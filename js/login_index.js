@@ -18,7 +18,7 @@
 						      break;
 						    }
 						  } 
-   						//window.open("home.html","_self");
+   						window.open("home.php","_self");
 						
 	      				
 

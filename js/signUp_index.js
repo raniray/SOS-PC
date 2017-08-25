@@ -14,7 +14,7 @@ $(document).ready(function() {
 	{
 
    		 var url = "./php/signUp.php"; // the script where you handle the form input.
-		$.ajax({
+		   $.ajax({
            type: "POST",
            url: url,
            data: $("form").serialize(), // serializes the form's elements.
@@ -32,7 +32,7 @@ $(document).ready(function() {
 						      break;
 						    }
 						  } 
-   						window.open("home.html","_self");
+   						window.open("home.php","_self");
 						
 	      				
 

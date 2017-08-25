@@ -56,21 +56,29 @@
 												<li class="active"><a href="#banner">Accueil</a></li>
 						
 												 <li><a href="#portfolio">Vente</a></li>
+												 <?php
+												    if($_SESSION['login']==true) { 
+   											     ?>	
 												<li class="dropdown" >
 													<a class="dropbtn" href="#">Réparation-PC</a>
   									
   												<div class="dropdown-content">
-    											<a href="history.html">Historique de réparation</a>
-   												 <a href="demandeRep.html">Nouvelle réparation</a>
-												    <a href="index2.html">Live help</a>
+    											<a href="history.php">Historique de réparation</a>
+   												 <a href="demandeRep.php">Nouvelle réparation</a>
+												    <a href="index2.php">Live help</a>
 												  </div>
 												</li>
+												 <?php };
+												 ?>
                                                 <li><a href="#about">A propos</a></li>
 												<li><a href="#contact">Contact</a></li>
 												<li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
           <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
+                    <?php
+				    if($_SESSION['login']==true) { 
+   											     ?>
                     <ul class="dropdown-menu">
                         <li>
                             <div class="navbar-login">
@@ -81,8 +89,8 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong>NOM PRENOM</strong></p>
-                                        <p class="text-left small">UserMail@mail.com</p>
+                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
                                 </div>
@@ -95,13 +103,32 @@
                                     <div class="col-lg-12">
                                         <p>
                                              <a href="#" class="btn button btn-block">Se déconnecter</a>
-                                             <a href="profile.html" class="btn button btn-block">Mon profil</a>
+                                             <a href="profile.php" class="btn button btn-block">Mon profil</a>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
+                    <?php }else{
+												 ?>
+                    <ul class="dropdown-menu">
+                     
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                             <a href="signUp.html" class="btn button btn-block">S'inscrire</a>
+                                             <a href="login.html" class="btn button btn-block">Se connecter</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                                        <?php };
+												 ?>
                 </li>
             </li>
 						
@@ -161,7 +188,7 @@
          				  <em>Evaluation=9999</em>
          				</br>
          			</br>
-         			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         			     <div class="btn button2"><a href="profileRep.php">Voir Profil</a></div>
 
          				</center>
         
@@ -179,7 +206,7 @@
          				  <em>Evaluation=9999</em>
          				  </br>
          			</br>
-         				           			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         				           			     <div class="btn button2"><a href="profileRep.php">Voir Profil</a></div>
       					 </center>          
         					
       					
@@ -194,7 +221,7 @@
          				  <em>Evaluation=9999</em>
          				  </br>
          			</br>
-         				           			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         				           			     <div class="btn button2"><a href="profileRep.php">Voir Profil</a></div>
        					 </center>        
         				
       				
@@ -209,7 +236,7 @@
          				  <em>Evaluation=9999</em>
          				</br>
          			</br>
-         				           			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         				           			     <div class="btn button2"><a href="profileRep.php">Voir Profil</a></div>
        					 </center> 
   				    </div>
   				</div>
@@ -729,10 +756,10 @@
 								
 
 
-								<div class="btn button"><a href="galery.html">tout</a></div>
-								<div class="btn button"><a href="galery.html">Les plus récentes</a></div>
-								<div class="btn button"><a href="galery.html">Les plus consultées</a></div>
-								<div class="btn button"><a href="galery.html">Les moins chères</a></div>
+								<div class="btn button"><a href="galery.php">tout</a></div>
+								<div class="btn button"><a href="galery.php">Les plus récentes</a></div>
+								<div class="btn button"><a href="galery.php">Les plus consultées</a></div>
+								<div class="btn button"><a href="galery.php">Les moins chères</a></div>
 
 							</center>
 						</div>
