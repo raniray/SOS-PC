@@ -1084,6 +1084,13 @@ textarea {
   border-radius: 50%;
   border: 1px solid gray;
 }
+
+.round {
+  display:block;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+}
 .btn-circle-danger {
   display:block;
   background-color: #f44245;

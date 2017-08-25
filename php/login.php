@@ -1,28 +1,37 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "sosPc";
+ini_set('display_errors', 1);
+//Connexion a la basse de donnée.
+try{
+            $PDO = new PDO('mysql:host=localhost;dbname=sosPc','root','root');
+            $PDO->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
+            $PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_OBJ);
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
-    session_start();
-    $username=$_POST['mail'];
-    $password=$_POST['pwd'];
-    $_SESSION['login_user']=$username; 
-    $query = mysql_query("SELECT mailUser FROM Compte WHERE mailUser='$username' and pswdUser='$password'");
-     if (mysql_num_rows($query) != 0)
-    {
-     
-     echo "successful"; 
-      }
-      else
+}catch(PDOException $e) {
+            echo "error";
+}
+//Récupération des données du form 
+$mail = !empty($_POST['mail']) ? trim($_POST['mail']) : null;
+$pass = !empty($_POST['pwd']) ? trim($_POST['pwd']) : null;
+//Formulation de la requête
+ $stmt = $PDO->prepare("SELECT * FROM Client_ WHERE  mailUser=:mail LIMIT 1");
+          $stmt->execute(array(':mail'=>$mail));
+          $userRow=$stmt->fetch(PDO::FETCH_ASSOC);//Récupérer l'utilisateur concerné.
+          if($stmt->rowCount() > 0)
+          { 
+if (password_verify($pass,$userRow['pswdUser']))
+
+     {       session_start(); // On commence la session
+            $_SESSION['login_user']=$userRow['nomUser']." ".$userRow['prenomUser'];
+            $_SESSION['login']=true;
+            $_SESSION['mail']=$mail;
+            $_SESSION['picture']=$userRow['profilePicUser'];
+            echo "successful";
+      }else
       {
-      echo "error";
-    }
-$conn->close();
+        echo "error";
+      }
+} else {
+   echo "error";
+}
+
 ?>

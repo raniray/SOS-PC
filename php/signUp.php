@@ -18,7 +18,7 @@ $pass = !empty($_POST['pwd']) ? trim($_POST['pwd']) : null;
 //haché du message
 $pwd=password_hash($pass, PASSWORD_BCRYPT, array("cost" => 12));
 //Formulation de la requête
-$sql = "INSERT INTO Client_ (idUser,nomUser,prenomUser,mailUser,pswdUser,statusAcount,ccpUser,profilePicUser,telUser,dateNaissUser) VALUES (null,:nomUser,:prenomUser,:mailUser,:pswdUser,'I',null,null,null,null)";
+$sql = "INSERT INTO Client_ (idUser,nomUser,prenomUser,mailUser,pswdUser,statusAcount,ccpUser,profilePicUser,telUser,dateNaissUser) VALUES (null,:nomUser,:prenomUser,:mailUser,:pswdUser,'I',null,'./img/Profiles/default-user.png',null,null)";
 $stmt = $PDO->prepare($sql);
 //liaison des variables 
 $stmt->bindValue(':nomUser', $nom);
@@ -32,6 +32,7 @@ if ($result) {
 	 $_SESSION['login_user']=$nom." ".$prenom;
      $_SESSION['login']=true;
      $_SESSION['mail']=$mail;
+     $_SESSION['picture']="./img/Profiles/default-user.png";
      echo "successful";
 } else {
      echo "error";

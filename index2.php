@@ -41,11 +41,9 @@
   </head>
 
   <body>
-    <!-- header start -->
+      <!-- header start -->
     <!-- ================ --> 
-    
-    <header class="header2 fixed clearfix navbar navbar-fixed-top">
-    
+    <header class="header fixed clearfix navbar navbar-fixed-top">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
@@ -82,6 +80,7 @@
             
                          <li><a href="home.php#portfolio">Vente</a></li>
                          <?php
+                            session_start();
                             if($_SESSION['login']==true) { 
                              ?> 
                         <li class="dropdown" >
@@ -102,6 +101,7 @@
                         Mon compte 
                     </a>
                     <?php
+                    session_start();
             if($_SESSION['login']==true) { 
                              ?>
                     <ul class="dropdown-menu">
@@ -110,7 +110,10 @@
                                 <div>
                                     <div class="col-lg-5">
                                         <p class="text-center">
-                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                          
+                                          <img class="round" src="<?php echo $_SESSION['picture'];?>">
+   
+                                            
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
@@ -127,7 +130,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="#" class="btn button btn-block">Se déconnecter</a>
+                                             <a href="./php/logout.php" class="btn button btn-block">Se déconnecter</a>
                                              <a href="profile.php" class="btn button btn-block">Mon profil</a>
                                         </p>
                                     </div>
@@ -145,7 +148,7 @@
                                     <div class="col-lg-12">
                                         <p>
                                              <a href="signUp.html" class="btn button btn-block">S'inscrire</a>
-                                             <a href="login.html.html" class="btn button btn-block">Se connecter</a>
+                                             <a href="login.html" class="btn button btn-block">Se connecter</a>
                                         </p>
                                     </div>
                                 </div>
@@ -175,7 +178,6 @@
       </div>
     </header>
     <!-- header end -->
-
 
 <div class="chat">
   <div class="chat-title">
