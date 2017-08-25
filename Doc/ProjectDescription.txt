@@ -1,0 +1,13 @@
+This project is a web plateform to repair and sell used Pcs, in this project we have 3 main actors :
+
+    -Client : Has the ability to create new Pc anouncement, ask to repair his PC, ask for live help.
+    -Repairman : Contacts the client and guides him throw messeges or ask him for a physical meetup.
+    -Administrator : puts clients in contact with repaiman and manages PC annoucements.
+    
+As mentionned earlier this plateforme provides the following services : 
+
+    -Pc repair.
+    -Live help throw chat.
+    -Pc selling anouncements.
+    
+   
