@@ -14,12 +14,17 @@
 <body>
   <div class="wrapper">
 	<div class="container">
-		<h1>SOS-PC</h1>
+		<h1 id="head">SOS-PC</h1>
 		
 		<form class="form" action="./php/login.php" method="post" id="form">
 			<input type="email" maxlength="100" required id="mail" name="mail" placeholder="Email"  title="Veuillez saisir une adresse email valide">
 			<input type="password"  pattern=".{6,}"  maxlength="20" required id="pwd" name="pwd"placeholder="Mot de passe (min 6 caractères)"  title="Veuillez saisir votre mot de passe de taille minimale 6">
 			<button type="submit" id="login-button">Se connecter</button>
+			</br>
+	        </br>
+			<div class="alert alert-danger" style="display:none;" id="err">
+ 		    <strong>Attention!</strong> Indicates a dangerous or potentially negative action.
+			</div>
 		</form>
 	</div>
 	
