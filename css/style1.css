@@ -17,6 +17,22 @@ body {
 	background-color: #ffffff;
 	position: relative;
 }
+#nouvelle-annonce{
+	position:absolute;
+	margin-left:36%;
+	padding-bottom: 10px;
+	
+	}   
+#nouvelle-annonce a {
+	text-decoration:none;
+	color:#fff;
+	border:none;
+}
+
+#nouvelle-annonce a:hover {
+	text-decoration:underline;
+	font-weight:bold;
+}
 .bla {
   display: inline-block;
 }

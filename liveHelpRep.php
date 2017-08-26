@@ -61,9 +61,9 @@
   </head>
 
   <body>
-            <!-- header start -->
+   <!-- header start -->
     <!-- ================ --> 
-    <header class="header fixed clearfix navbar navbar-fixed-top">
+    <header class="header2 fixed clearfix navbar navbar-fixed-top">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
@@ -72,11 +72,11 @@
             <div class="header-left clearfix">
               <!-- logo -->
               <div class="logo smooth-scroll">
-                <a href="home.php#banner"><img id="logo" src="img/logo.png" alt="Worthy"></a>
+                <a href="#banner"><img id="logo" src="img/logo.png" alt="Worthy"></a>
               </div>
               <!-- name-and-slogan -->
               <div class="site-name-and-slogan smooth-scroll">
-                <div class="site-name"><a href="home.php#banner">SOS-PC</a></div>
+                <div class="site-name"><a href="#banner">SOS-PC</a></div>
                 <div class="site-slogan">Votre PC en bonnes mains...</div>
               </div>
             </div>
@@ -96,31 +96,26 @@
                     </div>
                     <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
                       <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="home.php#banner">Accueil</a></li>
+                        <li class="active"><a href="accueilRep.php">Accueil</a></li>
             
-                         <li><a href="home.php#portfolio">Vente</a></li>
-                         <?php
-                            session_start();
-                            if($_SESSION['login']==true) { 
-                             ?> 
+                         <li><a href="accueilRep.php#portfolio">Vente</a></li>
                         <li class="dropdown" >
-                          <a class="dropbtn" href="#">Réparation-PC</a>
+                          <a class="dropbtn" href="#">Réparation PC</a>
                     
                           <div class="dropdown-content">
-                          <a href="history.php">Historique de réparation</a>
-                           <a href="demandeRep.php">Nouvelle réparation</a>
-                            <a href="index2.php">Live help</a>
+                          <a href="Reparations.php">Réparations</a>
+                           <a href="ficheReparation.php">Fiche réparation</a>
+                            <a href="liveHelpRep.php">Live help</a>
                           </div>
                         </li>
-                         <?php };
-                         ?>
-                                                <li><a href="home.php#about">A propos</a></li>
-                        <li><a href="home.php#contact">Contact</a></li>
+                                                <li><a href="accueilRep.php#about">A propos</a></li>
+                        <li><a href="accueilRep.php#contact">Contact</a></li>
                         <li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
           <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
-                    <?php
+
+                      <?php
                     session_start();
             if($_SESSION['login']==true) { 
                              ?>
@@ -158,26 +153,8 @@
                             </div>
                         </li>
                     </ul>
-                    <?php }else{
-                         ?>
-                    <ul class="dropdown-menu">
-                     
-                        <li>
-                            <div class="navbar-login navbar-login-session">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <p>
-                                             <a href="signUp.html" class="btn button btn-block">S'inscrire</a>
-                                             <a href="login.html" class="btn button btn-block">Se connecter</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                                        <?php };
-                         ?>
-                </li>
+                    <?php };
+                         ?>            </li>
             </li>
             
                       </ul>

@@ -47,7 +47,7 @@
 											<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
 												<span class="sr-only">Toggle navigation</span>
 												<span class="icon-bar"></span>
-												<span class="icon-bar"></span>
+												<span class="icon-bar"></sProfilProfilProfilpan>
 												<span class="icon-bar"></span>
 											</button>
 										</div>
@@ -273,7 +273,12 @@
 			<div class="container">
 				<h1 class="text-center title" id="portfolio">Espace vente PC</h1>
 				<div class="separator"></div>
-				<br>			
+				<br>
+				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceClient.php" >Nouvelle annonce</a></div>
+               	<br>
+               	<br>
+               	<br>
+               	<br>		
 				<div class="row object-non-visible" data-animation-effect="fadeIn">
 					<div class="col-md-12">
 						<div class="isotope-container row grid-space-20">

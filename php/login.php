@@ -25,13 +25,72 @@ if (password_verify($pass,$userRow['pswdUser']))
             $_SESSION['login']=true;
             $_SESSION['mail']=$mail;
             $_SESSION['picture']=$userRow['profilePicUser'];
-            echo "successful";
+            $_SESSION['Account_type']="C";
+            echo "client";
       }else
       {
         echo "error";
       }
-} else {
-   echo "error";
+} else {  // Cas des administrateurs
+
+          $stmt = $PDO->prepare("SELECT * FROM Admin_ WHERE  mailUser=:mail LIMIT 1");
+          $stmt->execute(array(':mail'=>$mail));
+          $userRow=$stmt->fetch(PDO::FETCH_ASSOC);//Récupérer l'utilisateur concerné.
+          if($stmt->rowCount() > 0)
+          {
+            if (password_verify($pass,$userRow['pswdUser']))
+
+     {       session_start(); // On commence la session
+            $_SESSION['login_user']=$userRow['nomUser']." ".$userRow['prenomUser'];
+            $_SESSION['login']=true;
+            $_SESSION['mail']=$mail;
+            $_SESSION['picture']=$userRow['profilePicUser'];
+            $_SESSION['Account_type']="A";
+
+            echo "admin";
+      }else
+      {
+        echo "error";
+      }
+
+
+
+          }else //Cas des Réparateurs 
+          {
+
+          $stmt = $PDO->prepare("SELECT * FROM Reparateur_ WHERE  mailUser=:mail LIMIT 1");
+          $stmt->execute(array(':mail'=>$mail));
+          $userRow=$stmt->fetch(PDO::FETCH_ASSOC);//Récupérer l'utilisateur concerné.
+          if($stmt->rowCount() > 0)
+          {
+            if (password_verify($pass,$userRow['pswdUser']))
+
+     {       session_start(); // On commence la session
+            $_SESSION['login_user']=$userRow['nomUser']." ".$userRow['prenomUser'];
+            $_SESSION['login']=true;
+            $_SESSION['mail']=$mail;
+            $_SESSION['picture']=$userRow['profilePicUser'];
+            $_SESSION['Account_type']="R";
+
+            echo "rep";
+      }else
+      {
+        echo "error";
+      }
+
+          }else
+          {
+           echo "error";
+
+          }
+
+
+    }
+
+
+
+
+   
 }
 
 ?>

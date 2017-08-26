@@ -17,72 +17,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
-		<script>
-$(function () { 
-    var myChart = Highcharts.chart('stats', {
-        chart: {
-		
-		backgroundColor: '#212121',
-		polar:true,
-            type: 'line'
-        },
-        title: {
-		    style: {
-         color: '#fff',
-         font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
-      },
-            text: 'Statistiques SOS-PC'
-        },
-		 legend: {
-          backgroundColor: '#424242'
-       
-    },
 
-        xAxis:
-		   
-		   
-		{
-		
-           categories: ['Jan', 'Fév', 'Mars', 'Avr', 'Mai', 'Juin', 'Jul', 'Août', 'Sep', 'Oct', 'Nov', 'Dec'],
-		    labels: {
-            style: {
-                color: '#428bca',
-				font: 'bold 11px Trebuchet MS, Verdana, sans-serif'
-            }
-        }
-        },
-        yAxis: {
-	
-      tickColor: '#000',
-      labels: {
-         style: {
-            color: '#009688',
-            font: 'bold 11px Trebuchet MS, Verdana, sans-serif'
-         }
-      },
-            title: { 
-			style: {
-         color: '#fff',
-         font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
-      },
-                text: 'Nombre par mois'
-            }
-        },
-        series: [{
-            name: 'Nombre de PCs vendus',
-            data: [1, 0, 4,5,0,1,2,2,3,1,0,1]
-        }, {
-            name: 'Nombre de réparations effectuées',
-            data: [2, 1, 0,3,7,2,4,2,3,1,0,2]
-        },{
-            name: 'Nombre d"inscris',
-            data: [15, 17, 30,10,9,5,13,12,3,11,7,14]},
-			{
-            name: 'Nombre de réparateurs',
-            data: [2, 3, 3,3,5,6,6,5,5,7,7,6]}]
-    });
-});
-</script>
 	</head>
 
 	<body class="no-trans">
@@ -123,38 +58,46 @@ $(function () {
 										</div>
 										<div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
 											<ul class="nav navbar-nav navbar-right">
-												<li class="active"><a href="accueilAdmin.html">Accueil</a></li>
+												<li class="active"><a href="accueilRep.php">Accueil</a></li>
 						
-												 <li><a href="#portfolio">Vente</a></li>
+												 <li><a href="accueilRep.php#portfolio">Vente</a></li>
 												<li class="dropdown" >
-													<a class="dropbtn" href="#">Administration</a>
+													<a class="dropbtn" href="#">Réparation PC</a>
   									
   												<div class="dropdown-content">
-    											<a href="dashboard.html">Dashboard</a>
-   												 <a href="demandeRepAdmin.html">Nouvelle réparation</a>
-												    <a href="index2Admin.html">Live help</a>
+    											<a href="Reparations.php">Réparations</a>
+   												 <a href="ficheReparation.php">Fiche réparation</a>
+												    <a href="liveHelpRep.php">Live help</a>
 												  </div>
 												</li>
-                                                <li><a href="#about">A propos</a></li>
-												<li><a href="#contact">Contact</a></li>
+                                                <li><a href="accueilRep.php#about">A propos</a></li>
+												<li><a href="accueilRep.php#contact">Contact</a></li>
 												<li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
           <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
+
+                      <?php
+                    session_start();
+				    if($_SESSION['login']==true) { 
+   											     ?>
                     <ul class="dropdown-menu">
                         <li>
                             <div class="navbar-login">
                                 <div>
                                     <div class="col-lg-5">
                                         <p class="text-center">
-                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                        	
+                                        	<img class="round" src="<?php echo $_SESSION['picture'];?>">
+   
+                                            
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong>NOM PRENOM</strong></p>
-                                        <p class="text-left small">UserMail@mail.com</p>
+                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
                                         
-                                    <!-- </div> -->
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -164,15 +107,16 @@ $(function () {
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="#" class="btn button btn-block">Se déconnecter</a>
-                                             <a href="profile.html" class="btn button btn-block">Mon profil</a>
+                                             <a href="./php/logout.php" class="btn button btn-block">Se déconnecter</a>
+                                             <a href="profile.php" class="btn button btn-block">Mon profil</a>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                </li>
+                    <?php };
+												 ?>            </li>
             </li>
 						
 											</ul>
@@ -202,8 +146,9 @@ $(function () {
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 object-non-visible" data-animation-effect="fadeIn">
-							<h1 class="text-center" style="margin-top:-9%;">Quelques statistiques</span></h1><br>
-							<div id="stats" style="min-width:100%; height:470px;margin-top:3%;"></div>
+							<h1 class="text-center">SOS-<span>PC</span></h1>
+							<p class="lead text-center">La première plateforme de maintenance et de vente PC en Algérie qui met à votre disposition une équipe  formée des meilleurs réparateurs, afin de vous assurer un service fiable, rapide et à des prix très abordables. Chez SOS-PC  votre ordi est en bonnes mains ....</p>
+							
 							
 						</div>
 					</div>
@@ -214,8 +159,7 @@ $(function () {
 		</div>
 		<!-- banner end -->
 
-		<div style="position:relative;background-color:#0a0a0a;width:100%;height:21%;margin-top:0%;"></div>
-
+		
 		<!-- section start -->
 		<!-- ================ -->
 		<div class="section translucent-bg-img">
@@ -234,7 +178,7 @@ $(function () {
          				  <em>Evaluation=9999</em>
          				</br>
          			</br>
-         			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         			     <div class="btn button2"><a href="profileRepCons2.php">Voir Profil</a></div>
 
          				</center>
         
@@ -252,7 +196,7 @@ $(function () {
          				  <em>Evaluation=9999</em>
          				  </br>
          			</br>
-         				           			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         				           			     <div class="btn button2"><a href="profileRepCons2.php">Voir Profil</a></div>
       					 </center>          
         					
       					
@@ -267,7 +211,7 @@ $(function () {
          				  <em>Evaluation=9999</em>
          				  </br>
          			</br>
-         				           			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         				           			     <div class="btn button2"><a href="profileRepCons2.php">Voir Profil</a></div>
        					 </center>        
         				
       				
@@ -282,7 +226,7 @@ $(function () {
          				  <em>Evaluation=9999</em>
          				</br>
          			</br>
-         				           			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         				           			     <div class="btn button2"><a href="profileRepCons2.php">Voir Profil</a></div>
        					 </center> 
   				    </div>
   				</div>
@@ -315,7 +259,10 @@ $(function () {
 				<h1 class="text-center title" id="portfolio">Espace vente PC</h1>
 				<div class="separator"></div>
 				<br>			
-				<div class="row object-non-visible" data-animation-effect="fadeIn">
+				<div class="separator"></div>
+				<br>		
+				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceRep.php" >Nouvelle annonce</a></div>
+				<div class="row object-non-visible" data-animation-effect="fadeIn" style="margin-top:9%;">
 					<div class="col-md-12">
 						<div class="isotope-container row grid-space-20">
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
@@ -802,11 +749,11 @@ $(function () {
 								
 
 
-								<div class="btn button"><a href="galery.html">tout</a></div>
-								<div class="btn button"><a href="galery.html">Les plus récentes</a></div>
-								<div class="btn button"><a href="galery.html">Les plus consultées</a></div>
-								<div class="btn button"><a href="galery.html">Les moins chères</a></div>
-								<div class="btn button"><a href="nouvelleAnnonce.html">Nouvelle annonce</a></div>
+								<div class="btn button"><a href="galery2.php">tout</a></div>
+								<div class="btn button"><a href="galery2.php">Les plus récentes</a></div>
+								<div class="btn button"><a href="galery2.php">Les plus consultées</a></div>
+								<div class="btn button"><a href="galery2.php">Les moins chères</a></div>
+							
 
 							</center>
 						</div>
