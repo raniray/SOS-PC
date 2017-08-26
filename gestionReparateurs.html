@@ -47,8 +47,8 @@ var modal = document.getElementById('modelReparateur');
 }
 
 function annuler(){
-  var modal = document.getElementByClass('formR');
-    modal.style.visibility= "hidden";
+  var modal = document.getElementById('modelReparateur');
+    modal.style.display = "none";
 }
 </script>
 
@@ -93,20 +93,15 @@ function annuler(){
                     </div>
                     <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
 											<ul class="nav navbar-nav navbar-right">
-												<li class="active"><a href="#banner">Accueil</a></li>
+												<li class="active"><a href="accueilAdmin.html">Accueil</a></li>
 						
-												 <li><a href="#portfolio">Vente</a></li>
+												 <li><a href="accueilAdmin.html#portfolio">Vente</a></li>
 												<li class="dropdown" >
-													<a class="dropbtn" href="#">Administration</a>
-  									
-  												<div class="dropdown-content">
-    											<a href="dashboard.html">Dashboard</a>
-   												 <a href="demandeRepAdmin.html">Nouvelle réparation</a>
-												    <a href="index2Admin.html">Live help</a>
-												  </div>
+													<a class="dropbtn" href="dashboard.html">Administration</a>
+   	
 												</li>
-                                                <li><a href="#about">A propos</a></li>
-												<li><a href="#contact">Contact</a></li>
+                                                <li><a href="accueilAdmin.html#about">A propos</a></li>
+												<li><a href="accueilAdmin.html#contact">Contact</a></li>
 												<li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
           <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
@@ -135,7 +130,7 @@ function annuler(){
                                     <div class="col-lg-12">
                                         <p>
                                              <a href="#" class="btn button btn-block">Se déconnecter</a>
-                                             <a href="profile.html" class="btn button btn-block">Mon profil</a>
+                                             <a href="profileAdmin.html" class="btn button btn-block">Mon profil</a>
                                         </p>
                                     </div>
                                 </div>
@@ -204,7 +199,7 @@ function annuler(){
 		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
 		<div class="infos-reparateur-content">
     
-    <div class="formR">
+    <div class="formR" id="profileRep">
 	<ul id="listeprofil">
 	  <li> <div class="text-center img-container">
           <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
@@ -216,7 +211,7 @@ function annuler(){
         </div></li>
 	   </ul>
 	  <br>
-		<div class="meh-info"> 
+		<div class="meh-info" > 
                   <table class="table table-user-information">
                     <tbody>
                       <tr>
@@ -247,8 +242,18 @@ function annuler(){
                         <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
-                        <td>Numéro de CCP:</td>
-                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                        <td>Profession:</td>
+                        <td><input id="prenom" name="profession" type="text" class="form-control3 input-md" required=""></td>
+                      </tr>
+					  <tr>
+                        <td>Classement:</td>
+                        <td><input id="prenom" name="classement" type="text" class="form-control3 input-md" required=""></td>
+                      </tr>
+					   <tr>
+                        <td colspan="2">Biographie:</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2"><textarea class="form-control" type="textarea" id="desc" placeholder="biographie" maxlength="140" rows="8"></textarea></td>
                       </tr>
                     </tbody>
                   </table>
@@ -257,7 +262,7 @@ function annuler(){
 	
 	       
                 <button class="btn button btn-block" style="bottom:15%;margin-left:-0.13%;">Enregistrer</button>
-				  <button class="btn btn-danger btn-block" style="bottom:10%;">Annuler</button>
+				  <button type="button" onclick="annuler();" class="btn btn-danger btn-block" style="bottom:10%;" data-dismiss="modal">Annuler</button>
             
 	</div>
   </div>

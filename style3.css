@@ -6,9 +6,9 @@ body {
 .dashboard{
 	
 	position:absolute;
-	top:28%;
+	top:24%;
 	width:92%;
-	height:68%;
+	height:70%;
 	left:3.7%;
 	overflow:auto;
 	background-color:#212121;
@@ -20,13 +20,13 @@ body {
 }
 .dashboard div{
 	position:relative;
-	top:16.5%;
+	top:18.25%;
 	left:2.7%;
 	margin:0;
 	padding:0;
 	float:left;
-	min-width:292px;
-	min-height:260px;
+	min-width:350px;
+	min-height:262px;
 
 	
 }
@@ -61,6 +61,7 @@ body {
 
 #dash1{
 	background-color:#C0C0C0;
+	margin-left:4.25%;
 }
 #dash2{
 	background-color:#55acee;
@@ -192,6 +193,46 @@ body {
 	font-family: 'Raleway', sans-serif;
 }
 /****************************************************Infos Réparateur****************************************************/
+ 
+ #tableR p{
+	 cursor:pointer;
+	 text-align:center;
+	color:#428bca;
+}
+
+ #tableR a{
+	 cursor:pointer;
+	 text-align:center;
+	color:#428bca;
+	text-decoration:none;
+}
+
+#tableR a:hover{
+	 cursor:pointer;
+	
+	text-decoration:underline;
+}
+ #tableR p:hover{
+	 
+	 
+	color:#ccc;
+	
+}
+
+#tableR select{
+	 
+	 
+	width:50%;
+	
+}
+
+#tableR td{
+	 
+	 
+	width:5%;
+	
+}
+
 
 .model-R {
     display: none; /* Hidden by default */
@@ -215,10 +256,11 @@ body {
     border: 1px solid #888;
 	border-radius:8px 8px 8px;
     width: 42%;
-	min-height:570px;
-	max-height:40%;
+	min-height:800px;
+	max-height:70%;
 }
  .meh-info{
+	 display:block;
 	position:relative;
 	top:8%;
 	right:0;
@@ -230,7 +272,16 @@ body {
 }
 
 
-
+.gClient{
+	 background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+	border-radius:8px 8px 8px;
+    width: 42%;
+	min-height:550px;
+	max-height:50%;
+}
 
 
 
@@ -289,6 +340,14 @@ body {
 
 
 .infos-reparateur-content .formR ul{
+	position:relative;
+    margin-top:7%;	
+	
+	display:block;
+
+}
+
+.gClient .formR ul{
 	position:relative;
     margin-top:7%;	
 	
@@ -1608,39 +1667,33 @@ textarea {
 	
 }
 
-#tableannonce2{
-	position:relative;
-	right:0;
-	left:0;
-	top:0;
-	bottom:0;
-	margin:auto;
-	width:40%;
-	float:right;
-}
+
 
 #tabledemande1{
 	position:relative;
 	right:0;
-	left:0;
-	top:0;
+	left:22%;
+	top:5%;
 	bottom:-10%;
 	margin:auto;
-	width:40%;
+	width:55%;
 	float:left;
 	
 }
 
-#tabledemande2{
-	position:relative;
-	right:0;
-	left:0;
-	top:0;
-	bottom:-10%;
-	margin:auto;
-	width:40%;
-	float:right;
+#tabledemande1 a{
+	 cursor:pointer;
+	 text-align:center;
+	color:#428bca;
+	text-decoration:none;
+	
 }
+
+#tabledemande1 a:hover{
+	 cursor:pointer;
+	
+	text-decoration:underline;
+} 
 
 .thistable td select{
 	margin-left:-10%;
@@ -1835,6 +1888,23 @@ padding:18px 22px;
 	
 }
 
+
+#nouvelle-annonce{
+	position:absolute;
+	margin-left:36%;
+	
+	
+	}   
+#nouvelle-annonce a {
+	text-decoration:none;
+	color:#fff;
+	border:none;
+}
+
+#nouvelle-annonce a:hover {
+	text-decoration:underline;
+	font-weight:bold;
+}
 .yesButton{
 	background-color:#28B78D;
 	border:none;
@@ -1854,6 +1924,57 @@ padding:18px 22px;
 .noButton:hover{
 	background-color:#f23239;
 }
+
+
+.supprimer-avis {
+  color: #333;
+  margin-left:10%;
+  padding:12px 16px;
+  background-color: #e6e6e6;
+  border-color: #ccc;
+ 
+}
+
+div .supprimer-avis {
+  color: #fff;
+  margin-left:17%;
+  padding:12px 16px;
+  background-color:#f44245;
+  border-color: #ccc;
+ 
+}
+.supprimer-avis:hover,
+.supprimer-avis:focus,
+.supprimer-avis.focus,
+.supprimer-avis:active,
+.supprimer-avis,
+.open > .dropdown-toggle.supprimer-avis {
+  background-color:#f23239;
+  border-color: #adadad;
+  cursor:pointer;
+}
+
+
+div .supprimer-annonce {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  opacity:0.6;
+ 
+}
+div .supprimer-annonce:hover,
+.supprimer-avis:focus,
+.supprimer-avis.focus,
+.supprimer-avis:active,
+.supprimer-avis,
+.open > .dropdown-toggle.supprimer-avis {
+  background-color:#f23239;
+  border-color: #adadad;
+  cursor:pointer;
+  color:#fff;
+  opacity:1;
+}
+
 
 /*****************************************************************Media************************************************************/
 
@@ -1896,12 +2017,37 @@ padding:18px 22px;
 
 }
 
+@media screen and (max-width: 900px) and (min-width: 100px) {
+
+.gClient {
+	min-height:800px;
+	min-width:300px;
+}
+
+}
+
+
 /********************/
 
 
 
 @media screen and (max-width: 1500px) and (min-width: 900px) {
   .infos-reparateur-content {
+	position:relative;
+    margin-top:3%;	
+	min-width:500px;
+	display:block;
+
+}
+
+
+
+}
+
+
+
+@media screen and (max-width: 1500px) and (min-width: 900px) {
+  .gClient {
 	position:relative;
     margin-top:3%;	
 	min-width:500px;
@@ -1953,6 +2099,14 @@ padding:18px 22px;
 @media screen and (max-width: 100px) and (min-width: 10px) {
 
 .infos-reparateur-content {
+	min-height:800px;
+	min-width:300px;
+}
+
+}
+@media screen and (max-width: 100px) and (min-width: 10px) {
+
+.gClient {
 	min-height:800px;
 	min-width:300px;
 }

@@ -19,6 +19,30 @@
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
 		<script>
 $(function () { 
+
+    Highcharts.setOptions({
+    lang: {
+        months: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+            'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+            weekdays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi',
+                'Jeudi', 'Vendredi', 'Samedi'],
+                shortMonths: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil',
+                    'Aout', 'Sept', 'Oct', 'Nov', 'Déc'],
+                    decimalPoint: ',',
+					printChart: 'Imprimer',
+                    downloadPNG: 'Télécharger en image PNG',
+                    downloadJPEG: 'Télécharger en image JPEG',
+                    downloadPDF: 'Télécharger en document PDF',
+                    downloadSVG: 'Télécharger en document Vectoriel',
+                    exportButtonTitle: 'Export du graphique',
+                    loading: 'Chargement en cours...',
+                    printButtonTitle: 'Imprimer le graphique',
+                    resetZoom: 'Réinitialiser le zoom',
+                    resetZoomTitle: 'Réinitialiser le zoom au niveau 1:1',
+                    thousandsSep: ' ',
+                    decimalPoint: ','
+    }
+});
     var myChart = Highcharts.chart('stats', {
         chart: {
 		
@@ -126,14 +150,11 @@ $(function () {
 												<li class="active"><a href="accueilAdmin.html">Accueil</a></li>
 						
 												 <li><a href="#portfolio">Vente</a></li>
-												<li class="dropdown" >
-													<a class="dropbtn" href="#">Administration</a>
+												<li class="active" >
+													<a  href="dashboard.html">Administration</a>
   									
-  												<div class="dropdown-content">
-    											<a href="dashboard.html">Dashboard</a>
-   												 <a href="demandeRepAdmin.html">Nouvelle réparation</a>
-												    <a href="index2Admin.html">Live help</a>
-												  </div>
+  												
+												  
 												</li>
                                                 <li><a href="#about">A propos</a></li>
 												<li><a href="#contact">Contact</a></li>
@@ -165,7 +186,7 @@ $(function () {
                                     <div class="col-lg-12">
                                         <p>
                                              <a href="#" class="btn button btn-block">Se déconnecter</a>
-                                             <a href="profile.html" class="btn button btn-block">Mon profil</a>
+                                             <a href="profileAdmin.html" class="btn button btn-block">Mon profil</a>
                                         </p>
                                     </div>
                                 </div>
@@ -202,7 +223,7 @@ $(function () {
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 object-non-visible" data-animation-effect="fadeIn">
-							<h1 class="text-center" style="margin-top:-9%;">Quelques statistiques</span></h1><br>
+							<h1 class="text-center title" style="margin-top:-9%;">Quelques statistiques</h1><br>
 							<div id="stats" style="min-width:100%; height:470px;margin-top:3%;"></div>
 							
 						</div>
@@ -214,7 +235,7 @@ $(function () {
 		</div>
 		<!-- banner end -->
 
-		<div style="position:relative;background-color:#0a0a0a;width:100%;height:21%;margin-top:0%;"></div>
+		<div style="position:relative;background-color:#0a0a0a;width:100%;height:28%;margin-top:0%;"></div>
 
 		<!-- section start -->
 		<!-- ================ -->
@@ -313,13 +334,18 @@ $(function () {
 		<div class="section">
 			<div class="container">
 				<h1 class="text-center title" id="portfolio">Espace vente PC</h1>
+                 
 				<div class="separator"></div>
-				<br>			
-				<div class="row object-non-visible" data-animation-effect="fadeIn">
+				<br>		
+				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceAdmin.html" >Nouvelle annonce</a></div>
+               
+				<div class="row object-non-visible" data-animation-effect="fadeIn" style="margin-top:9%;">
 					<div class="col-md-12">
 						<div class="isotope-container row grid-space-20">
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
+							<div>
 								<div class="image-box">
+								
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
 										<a class="overlay" data-toggle="modal" data-target="#project-1">
@@ -327,7 +353,31 @@ $(function () {
 											<span>Voir l'annonce</span>
 										</a>
 									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-1">Voir l'annonce</a>
+						        <a class="btn btn-default btn-block voir-annonce" data-toggle="modal" data-target="#project-1">Voir annonce</a>
+								</div>
+								<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-1" tabindex="-1" role="dialog" aria-labelledby="project-1-label" aria-hidden="true">
@@ -358,6 +408,7 @@ $(function () {
 							</div>
 
 							<div class="col-sm-6 col-md-3 isotope-item app-development">
+							<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -367,6 +418,29 @@ $(function () {
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-2">Voir l'annonce</a>
+								</div>
+																<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-2" tabindex="-1" role="dialog" aria-labelledby="project-2-label" aria-hidden="true">
@@ -397,6 +471,7 @@ $(function () {
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
+								<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -406,6 +481,29 @@ $(function () {
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-3">Voir l'annonce</a>
+								</div>
+																<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-3" tabindex="-1" role="dialog" aria-labelledby="project-3-label" aria-hidden="true">
@@ -436,6 +534,7 @@ $(function () {
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item site-building">
+								<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -445,6 +544,29 @@ $(function () {
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-4">Voir l'annonce</a>
+								</div>
+																<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-4" tabindex="-1" role="dialog" aria-labelledby="project-4-label" aria-hidden="true">
@@ -475,6 +597,7 @@ $(function () {
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item app-development">
+							<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -484,6 +607,29 @@ $(function () {
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-5">Voir l'annonce</a>
+								</div>
+																<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-5" tabindex="-1" role="dialog" aria-labelledby="project-5-label" aria-hidden="true">
@@ -514,6 +660,7 @@ $(function () {
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
+								<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -523,6 +670,29 @@ $(function () {
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-6">Voir l'annonce</a>
+								</div>
+																<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-6" tabindex="-1" role="dialog" aria-labelledby="project-6-label" aria-hidden="true">
@@ -553,6 +723,7 @@ $(function () {
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item site-building">
+								<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -562,6 +733,30 @@ $(function () {
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-7">Voir l'annonce</a>
+								</div>
+																<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+								
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-7" tabindex="-1" role="dialog" aria-labelledby="project-7-label" aria-hidden="true">
@@ -592,6 +787,7 @@ $(function () {
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
+								<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -601,6 +797,30 @@ $(function () {
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-8">Voir l'annonce</a>
+								</div>
+																<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+								
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-8" tabindex="-1" role="dialog" aria-labelledby="project-8-label" aria-hidden="true">
@@ -631,6 +851,7 @@ $(function () {
 							</div>
 
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
+								<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -640,6 +861,29 @@ $(function () {
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-9">Voir l'annonce</a>
+								</div>
+																<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-9" tabindex="-1" role="dialog" aria-labelledby="project-9-label" aria-hidden="true">
@@ -670,6 +914,7 @@ $(function () {
 							</div>
 
 							<div class="col-sm-6 col-md-3 isotope-item site-building">
+								<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -679,6 +924,29 @@ $(function () {
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-10">Voir l'annonce</a>
+								</div>
+																<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-10" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
@@ -709,6 +977,7 @@ $(function () {
 							</div>
 
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
+								<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -718,6 +987,29 @@ $(function () {
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-11">Voir l'annonce</a>
+								</div>
+																<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-11" tabindex="-1" role="dialog" aria-labelledby="project-11-label" aria-hidden="true">
@@ -748,6 +1040,7 @@ $(function () {
 							</div>
 
 							<div class="col-sm-6 col-md-3 isotope-item app-development">
+								<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -757,6 +1050,29 @@ $(function () {
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-12">Voir l'annonce</a>
+								</div>
+																<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
 								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="project-12" tabindex="-1" role="dialog" aria-labelledby="project-12-label" aria-hidden="true">
@@ -806,7 +1122,7 @@ $(function () {
 								<div class="btn button"><a href="galery.html">Les plus récentes</a></div>
 								<div class="btn button"><a href="galery.html">Les plus consultées</a></div>
 								<div class="btn button"><a href="galery.html">Les moins chères</a></div>
-								<div class="btn button"><a href="nouvelleAnnonce.html">Nouvelle annonce</a></div>
+								
 
 							</center>
 						</div>
@@ -840,6 +1156,29 @@ $(function () {
 								</blockquote>
 							</div>
 						</div>
+		<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
+								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cet avis  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+	<br><br><br>
 					</div>
 					<div class="col-md-4">
 						<div class="media testimonial">
@@ -854,6 +1193,29 @@ $(function () {
 								</blockquote>
 							</div>
 						</div>
+								<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
+								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cet avis  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+	<br><br><br>
 					</div>
 					<div class="col-md-4">
 						<div class="media testimonial">
@@ -868,6 +1230,29 @@ $(function () {
 								</blockquote>
 							</div>
 						</div>
+								<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
+								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cet avis  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+	<br><br><br>
 					</div>
 				</div>
 				<div class="row">
@@ -884,6 +1269,29 @@ $(function () {
 								</blockquote>
 							</div>
 						</div>
+								<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
+								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cet avis  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+	<br><br><br>
 					</div>
 					<div class="col-md-4">
 						<div class="media testimonial">
@@ -898,6 +1306,29 @@ $(function () {
 								</blockquote>
 							</div>
 						</div>
+								<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
+								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cet avis  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+	<br><br><br>
 					</div>
 					<div class="col-md-4">
 						<div class="media testimonial">
@@ -912,6 +1343,29 @@ $(function () {
 								</blockquote>
 							</div>
 						</div>
+								<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
+								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cet avis  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+	<br><br><br>
 					</div>
 				</div>
 			</div>

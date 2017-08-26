@@ -4,7 +4,7 @@
 
     $servername = "localhost";
     $username = "root";
-    $password = "root";
+    $password = "";
     $dbname = "sosPc";
 
      $dbh = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
