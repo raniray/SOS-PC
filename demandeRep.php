@@ -47,7 +47,9 @@
     <div class="scrollToTop"><i class="icon-up-open-big"></i></div>
   <div class="banner-image"></div>
   <div class="banner-caption2">
-    <header class="header2 fixed clearfix navbar navbar-fixed-top">
+           <!-- header start -->
+    <!-- ================ --> 
+    <header class="header fixed clearfix navbar navbar-fixed-top">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
@@ -56,11 +58,11 @@
             <div class="header-left clearfix">
               <!-- logo -->
               <div class="logo smooth-scroll">
-                <a href="#banner"><img id="logo" src="img/logo.png" alt="Worthy"></a>
+                <a href="home.php#banner"><img id="logo" src="img/logo.png" alt="Worthy"></a>
               </div>
               <!-- name-and-slogan -->
               <div class="site-name-and-slogan smooth-scroll">
-                <div class="site-name"><a href="#banner">SOS-PC</a></div>
+                <div class="site-name"><a href="home.php#banner">SOS-PC</a></div>
                 <div class="site-slogan">Votre PC en bonnes mains...</div>
               </div>
             </div>
@@ -80,36 +82,49 @@
                     </div>
                     <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
                       <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="index.html#banner">Accueil</a></li>
+                        <li class="active"><a href="home.php#banner">Accueil</a></li>
             
-                         <li><a href="index.html#portfolio">Vente</a></li>
+                         <li><a href="home.php#portfolio">Vente</a></li>
+                         <?php
+                            session_start();
+                            if($_SESSION['login']==true) { 
+                             ?> 
                         <li class="dropdown" >
                           <a class="dropbtn" href="#">Réparation-PC</a>
                     
                           <div class="dropdown-content">
-                          <a href="history.html">Historique de réparation</a>
-                           <a href="demandeRep.html">Nouvelle réparation</a>
-                            <a href="index2.html">Live help</a>
+                          <a href="history.php">Historique de réparation</a>
+                           <a href="demandeRep.php">Nouvelle réparation</a>
+                            <a href="index2.php">Live help</a>
                           </div>
                         </li>
-                                                <li><a href="index.html#about">A propos</a></li>
-                        <li><a href="index.html#contact">Contact</a></li>
+                         <?php };
+                         ?>
+                                                <li><a href="home.php#about">A propos</a></li>
+                        <li><a href="home.php#contact">Contact</a></li>
                         <li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
           <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
+                    <?php
+                    session_start();
+            if($_SESSION['login']==true) { 
+                             ?>
                     <ul class="dropdown-menu">
                         <li>
                             <div class="navbar-login">
                                 <div>
                                     <div class="col-lg-5">
                                         <p class="text-center">
-                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                          
+                                          <img class="round" src="<?php echo $_SESSION['picture'];?>">
+   
+                                            
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong>NOM PRENOM</strong></p>
-                                        <p class="text-left small">UserMail@mail.com</p>
+                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
                                 </div>
@@ -121,14 +136,33 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="#" class="btn button btn-block">Se déconnecter</a>
-                                             <a href="profile.html" class="btn button btn-block">Mon profil</a>
+                                             <a href="./php/logout.php" class="btn button btn-block">Se déconnecter</a>
+                                             <a href="profile.php" class="btn button btn-block">Mon profil</a>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
+                    <?php }else{
+                         ?>
+                    <ul class="dropdown-menu">
+                     
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                             <a href="signUp.html" class="btn button btn-block">S'inscrire</a>
+                                             <a href="login.html" class="btn button btn-block">Se connecter</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                                        <?php };
+                         ?>
                 </li>
             </li>
             
@@ -150,6 +184,7 @@
       </div>
     </header>
     <!-- header end -->
+
   
 <div class="demande">
 

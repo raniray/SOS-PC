@@ -1,5 +1,5 @@
   <?php
-  function data_base_connect ()
+  function data_base_connect()
    {
 
     $servername = "localhost";

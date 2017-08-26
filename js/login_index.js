@@ -1,4 +1,4 @@
- $("#login-button").click(function(event){
+$('form').submit(function(e) {
 		  var url = "./php/login.php"; // the script where you handle the form input.
 		  $.ajax({
            type: "POST",
@@ -7,6 +7,8 @@
            success: function(data)
            {
            		if (data== 'successful') {
+           			    
+
           				$('form').empty();
 	      				$('.wrapper').addClass('form-success');
 	      				$('#head').empty();
@@ -18,7 +20,7 @@
 						      break;
 						    }
 						  } 
-   						//window.open("home.html","_self");
+   						window.open("home.php","_self");
 						
 	      				
 
@@ -31,6 +33,7 @@
 	  					
 	  			}
            }
+
            
          });
 		  e.preventDefault();
