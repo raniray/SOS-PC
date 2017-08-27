@@ -2,19 +2,18 @@
 <html >
   <head>
     <meta charset="UTF-8">
-    <title>Live help</title>
+    <title>Nouvelle demande</title>
     <meta name="description" content="Worthy a Bootstrap-based, Responsive HTML5 Template">
     
 
     <!-- Mobile Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link rel="stylesheet" href="css/normalize.css">
-
+   
     <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans'>
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.min.css'>
 
-        <link rel="stylesheet" href="css/style2.css">
+        
         <!-- Favicon -->
     <link rel="shortcut icon" href="images/favicon.ico">
 
@@ -32,35 +31,22 @@
     
 
     <!-- Worthy core CSS file -->
-    <link href="css/style3.css" rel="stylesheet">
+    <link href="css/style1.css" rel="stylesheet">
 
     <!-- Custom css --> 
-    <link href="css/custom.css" rel="stylesheet">
-       <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	    
-<script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
-
-      
-     <script type="text/javascript">
-	 $(document).ready(function() {
-	 $('#chatbox').css("visibility", "hidden");
-  $('#userspanel').click(function (e) {
-     // alert(e.target.id); // The id of the clicked element
-       $('#chatclassmom').css("visibility", "hidden");
-	  $('#chatbox').css("visibility", "visible");
-
-      
-	  
-	   
-  });
-});
-	 
-	 </script>
+    
+    
     
     
   </head>
 
-  <body>
+ <body class="default-bg2">
+
+    <!-- scrollToTop -->
+    <!-- ================ -->
+    <div class="scrollToTop"><i class="icon-up-open-big"></i></div>
+  <div class="banner-image"></div>
+  <div class="banner-caption2">
    <!-- header start -->
     <!-- ================ --> 
     <header class="header2 fixed clearfix navbar navbar-fixed-top">
@@ -96,15 +82,9 @@
                     </div>
                     <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
                       <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="home.php#banner">Accueil</a></li>
-
-         
-                         <li><a href="home.php#portfolio">Vente</a></li>
-                         <?php
-                            session_start();
-                            if($_SESSION['login']==true) { 
-                             ?> 
-
+                        <li class="active"><a href="accueilRep.php">Accueil</a></li>
+            
+                         <li><a href="accueilRep.php#portfolio">Vente</a></li>
                         <li class="dropdown" >
                           <a class="dropbtn" href="#">Réparation PC</a>
                     
@@ -181,51 +161,173 @@
         </div>
       </div>
     </header>
-    <!-- header end -->
+    <!-- header end -->  
+<div class="demande">
 
-	<div class="usersonline" id="userspanel">
-	<h4 class="usersonline-title ">En ligne</h4>
-<a href="#user1" ><p id="user1">NOM PRENOM  <i class="fa fa-circle online"></i></p></a>
-<a href="#user2"><p id="user2">NOM PRENOM <i class="fa fa-circle online"></i></p></a>
-<a href="#user3"><p id="user3">NOM PRENOM <i class="fa fa-circle online"></i></p></a>
-<a href="#user4"><p id="user4">NOM PRENOM <i class="fa fa-circle online"></i></p></a>
-<a href="#user5"><p id="user5">NOM PRENOM <i class="fa fa-circle online"></i></p></a>
-<a href="#user6"><p id="user6">NOM PRENOM <i class="fa fa-circle online"></i></p></a>
-<a href="#user7"><p id="user7">NOM PRENOM <i class="fa fa-circle online"></i></p></a>
-<a href="#user8"><p id="user8">NOM PRENOM <i class="fa fa-circle online"></i></p></a>
-<a href="#user9"><p id="user9">NOM PRENOM <i class="fa fa-circle online"></i></p></a>
-<a href="#user10"><p id="user10">NOM PRENOM <i class="fa fa-circle online"></i></p></a>
-<a href="#user11"><p id="user11">NOM PRENOM <i class="fa fa-circle online"></i></p></a>
-<a href="#user12"><p id="user12">NOM PRENOM <i class="fa fa-circle online"></i></p></a>
-</div>
-<div class="chat" id="chatbox">
-  <div class="chat-title">
-    <h1>NOM PRENOM</h1>
-    <h2>Live help</h2>
-    <figure class="avatar">
-      <img src="1.png" /></figure>
+<div class="container">
+  <div class="row form-group">
+        <div class="col-xs-22">
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="active"><a href="#step-1">
+                    <h4 class="list-group-item-heading">Etape 1</h4>
+                    <p class="list-group-item-text">Caractérestiques de la réparation</p>
+                </a></li>
+                <li class="disabled"><a href="#step-2">
+                    <h4 class="list-group-item-heading">Etape 2</h4>
+                    <p class="list-group-item-text">Autres détails </p>
+                </a></li>
+               
+                
+             
+                
+            </ul>
+        </div>
   </div>
-  <div class="messages">
-    <div class="messages-content"></div>
-   </div>
-  <div class="message-box">
-    <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
-    <button type="submit" class="message-submit">Envoyer</button>
-  </div>
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-16">
+            <div class="well text-center">
+              <center>
+                <h1> ETAPE 1</h1>
+                <form class="form-horizontal">
 
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="nome">Numéro de la demande:</label>  
+  <div class="col-md-5">
+  <input id="nome" name="nome" type="text" placeholder=" ex : N°17" class="form-control input-md" required="">
+    
+  </div>
 </div>
 
-   <div id="chatclassmom">
-      <div id="cir1"></div>
-	  <div id="cir2"></div>
-	  <div id="cir3"></div>
-	  <div id="liveHelp"><p>Live help...</p></div>
-   </div> 
-<p> Copyright © 2017 <a target="_blank" href="#">SOS-PC</a>.</p> 
-<div class="bg"> </div>
+<div class="form-group">
+  <label class="col-md-4 control-label" for="nome">Temps total estimé de la réparation:</label>  
+  <div class="col-md-5">
+  <input id="nome" name="nome" type="text" placeholder="ex:2 heures" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+
+
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="sla">Type de la réparation:</label>
+  <div class="col-md-5">
+    <select id="sla" name="sla" class="form-control">
+      <option value="1">Software</option>
+      <option value="2">Hardware</option>
+      <option value="7">Software,Hardware</option>
+    </select>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="nome">Prix total de la réparation:</label>  
+  <div class="col-md-5">
+  <input id="nome" name="prix" type="text" placeholder="ex:2000DA" class="form-control input-md" required="">
+    
+  </div>
+</div>
+                
+</center>               
+</form>
+                
+                
+                <button id="activate-step-2" class="btn btn-primary btn-md">Activer Etape 2</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row setup-content" id="step-2">
+        <div class="col-xs-16">
+            
+                      <div class="row">
+                       <div class="col-lg-16">
+                       <div class="container">
+                        <div class="row clearfix">
+                         <div class="col-md-16 column">
+                            <div class="col-md-16 well text-center">
+                <h1 class="text-center"> Etape 2</h1>
+                <h4 class="text-center"> Autres détails</h4>
+
+                              <textarea class="form-control" type="textarea" id="desc" placeholder="Autres détails concernant cette réparation" maxlength="140" rows="10"></textarea>
+                            
+                               <div class="container">
+
+                             </br> 
+    </div> 
+
+    <!-- /container -->
+    
+
+
+                
+                <button id="activate-step-3" class="btn btn-primary btn-md">Envoyer</button>
+                
+            </div>
+            </div>
+          </div>
+    
+          </div>
+    </div> 
+
+    <!-- /container -->
+    
+
+
+                
+                
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+<!--
+  <div>
+
+    <p class="text-center">Copyright © 2017 <a target="_blank" href="#">SOS-PC</a>.</p>
+
+  </div>-->
+</div>
+</div>
+</body>
+  <!-- Jquery and Bootstap core js files -->
+    <script type="text/javascript" src="plugins/jquery.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Modernizr javascript -->
+    <script type="text/javascript" src="plugins/modernizr.js"></script>
+
+    <!-- Isotope javascript -->
+    <script type="text/javascript" src="plugins/isotope/isotope.pkgd.min.js"></script>
+    
+    <!-- Backstretch javascript -->
+    <script type="text/javascript" src="plugins/jquery.backstretch.min.js"></script>
+
+    <!-- Appear javascript -->
+    <script type="text/javascript" src="plugins/jquery.appear.js"></script>
+
+    <!-- Initialization of Plugins -->
+    <script type="text/javascript" src="js/template.js"></script>
+
+    <!-- Custom Scripts -->
+    <script type="text/javascript" src="js/custom.js"></script>
+
+     <script type="text/javascript" src="js/demande.js"></script>
+
+     <script type="text/javascript" src="js/image.js"></script>
+
+     <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
   
-    
-   <script src="js/index2Admin.js"></script> 
-    
-  </body>
 </html>
+

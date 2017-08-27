@@ -20,7 +20,7 @@ $(document).ready(function() {
            data: $("form").serialize(), // serializes the form's elements.
            success: function(data)
            {
-           		if (data== 'successful') {
+           		if(data.localeCompare("successful")) {
           				$('form').empty();
 	      				$('.wrapper').addClass('form-success');
 	      				$('#head').empty();

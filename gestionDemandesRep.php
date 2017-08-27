@@ -21,7 +21,7 @@
 
   <div class="banner-caption2">
 
-    <!-- header start -->
+      <!-- header start -->
     <!-- ================ --> 
     <header class="header2 fixed clearfix navbar navbar-fixed-top">
       <div class="container">
@@ -55,40 +55,45 @@
                       </button>
                     </div>
                     <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
-											<ul class="nav navbar-nav navbar-right">
-												<li class="active"><a href="#banner">Accueil</a></li>
-						
-												 <li><a href="#portfolio">Vente</a></li>
-												<li class="dropdown" >
-													<a class="dropbtn" href="#">Administration</a>
-  									
-  												<div class="dropdown-content">
-    											<a href="dashboard.html">Dashboard</a>
-   												 <a href="demandeRep.html">Fiche réparation</a>
-												    <a href="index2.html">Live help</a>
-												  </div>
-												</li>
-                                                <li><a href="#about">A propos</a></li>
-												<li><a href="#contact">Contact</a></li>
-												<li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
+                      <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="accueilAdmin.php">Accueil</a></li>
+            
+                         <li><a href="accueilAdmin.php#portfolio">Vente</a></li>
+                        <li class="active" >
+                          <a  href="dashboard.php">Administration</a>
+                    
+                          
+                          
+                        </li>
+                                                <li><a href="accueilAdmin.php#about">A propos</a></li>
+                        <li><a href="accueilAdmin.php#contact">Contact</a></li>
+                        <li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
           <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
+                    <?php
+          session_start();
+          if($_SESSION['login']==true) { 
+            ?>  
                     <ul class="dropdown-menu">
                         <li>
                             <div class="navbar-login">
                                 <div>
                                     <div class="col-lg-5">
+                                         <div class="col-lg-5">
                                         <p class="text-center">
-                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                          
+                                          <img class="round" src="<?php echo $_SESSION['picture'];?>">
+   
+                                            
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong>NOM PRENOM</strong></p>
-                                        <p class="text-left small">UserMail@mail.com</p>
+                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
                                         
-                                    <!-- </div> -->
-                                </div>
+                                    </div>
+
                             </div>
                         </li>
                         <li class="divider"></li>
@@ -97,21 +102,23 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="#" class="btn button btn-block">Se déconnecter</a>
-                                             <a href="profile.html" class="btn button btn-block">Mon profil</a>
+                                             <a href="./php/logout.php" class="btn button btn-block">Se déconnecter</a>
+                                             <a href="profileAdmin.php" class="btn button btn-block">Mon profil</a>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
+                    <?php };
+                         ?>
                 </li>
             </li>
-						
-											</ul>
-										</div>
+            
+                      </ul>
+                    </div>
 
-									</div>
+                  </div>
                 </nav>
                 <!-- navbar end -->
 

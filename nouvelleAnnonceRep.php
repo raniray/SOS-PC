@@ -2,7 +2,7 @@
 <html >
   <head>
     <meta charset="UTF-8">
-    <title>Nouvelle demande</title>
+    <title>Nouvelle annonce</title>
     <meta name="description" content="Worthy a Bootstrap-based, Responsive HTML5 Template">
     
 
@@ -47,6 +47,8 @@
     <div class="scrollToTop"><i class="icon-up-open-big"></i></div>
   <div class="banner-image"></div>
   <div class="banner-caption2">
+     <!-- header start -->
+    <!-- ================ --> 
     <header class="header2 fixed clearfix navbar navbar-fixed-top">
       <div class="container">
         <div class="row">
@@ -80,36 +82,44 @@
                     </div>
                     <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
                       <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="accueilRep.html#banner">Accueil</a></li>
+                        <li class="active"><a href="accueilRep.php">Accueil</a></li>
             
-                         <li><a href="accueilRep.html#portfolio">Vente</a></li>
+                         <li><a href="accueilRep.php#portfolio">Vente</a></li>
                         <li class="dropdown" >
-                          <a class="dropbtn" href="#">Réparation-PC</a>
+                          <a class="dropbtn" href="#">Réparation PC</a>
                     
                           <div class="dropdown-content">
-                          <a href="Reparations.html">Réparations</a>
-                           <a href="ficheReparation.html">Fiche réparation</a>
-                            <a href="liveHelpRep.html">Live help</a>
+                          <a href="Reparations.php">Réparations</a>
+                           <a href="ficheReparation.php">Fiche réparation</a>
+                            <a href="liveHelpRep.php">Live help</a>
                           </div>
                         </li>
-                                                <li><a href="accueilRep.html#about">A propos</a></li>
-                        <li><a href="accueilRep.html#contact">Contact</a></li>
+                                                <li><a href="accueilRep.php#about">A propos</a></li>
+                        <li><a href="accueilRep.php#contact">Contact</a></li>
                         <li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
           <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
+
+                      <?php
+                    session_start();
+            if($_SESSION['login']==true) { 
+                             ?>
                     <ul class="dropdown-menu">
                         <li>
                             <div class="navbar-login">
                                 <div>
                                     <div class="col-lg-5">
                                         <p class="text-center">
-                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                          
+                                          <img class="round" src="<?php echo $_SESSION['picture'];?>">
+   
+                                            
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong>NOM PRENOM</strong></p>
-                                        <p class="text-left small">UserMail@mail.com</p>
+                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
                                 </div>
@@ -121,15 +131,16 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="#" class="btn button btn-block">Se déconnecter</a>
-                                             <a href="profileRep.html" class="btn button btn-block">Mon profil</a>
+                                             <a href="./php/logout.php" class="btn button btn-block">Se déconnecter</a>
+                                             <a href="profile.php" class="btn button btn-block">Mon profil</a>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                </li>
+                    <?php };
+                         ?>            </li>
             </li>
             
                       </ul>
@@ -159,13 +170,16 @@
             <ul class="nav nav-pills nav-justified thumbnail setup-panel">
                 <li class="active"><a href="#step-1">
                     <h4 class="list-group-item-heading">Etape 1</h4>
-                    <p class="list-group-item-text">Caractérestiques de la réparation</p>
+                    <p class="list-group-item-text">Caractéristiques de votre annonce</p>
                 </a></li>
                 <li class="disabled"><a href="#step-2">
                     <h4 class="list-group-item-heading">Etape 2</h4>
-                    <p class="list-group-item-text">Autres détails </p>
+                    <p class="list-group-item-text">Contenu de l'annonce </p>
                 </a></li>
-               
+                <li class="disabled"><a href="#step-3">
+                    <h4 class="list-group-item-heading">Etape 3</h4>
+                    <p class="list-group-item-text">Une photo de votre PC</p>
+                </a></li>
                 
              
                 
@@ -180,42 +194,36 @@
                 <form class="form-horizontal">
 
 <!-- Text input-->
+
+
 <div class="form-group">
-  <label class="col-md-4 control-label" for="nome">Numéro de la demande:</label>  
+  <label class="col-md-4 control-label" for="nome">Prix:</label>  
   <div class="col-md-5">
-  <input id="nome" name="nome" type="text" placeholder=" ex : N°17" class="form-control input-md" required="">
+  <input id="nome" name="prix" type="text" placeholder="ex: 35000 " class="form-control input-md" required="">
     
   </div>
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="nome">Temps total estimé de la réparation:</label>  
+  <label class="col-md-4 control-label" for="nome">Durée:</label>  
   <div class="col-md-5">
-  <input id="nome" name="nome" type="text" placeholder="ex:2 heures" class="form-control input-md" required="">
+  <input id="nome" name="duree" type="text" placeholder="ex: 3 jours" class="form-control input-md" required="">
     
   </div>
 </div>
-
-
 
 
 <!-- Select Basic -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="sla">Type de la réparation:</label>
-  <div class="col-md-5">
-    <select id="sla" name="sla" class="form-control">
-      <option value="1">Software</option>
-      <option value="2">Hardware</option>
-      <option value="7">Software,Hardware</option>
-    </select>
-  </div>
-</div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="nome">Prix total de la réparation:</label>  
+  <label class="col-md-4 control-label" for="sla">Ancienneté</label>
   <div class="col-md-5">
-  <input id="nome" name="prix" type="text" placeholder="ex:2000DA" class="form-control input-md" required="">
-    
+    <select id="sla" name="sla" class="form-control">
+      <option value="1">moins d'un ans</option>
+      <option value="2">1 ans</option>
+      <option value="3">Entre 2  et 5 ans </option>
+      <option value="4">Plus de 5 ans </option>
+     </select>
   </div>
 </div>
                 
@@ -239,9 +247,9 @@
                          <div class="col-md-16 column">
                             <div class="col-md-16 well text-center">
                 <h1 class="text-center"> Etape 2</h1>
-                <h4 class="text-center"> Autres détails</h4>
+                <h4 class="text-center"> Contenu de l'annonce</h4>
 
-                              <textarea class="form-control" type="textarea" id="desc" placeholder="Autres détails concernant cette réparation" maxlength="140" rows="10"></textarea>
+                              <textarea class="form-control" type="textarea" id="desc" placeholder="Decrire la l'annonce" maxlength="140" rows="10"></textarea>
                             
                                <div class="container">
 
@@ -253,7 +261,7 @@
 
 
                 
-                <button id="activate-step-3" class="btn btn-primary btn-md">Envoyer</button>
+                <button id="activate-step-3" class="btn btn-primary btn-md">Activer Etape 3</button>
                 
             </div>
             </div>
@@ -267,12 +275,57 @@
 
 
                 
-                
+                <button id="activate-step-3" class="btn btn-primary btn-md">Activer Etape 3</button>
             </div>
         </div>
     </div>
 
 
+
+
+ <div class="row setup-content" id="step-3">
+        <div class="col-xs-16">
+            <div class="col-md-16 well text-center">
+                <h1 class="text-center"> Etape 3</h1>
+                <h4 class="text-center">Joindre une photo de  votre PC</h4>
+                  <div class="container">
+                    <div class="col-md-16">
+                     <div class="form-group">
+                    <form class="form-horizontal">
+
+                        <div class="form-group">
+                                  
+                         
+                                  <div class="col-md-8 control-label">
+                                    <input id="prev" type="text" class="form-control2" readonly>
+                                  </div>
+                                  
+                                  <div class="col-md-4"> 
+                                  <span class="btn btn-primary btn-md btn-file">
+                                  Parcourir… <input type="file" id="imgInp">
+                                   </span>
+
+
+                                 </div>
+
+
+                       </div> 
+
+                  </form>
+    </div>
+</div>
+</div>
+            <button id="activate-step-3" class="btn btn-primary btn-md">Créer annonce</button>    
+            </div>
+        </div>
+    </div>
+    
+
+
+
+
+    
+</div>
 
 
 

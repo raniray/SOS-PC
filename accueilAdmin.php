@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+<?php session_start();?>
 	<head>
 		<meta charset="utf-8">
 		<title>SOS-PC</title>
@@ -147,12 +148,11 @@ $(function () {
 										</div>
 										<div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
 											<ul class="nav navbar-nav navbar-right">
-												<li class="active"><a href="accueilAdmin.html">Accueil</a></li>
+												<li class="active"><a href="accueilAdmin.php">Accueil</a></li>
 						
 												 <li><a href="#portfolio">Vente</a></li>
 												<li class="active" >
-													<a  href="dashboard.html">Administration</a>
-  									
+													<a  href="dashboard.php">Administration</a>					
   												
 												  
 												</li>
@@ -162,21 +162,28 @@ $(function () {
           <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
+                    <?php
+					if(isset($_SESSION['login'])==true) { 
+   					?>	
                     <ul class="dropdown-menu">
                         <li>
                             <div class="navbar-login">
                                 <div>
                                     <div class="col-lg-5">
+                                         <div class="col-lg-5">
                                         <p class="text-center">
-                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                        	
+                                        	<img class="round" src="<?php echo $_SESSION['picture'];?>">
+   
+                                            
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong>NOM PRENOM</strong></p>
-                                        <p class="text-left small">UserMail@mail.com</p>
+                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
                                         
-                                    <!-- </div> -->
-                                </div>
+                                    </div>
+
                             </div>
                         </li>
                         <li class="divider"></li>
@@ -185,14 +192,16 @@ $(function () {
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="#" class="btn button btn-block">Se déconnecter</a>
-                                             <a href="profileAdmin.html" class="btn button btn-block">Mon profil</a>
+                                             <a href="./php/logout.php" class="btn button btn-block">Se déconnecter</a>
+                                             <a href="profileAdmin.php" class="btn button btn-block">Mon profil</a>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
+                    <?php };
+												 ?>
                 </li>
             </li>
 						
@@ -223,7 +232,8 @@ $(function () {
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 object-non-visible" data-animation-effect="fadeIn">
-							<h1 class="text-center title" style="margin-top:-9%;">Quelques statistiques</h1><br>
+
+							<h1 class="text-center title" style="margin-top:-12%;font-size: 40px;">Quelques statistiques</h1><br>
 							<div id="stats" style="min-width:100%; height:470px;margin-top:3%;"></div>
 							
 						</div>
@@ -255,7 +265,7 @@ $(function () {
          				  <em>Evaluation=9999</em>
          				</br>
          			</br>
-         			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         			     <div class="btn button2"><a href="profileRepCons.php">Voir Profil</a></div>
 
          				</center>
         
@@ -273,7 +283,7 @@ $(function () {
          				  <em>Evaluation=9999</em>
          				  </br>
          			</br>
-         				           			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         				           			     <div class="btn button2"><a href="profileRepCons.php">Voir Profil</a></div>
       					 </center>          
         					
       					
@@ -288,7 +298,7 @@ $(function () {
          				  <em>Evaluation=9999</em>
          				  </br>
          			</br>
-         				           			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         				           			     <div class="btn button2"><a href="profileRepCons.php">Voir Profil</a></div>
        					 </center>        
         				
       				
@@ -303,7 +313,7 @@ $(function () {
          				  <em>Evaluation=9999</em>
          				</br>
          			</br>
-         				           			     <div class="btn button2"><a href="profileRep.html">Voir Profil</a></div>
+         				           			     <div class="btn button2"><a href="profileRepCons.php">Voir Profil</a></div>
        					 </center> 
   				    </div>
   				</div>
@@ -337,7 +347,8 @@ $(function () {
                  
 				<div class="separator"></div>
 				<br>		
-				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceAdmin.html" >Nouvelle annonce</a></div>
+
+				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceAdmin.php" >Nouvelle annonce</a></div>
                
 				<div class="row object-non-visible" data-animation-effect="fadeIn" style="margin-top:9%;">
 					<div class="col-md-12">
@@ -1117,11 +1128,10 @@ $(function () {
 							<center>
 								
 
-
-								<div class="btn button"><a href="galery.html">tout</a></div>
-								<div class="btn button"><a href="galery.html">Les plus récentes</a></div>
-								<div class="btn button"><a href="galery.html">Les plus consultées</a></div>
-								<div class="btn button"><a href="galery.html">Les moins chères</a></div>
+								<div class="btn button"><a href="galery3.php">tout</a></div>
+								<div class="btn button"><a href="galery3.php">Les plus récentes</a></div>
+								<div class="btn button"><a href="galery3.php">Les plus consultées</a></div>
+								<div class="btn button"><a href="galery3.php">Les moins chères</a></div>
 								
 
 							</center>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html >
+<?php           session_start(); ?>
   <head>
     <meta charset="UTF-8">
     <title>Gestion Réparateurs</title>
@@ -58,7 +59,8 @@ function annuler(){
 
   <div class="banner-caption2">
 
-    <!-- header start -->
+
+      <!-- header start -->
     <!-- ================ --> 
     <header class="header2 fixed clearfix navbar navbar-fixed-top">
       <div class="container">
@@ -92,35 +94,45 @@ function annuler(){
                       </button>
                     </div>
                     <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
-											<ul class="nav navbar-nav navbar-right">
-												<li class="active"><a href="accueilAdmin.html">Accueil</a></li>
-						
-												 <li><a href="accueilAdmin.html#portfolio">Vente</a></li>
-												<li class="dropdown" >
-													<a class="dropbtn" href="dashboard.html">Administration</a>
-   	
-												</li>
-                                                <li><a href="accueilAdmin.html#about">A propos</a></li>
-												<li><a href="accueilAdmin.html#contact">Contact</a></li>
-												<li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
+
+                      <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="accueilAdmin.php">Accueil</a></li>
+            
+                         <li><a href="accueilAdmin.php#portfolio">Vente</a></li>
+                        <li class="active" >
+                          <a  href="dashboard.php">Administration</a>
+                    
+                          
+                          
+                        </li>
+                                                <li><a href="accueilAdmin.php#about">A propos</a></li>
+                        <li><a href="accueilAdmin.php#contact">Contact</a></li>
+                        <li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
           <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
+                    <?php
+          if(isset($_SESSION['login'])==true) { 
+            ?>  
                     <ul class="dropdown-menu">
                         <li>
                             <div class="navbar-login">
                                 <div>
                                     <div class="col-lg-5">
+                                         <div class="col-lg-5">
                                         <p class="text-center">
-                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                          
+                                          <img class="round" src="<?php echo $_SESSION['picture'];?>">
+   
+                                            
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong>NOM PRENOM</strong></p>
-                                        <p class="text-left small">UserMail@mail.com</p>
+                                        <p class="text-left"><strong><?php  echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
                                         
-                                    <!-- </div> -->
-                                </div>
+                                    </div>
+
                             </div>
                         </li>
                         <li class="divider"></li>
@@ -129,21 +141,24 @@ function annuler(){
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="#" class="btn button btn-block">Se déconnecter</a>
-                                             <a href="profileAdmin.html" class="btn button btn-block">Mon profil</a>
+
+                                             <a href="./php/logout.php" class="btn button btn-block">Se déconnecter</a>
+                                             <a href="profileAdmin.php" class="btn button btn-block">Mon profil</a>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
+                    <?php };
+                         ?>
                 </li>
             </li>
-						
-											</ul>
-										</div>
+            
+                      </ul>
+                    </div>
 
-									</div>
+                  </div>
                 </nav>
                 <!-- navbar end -->
 
@@ -177,14 +192,22 @@ function annuler(){
                      <th>Evaluer réparateur</th>
                      <th>Modifier réparateur</th>
                       <th>Supprimer réparateur</th>
-                       <th>Ajouter réparateur</th>
+                       <th><div style="text-align:center;position:relative;margin-top:30%;"><p class="nouveau-rep">Nouveau réparateur?</p><p class="nouveau-rep">Ajoutez-le!</p>
+	<button  class="btn button btn-xs" onclick="afficher();" title="ajouter"><span class="glyphicon glyphicon-plus" ></span></button>
+       </th>
                    </thead>
     <tbody>
-    
+  <?php 
+require('php/connexion.php');
+$db=data_base_connect();
+$select = $db->prepare("SELECT * FROM reparateur_");
+$select->execute();
+$i=0;
+while($row = $select->fetch()){
+  ?>
     <tr>
-    
-    <td>NOM PRENOM </td>
-    <td>DD/MM/YYYY</td>
+    <td><?php echo $row['nomUser'];?> </td>
+    <td><?php echo $row['dateInscription'];?> </td>
  
     <td style="position:relative;left:-3.4%;">
 	<fieldset class="rating">
@@ -202,7 +225,8 @@ function annuler(){
 		<div class="infos-reparateur-content">
     
     <div class="formR" id="profileRep">
-  	<ul id="listeprofil">
+	<ul id="listeprofil">
+
 	  <li> <div class="text-center img-container">
           <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
 		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
@@ -218,7 +242,7 @@ function annuler(){
                     <tbody>
                       <tr>
                         <td>Nom:</td>
-                        <td><input id="nom" name="nom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="nom" name="nom" type="text" value="<?php echo $row['nomUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
                         <td>Prénom:</td>
@@ -250,6 +274,7 @@ function annuler(){
 					  <tr>
                         <td>Classement:</td>
                         <td><input id="classement" name="classement" type="text" class="form-control3 input-md" required=""></td>
+
                       </tr>
 					   <tr>
                         <td colspan="2">Biographie:</td>
@@ -264,6 +289,7 @@ function annuler(){
 	
 	       
                 <button class="btn button btn-block" onclick="ajouterRep();" style="bottom:15%;margin-left:-0.13%;">Enregistrer</button>
+
 				  <button type="button" onclick="annuler();" class="btn btn-danger btn-block" style="bottom:10%;" data-dismiss="modal">Annuler</button>
             
 	</div>
@@ -271,28 +297,39 @@ function annuler(){
   </div>
 	</td>
 
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p></td>
-    
-    <td rowspan="6" style="width:20%;"><div style="text-align:center;position:relative;margin-top:30%;"><p class="nouveau-rep">Nouveau réparateur?</p><p class="nouveau-rep">Ajoutez-le!</p>
-	<button  class="btn button btn-xs" onclick="afficher();" title="ajouter"><span class="glyphicon glyphicon-plus" ></span></button>
+    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
+	 <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="Suppresion" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer ce réparateur </h4>
+      </div>
+          <div class="modal-body">
        
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer ce réparateur?  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+   
+  </div></td>
+    
+    
 	</div>
 	</td>
     </tr>
-  
-
-<?php 
-require('php/connexion.php');
-$db = data_base_connect();
-
-$getRep = $db->prepare("SELECT * from  reparateur_");
-//Exécution de la requête 
-    try {
-              $getRep->execute();
-              while($row = $getRep->fetchAll()){
-                    ?>
+    <?php 
+    
+    $i++;
+    }?>
+<!--    
  <tr>
-    <td><?php echo $row[0]?></td>
+    
+    <td>NOM PRENOM </td>
     <td>DD/MM/YYYY</td>
     <td style="position:relative;left:-3.4%;"><fieldset class="rating">
     <input type="radio" id="star52" name="rating2" value="5" /><label for="star52" title="Excellent">5 stars</label>
@@ -311,7 +348,7 @@ $getRep = $db->prepare("SELECT * from  reparateur_");
 	<ul id="listeprofil">
 	  <li> <div class="text-center img-container">
           <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
-		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
+		  <!-<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-
          
           
           <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
@@ -319,80 +356,8 @@ $getRep = $db->prepare("SELECT * from  reparateur_");
         </div></li>
 	   </ul>
 	  <br>
-       
-                <button class="btn button btn-block" style="bottom:15%;margin-left:-0.13%;">Enregistrer</button>
-				  <button class="btn btn-danger btn-block" style="bottom:10%;">Annuler</button>
-            
-	</div>
-  </div>
-  </div>
-	</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
-	 <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="Suppresion" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer ce réparateur </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer ce réparateur?  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-	</td>
-
-    </tr>
-<?php 
-              }
-              echo "Reparateur inseré Avec succées";
-      } catch (Exception $e) {
-        echo $e->getMessage();
-      }
-
-?>
-    
-
-
-
-
-  <tr>
-    
-    <td>NOM PRENOM </td>
-    <td>DD/MM/YYYY</td>
-    <td style="position:relative;left:-3.4%;"><fieldset class="rating">
-    <input type="radio" id="star53" name="rating3" value="5" /><label for="star53" title="Excellent">5 stars</label>
-    <input type="radio" id="star43" name="rating3" value="4" /><label for="star43" title="Très bien">4 stars</label>
-    <input type="radio" id="star33" name="rating3" value="3" /><label for="star33" title="Bien">3 stars</label>
-    <input type="radio" id="star23" name="rating3" value="2" /><label for="star23" title="Un peu mauvais">2 stars</label>
-    <input type="radio" id="star13" name="rating3" value="1" /><label for="star13" title="Mauvais">1 star</label>
-</fieldset></td>
-    <td>
-	<p data-placement="top" data-toggle="tooltip" title="Modifier"><button onclick="afficher();" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
-        <div id="modelReparateur" class="model-R">
-		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
-		<div class="infos-reparateur-content">
-    
-    <div class="formR">
-	<ul id="listeprofil">
-	  <li> <div class="text-center img-container">
-          <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
-		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
-         
-          
-          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
 	
-        </div></li>
-	   </ul>
-	  <br>
-		
+	
 	       
                 <button class="btn button btn-block" style="bottom:15%;margin-left:-0.13%;">Enregistrer</button>
 				  <button class="btn btn-danger btn-block" style="bottom:10%;">Annuler</button>
@@ -419,204 +384,12 @@ $getRep = $db->prepare("SELECT * from  reparateur_");
         <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
       </div>
         </div>
-    <!-- /.modal-content --> 
+   /.modal-content
   </div>
 	</td>
-   
+
     </tr>  
- <tr>
-    
-    <td>NOM PRENOM </td>
-    <td>DD/MM/YYYY</td>
-    <td style="position:relative;left:-3.4%;"><fieldset class="rating">
-    <input type="radio" id="star54" name="rating4" value="5" /><label for="star54" title="Excellent">5 stars</label>
-    <input type="radio" id="star44" name="rating4" value="4" /><label for="star44" title="Très bien">4 stars</label>
-    <input type="radio" id="star34" name="rating4" value="3" /><label for="star34" title="Bien">3 stars</label>
-    <input type="radio" id="star24" name="rating4" value="2" /><label for="star24" title="Un peu mauvais">2 stars</label>
-    <input type="radio" id="star14" name="rating4" value="1" /><label for="star14" title="Mauvais">1 star</label>
-</fieldset></td>
-    <td>
-	<p data-placement="top" data-toggle="tooltip" title="Modifier"><button onclick="afficher();" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
-        <div id="modelReparateur" class="model-R">
-		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
-		<div class="infos-reparateur-content">
-    
-    <div class="formR">
-	<ul id="listeprofil">
-	  <li> <div class="text-center img-container">
-          <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
-		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
-         
-          
-          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
-	
-        </div></li>
-	   </ul>
-	  <br>
-		
-	
-	       
-                <button class="btn button btn-block" style="bottom:15%;margin-left:-0.13%;">Enregistrer</button>
-				  <button class="btn btn-danger btn-block" style="bottom:10%;">Annuler</button>
-            
-	</div>
-  </div>
-  </div>
-	</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Suppression" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
-	    <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="Suppresion" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer ce réparateur </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer ce réparateur?  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
-
-	</td>
-   
-    </tr>
-   
-    
- 
-<tr>
-    
-    <td>NOM PRENOM </td>
-    <td>DD/MM/YYYY</td>
-    <td style="position:relative;left:-3.4%;"><fieldset class="rating">
-    <input type="radio" id="star55" name="rating5" value="5" /><label for="star55" title="Excellent">5 stars</label>
-    <input type="radio" id="star45" name="rating5" value="4" /><label for="star45" title="Très bien">4 stars</label>
-    <input type="radio" id="star35" name="rating5" value="3" /><label for="star35" title="Bien">3 stars</label>
-    <input type="radio" id="star25" name="rating5" value="2" /><label for="star25" title="Un peu mauvais">2 stars</label>
-    <input type="radio" id="star15" name="rating5" value="1" /><label for="star15" title="Mauvais">1 star</label>
-</fieldset></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button onclick="afficher();" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
-        <div id="modelReparateur" class="model-R">
-		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
-		<div class="infos-reparateur-content">
-    
-    <div class="formR">
-	<ul id="listeprofil">
-	  <li> <div class="text-center img-container">
-          <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
-		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
-         
-          
-          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
-	
-        </div></li>
-	   </ul>
-	  <br>
-		
-	       
-                <button class="btn button btn-block" style="bottom:15%;margin-left:-0.13%;">Enregistrer</button>
-				  <button class="btn btn-danger btn-block" style="bottom:10%;">Annuler</button>
-            
-	</div>
-  </div>
-  </div>
-	</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
-	 <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="Suppresion" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer cet réparateur </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer ce réparateur?  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-	</td>
-   
-    </tr>
-  
-  <tr>
-    
-    <td>NOM PRENOM </td>
-    <td>DD/MM/YYYY</td>
-    <td style="position:relative;left:-3.4%;"><fieldset class="rating">
-    <input type="radio" id="star56" name="rating6" value="5" /><label for="star56" title="Excellent">5 stars</label>
-    <input type="radio" id="star46" name="rating6" value="4" /><label for="star46" title="Très bien">4 stars</label>
-    <input type="radio" id="star36" name="rating6" value="3" /><label for="star36" title="Bien">3 stars</label>
-    <input type="radio" id="star26" name="rating6" value="2" /><label for="star26" title="Un peu mauvais">2 stars</label>
-    <input type="radio" id="star16" name="rating6" value="1" /><label for="star16" title="Mauvais">1 star</label>
-</fieldset></td>
-    <td>
-	<p data-placement="top" data-toggle="tooltip" title="Modifier"><button onclick="afficher();" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
-        <div id="modelReparateur" class="model-R">
-		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
-		<div class="infos-reparateur-content">
-    
-    <div class="formR">
-	<ul id="listeprofil">
-	  <li> <div class="text-center img-container">
-          <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
-		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
-         
-          
-          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
-	
-        </div></li>
-	   </ul>
-	  <br>
-		
-	       
-                <button class="btn button btn-block" style="bottom:15%;margin-left:-0.13%;">Enregistrer</button>
-				  <button class="btn btn-danger btn-block" style="bottom:10%;" onclick="annuler();" >Annuler</button>
-            
-	</div>
-  </div>
-  </div>
-	</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
-	 <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="Suppresion" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer ce réparateur </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer ce réparateur?  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-	</td>
-   
-    </tr>  
-   
-    
-   
+   -->
     
     </tbody>
         
