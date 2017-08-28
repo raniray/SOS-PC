@@ -6,7 +6,7 @@ $('form').submit(function(e) {
            data: $("form").serialize(), // serializes the form's elements.
            success: function(data)
            {
-           		if (data== 'client') {
+           		if (data.localeCompare('client')) {
            			    
 
           				$('form').empty();
@@ -21,21 +21,12 @@ $('form').submit(function(e) {
 						    }
 						  } 
    						window.open("home.php","_self");
-						
-	      				
-
            		}else
 	  			{
-
-
-
-	  					if (data== 'client') {
-           			    
-
-          				$('form').empty();
+	  					if (data.localeCompare('client')) {
+           				$('form').empty();
 	      				$('.wrapper').addClass('form-success');
-	      				$('#head').empty();
-	      				
+	      				$('#head').empty();		
 	      				$('#head').append("Bienvenue dans SOS-PC...");
 	      				var start = new Date().getTime();
 	      				for (var i = 0; i < 1e7; i++) {
@@ -44,13 +35,10 @@ $('form').submit(function(e) {
 						    }
 						  } 
    						window.open("home.php","_self");
-						
-	      				
-
            		}else   {
 
 
-	  					if (data== 'admin') {
+	  					if (data.localeCompare('admin')) {
            			    
 
           				$('form').empty();
@@ -71,7 +59,7 @@ $('form').submit(function(e) {
            		}else   {
 
 
- 							if (data== 'rep') {
+ 							if (data.localeCompare('rep')) {
            			    
 
           				$('form').empty();
@@ -90,12 +78,9 @@ $('form').submit(function(e) {
 	      				
 
            		}else   {
-
-
 	  				  	errorMessage = "Mauvais mot de passe ou nom d'utilisateur  ! ";
     					$('#err').show();
 						document.getElementById('err').innerHTML=errorMessage;
-
 
            		}
 
