@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html >
+  <?php session_start();?>
   <head>
     <meta charset="UTF-8">
     <title>Nouvelle annonce</title>
@@ -87,8 +88,8 @@
             
                          <li><a href="home.php#portfolio">Vente</a></li>
                          <?php
-                            session_start();
-                            if($_SESSION['login']==true) { 
+                            
+                            if(isset($_SESSION['login'])==true) { 
                              ?> 
                         <li class="dropdown" >
                           <a class="dropbtn" href="#">Réparation-PC</a>
@@ -108,8 +109,7 @@
                         Mon compte 
                     </a>
                     <?php
-                    session_start();
-            if($_SESSION['login']==true) { 
+            if(isset($_SESSION['login'])==true) { 
                              ?>
                     <ul class="dropdown-menu">
                         <li>
@@ -124,8 +124,8 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
-                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
+                                        <p class="text-left"><strong><?php echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
                                 </div>
