@@ -39,7 +39,24 @@ session_start();
 
     <!-- Custom css --> 
     
-    
+    <script type="text/javascript">
+            
+           function creerAnnonce(){
+              // les paramaitre de la formulaire 
+                model = $('#modelePC').val();
+                prix = $('#prix').val();
+               
+               /* email = $('#mail').val();
+                tel =$('#tel').val();
+                profession = $('#profession').val();
+                classement = $('#classement').val();
+                biographie = $('#desc').val();*/
+                // envoie avec un post les paramaitre + le nom de fichier 
+                $.post("php/newAnnounce.php",{model,prix},(data)=>{
+                  alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
+                })
+            }
+     </script>
     
     
   </head>
@@ -364,7 +381,7 @@ session_start();
 
 
                        </div> 
-<button  type="submit"  class="btn btn-primary btn-md"  >Créer annonce</button>  
+<button  type="submit"  class="btn btn-primary btn-md" onclick="creerAnnonce();" >Créer annonce</button>  
                   </form>
     </div>
 </div>
@@ -397,6 +414,8 @@ session_start();
 </div>
 </div>
 </body>
+
+
   <!-- Jquery and Bootstap core js files -->
     <script type="text/javascript" src="plugins/jquery.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
