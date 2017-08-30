@@ -3,7 +3,7 @@
 require('connexion.php');
 
 $db = data_base_connect();
-$pwd=password_hash("psw", PASSWORD_BCRYPT, array("cost" => 12));
+$pwd=md5($_POST['nom']);
 
 $ajout = $db->prepare("INSERT INTO reparateur_ (nomUser,prenomUser,mailUser,pswdUser,statusAcount,telUser,profession,classement,dateInscription,biography) VALUES (:nomUser,:prenomUser,:mailUser,:psw,'R',:tel,:profession,:classement,:dateInscription,:biography)");
 

@@ -27,9 +27,8 @@ var btn = document.getElementById("myBtnRep");
 var span = document.getElementsByClassName("close-infos")[0];
 
 // When the user clicks the button, open the modal 
- function afficher() {
-var modal = document.getElementById('modelReparateur');
-
+ function afficher(id) {
+var modal = document.getElementById('modelReparateur'+id);
     modal.style.display = "block";
 }
 
@@ -47,8 +46,8 @@ var modal = document.getElementById('modelReparateur');
     }
 }
 
-function annuler(){
-  var modal = document.getElementById('modelReparateur');
+function annuler(id){
+  var modal = document.getElementById('modelReparateur'+id);
     modal.style.display = "none";
 }
 </script>
@@ -192,9 +191,7 @@ function annuler(){
                      <th>Evaluer réparateur</th>
                      <th>Modifier réparateur</th>
                       <th>Supprimer réparateur</th>
-                       <th><div style="text-align:center;position:relative;margin-top:30%;"><p class="nouveau-rep">Nouveau réparateur?</p><p class="nouveau-rep">Ajoutez-le!</p>
-	<button  class="btn button btn-xs" onclick="afficher();" title="ajouter"><span class="glyphicon glyphicon-plus" ></span></button>
-       </th>
+                       <th>Ajouter Reparateur</th>
                    </thead>
     <tbody>
   <?php 
@@ -206,7 +203,7 @@ $i=0;
 while($row = $select->fetch()){
   ?>
     <tr>
-    <td><?php echo $row['nomUser'];?> </td>
+    <td><?php echo $row['nomUser']." ".$row['prenomUser'];?> </td>
     <td><?php echo $row['dateInscription'];?> </td>
  
     <td style="position:relative;left:-3.4%;">
@@ -219,8 +216,8 @@ while($row = $select->fetch()){
 </fieldset>
 	</td>
  
-    <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button onclick="afficher();" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
-        <div id="modelReparateur" class="model-R">
+    <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button onclick="afficher(<?php echo $row['idUser']; ?>);" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
+        <div id="<?php echo "modelReparateur".$row['idUser'];?>" class="model-R">
 		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
 		<div class="infos-reparateur-content">
     
@@ -290,7 +287,7 @@ while($row = $select->fetch()){
 	       
                 <button class="btn button btn-block" onclick="ajouterRep();" style="bottom:15%;margin-left:-0.13%;">Enregistrer</button>
 
-				  <button type="button" onclick="annuler();" class="btn btn-danger btn-block" style="bottom:10%;" data-dismiss="modal">Annuler</button>
+				  <button type="button" onclick="annuler(<?php echo $row['idUser']; ?>);" class="btn btn-danger btn-block" style="bottom:10%;" data-dismiss="modal">Annuler</button>
             
 	</div>
   </div>
@@ -311,7 +308,7 @@ while($row = $select->fetch()){
        
       </div>
         <div class="modal-footer ">
-        <button type="button" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" onclick="ouisup(<?php echo $row['idUser']; ?>);" class="btn btn-success yesButton"><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
         <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
       </div>
         </div>
@@ -321,6 +318,9 @@ while($row = $select->fetch()){
     
 	</div>
 	</td>
+  <td rowspan="<?php echo $select->rowCount();?>"> <div style="text-align:center;position:relative;margin-top:30%;"><p class="nouveau-rep">Nouveau réparateur?</p><p class="nouveau-rep">Ajoutez-le!</p>
+	<button  class="btn button btn-xs" onclick="afficher(<?php echo $row['idUser']; ?>);" title="ajouter"><span class="glyphicon glyphicon-plus" ></span></button>
+       </td>
     </tr>
     <?php 
     
@@ -468,7 +468,12 @@ while($row = $select->fetch()){
      
      
      <script type="text/javascript">
-            
+            function ouisup(id){
+                console.log(id);
+                $.post("php/supprimerReparateur.php",{id},(data)=>{
+                  alert(data);
+                })
+            }
             function ajouterRep(){
                 nom = $('#nom').val();
                 prenom = $('#prenom').val();
