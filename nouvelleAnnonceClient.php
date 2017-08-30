@@ -225,7 +225,7 @@ session_start();
 <div class="form-group">
   <label class="col-md-4 control-label" for="modelePC">Modèle PC:</label>  
   <div class="col-md-5">
-  <input id="modelePC" name="modelePC" type="text" placeholder="Modèle PC ex : Dell latitude" class="form-control input-md" required="">
+  <input id="model" name="model" type="text" placeholder="Modèle PC ex : Dell latitude" class="form-control input-md" required="">
     
   </div>
 </div>
@@ -364,8 +364,9 @@ session_start();
 
 
                        </div> 
-<button  type="submit"  class="btn btn-primary btn-md"  >Créer annonce</button>  
-                  </form>
+                                         </form>
+
+<button class="btn btn-primary btn-md" onclick="creerAnnonce();" >Créer annonce</button>  
     </div>
 </div>
 </div>
@@ -397,6 +398,8 @@ session_start();
 </div>
 </div>
 </body>
+
+
   <!-- Jquery and Bootstap core js files -->
     <script type="text/javascript" src="plugins/jquery.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
@@ -425,5 +428,22 @@ session_start();
 
      <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
   
+  <script type="text/javascript">
+            
+           function creerAnnonce(){
+              // les paramaitre de la formulaire 
+                model = $('#model').val();
+                prix = $('#prix').val();
+               /* email = $('#mail').val();
+                tel =$('#tel').val();
+                profession = $('#profession').val();
+                classement = $('#classement').val();
+                biographie = $('#desc').val();*/
+                // envoie avec un post les paramaitre + le nom de fichier 
+                $.post("php/newAnnonce.php",{model,prix},(data)=>{
+                  alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
+                })
+            }
+     </script>
 </html>
 
