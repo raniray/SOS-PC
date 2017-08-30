@@ -475,6 +475,7 @@ while($row = $select->fetch()){
                 })
             }
             function ajouterRep(){
+              // les paramaitre de la formulaire 
                 nom = $('#nom').val();
                 prenom = $('#prenom').val();
                 date_de_naissance = $('#date_de_naissance').val();
@@ -483,8 +484,9 @@ while($row = $select->fetch()){
                 profession = $('#profession').val();
                 classement = $('#classement').val();
                 biographie = $('#desc').val();
+                // envoie avec un post les paramaitre + le nom de fichier 
                 $.post("php/ajouterReparateur.php",{nom,prenom,date_de_naissance,email,tel,profession,classement,biographie},(data)=>{
-                  alert(data);
+                  alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
                 })
             }
 
