@@ -1,6 +1,9 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html >
-  <?php session_start();?>
   <head>
     <meta charset="UTF-8">
     <title>Nouvelle annonce</title>
@@ -88,7 +91,7 @@
             
                          <li><a href="home.php#portfolio">Vente</a></li>
                          <?php
-                            
+                           
                             if(isset($_SESSION['login'])==true) { 
                              ?> 
                         <li class="dropdown" >
@@ -109,6 +112,7 @@
                         Mon compte 
                     </a>
                     <?php
+                   
             if(isset($_SESSION['login'])==true) { 
                              ?>
                     <ul class="dropdown-menu">
@@ -215,34 +219,60 @@
             <div class="well text-center">
               <center>
                 <h1> ETAPE 1</h1>
-                <form class="form-horizontal">
-
+                <form class="form-horizontal" action="./php/newAnnonce.php" method="post" >
+   <?php echo "LOL!"; ?>
 <!-- Text input-->
-
-
 <div class="form-group">
-  <label class="col-md-4 control-label" for="nome">Prix:</label>  
+  <label class="col-md-4 control-label" for="modelePC">Modèle PC:</label>  
   <div class="col-md-5">
-  <input id="nome" name="prix" type="text" placeholder="ex: 35000 " class="form-control input-md" required="">
+  <input id="modelePC" name="modelePC" type="text" placeholder="Modèle PC ex : Dell latitude" class="form-control input-md" required="">
     
   </div>
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="nome">Durée:</label>  
+  <label class="col-md-4 control-label" for="processeur">Processeur:</label>  
   <div class="col-md-5">
-  <input id="nome" name="duree" type="text" placeholder="ex: 3 jours" class="form-control input-md" required="">
+  <input id="processeur" name="processeur" type="text" placeholder="Processeur ex : i3" class="form-control input-md" required="">
     
   </div>
 </div>
 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="RAM">RAM:</label>  
+  <div class="col-md-5">
+  <input id="RAM" name="RAM" type="text" placeholder="RAM ex 8 GB" class="form-control input-md" required="">
+    
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-md-4 control-label" for="prix">Prix:</label>  
+  <div class="col-md-5">
+  <input id="prix" name="prix" type="text" placeholder="35000DA" class="form-control input-md" required="">
+    
+  </div>
+</div>
 
 <!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="sysE">Système d'exploitation:</label>
+  <div class="col-md-5">
+    <select id="sysE" name="sysE" class="form-control">
+      <option value="1">Windows XP</option>
+      <option value="2">Windows 7</option>
+      <option value="3">Windows 8</option>
+      <option value="4">Windows 10</option>
+      <option value="5">Windows Linux</option>
+      <option value="6">Mac OS</option>
+      <option value="7">Autres..</option>
+    </select>
+  </div>
+</div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="sla">Ancienneté</label>
+  <label class="col-md-4 control-label" for="ancienn">Ancienneté</label>
   <div class="col-md-5">
-    <select id="sla" name="sla" class="form-control">
+    <select id="ancienn" name="ancienn" class="form-control">
       <option value="1">moins d'un ans</option>
       <option value="2">1 ans</option>
       <option value="3">Entre 2  et 5 ans </option>
@@ -271,9 +301,9 @@
                          <div class="col-md-16 column">
                             <div class="col-md-16 well text-center">
                 <h1 class="text-center"> Etape 2</h1>
-                <h4 class="text-center"> Contenu de l'annonce</h4>
+                <h4 class="text-center"> Informations supplémentaires</h4>
 
-                              <textarea class="form-control" type="textarea" id="desc" placeholder="Decrire la l'annonce" maxlength="140" rows="10"></textarea>
+                              <textarea class="form-control" name="contenuAnnonce" type="textarea" id="contenuAnnonce" placeholder="Decrire la l'annonce" maxlength="140" rows="10"></textarea>
                             
                                <div class="container">
 
@@ -299,7 +329,7 @@
 
 
                 
-                <button id="activate-step-3" class="btn btn-primary btn-md">Activer Etape 3</button>
+               
             </div>
         </div>
     </div>
@@ -334,12 +364,12 @@
 
 
                        </div> 
-
+<button  type="submit"  class="btn btn-primary btn-md"  >Créer annonce</button>  
                   </form>
     </div>
 </div>
 </div>
-            <button id="activate-step-3" class="btn btn-primary btn-md">Créer annonce</button>    
+              
             </div>
         </div>
     </div>
