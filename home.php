@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
-<?php session_start(); ?>
+<?php session_start(); 
+?>
 	<head>
 		<meta charset="utf-8">
 		<title>SOS-PC</title>
@@ -79,7 +80,7 @@
                         Mon compte 
                     </a>
                     <?php
-				    if(isset($_SESSION['login'])==true) { 
+				    if($_SESSION['login']==true) { 
    											     ?>
                     <ul class="dropdown-menu">
                         <li>

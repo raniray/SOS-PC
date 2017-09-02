@@ -1,5 +1,4 @@
 <?php
-
 // $servername = "localhost";
 // $username = "root";
 // $password = "root";
@@ -72,13 +71,15 @@ $mail = !empty($_POST['mail']) ? trim($_POST['mail']) : null;
 $pass = !empty($_POST['pwd']) ? trim($_POST['pwd']) : null;
 $md5pass = md5($pass);
 //Formulation de la requête
- $stmt = $PDO->prepare("SELECT * FROM Client_ WHERE mailUser=:mail LIMIT 1");
+ $stmt = $db->prepare("SELECT * FROM Client_ WHERE mailUser=:mail LIMIT 1");
           $stmt->execute(array(':mail'=>$mail));
           $userRow=$stmt->fetch(PDO::FETCH_ASSOC);//Récupérer l'utilisateur concerné.
           if($stmt->rowCount() > 0)
           { 
             if ($md5pass==$userRow['pswdUser']) //password_verify($pass,$userRow['pswdUser'])
-            {       session_start(); // On commence la session
+            { 
+                   session_start();
+                     // On commence la session
                     $_SESSION['login_user']=$userRow['nomUser']." ".$userRow['prenomUser'];
                     $_SESSION['login']=true;
                     $_SESSION['mail']=$mail;
@@ -98,7 +99,9 @@ $md5pass = md5($pass);
                     {
             if ($md5pass==$userRow['pswdUser']) //password_verify($pass,$userRow['pswdUser'])
 
-              {       session_start(); // On commence la session
+              {session_start();
+
+                        // On commence la session
                       $_SESSION['login_user']=$userRow['nomUser']." ".$userRow['prenomUser'];
                       $_SESSION['login']=true;
                       $_SESSION['mail']=$mail;
@@ -123,7 +126,8 @@ $md5pass = md5($pass);
           {
             if ($md5pass==$userRow['pswdUser']) //password_verify($pass,$userRow['pswdUser'])
 
-     {       session_start(); // On commence la session
+     {  session_start();    
+        // On commence la session
             $_SESSION['login_user']=$userRow['nomUser']." ".$userRow['prenomUser'];
             $_SESSION['login']=true;
             $_SESSION['mail']=$mail;
