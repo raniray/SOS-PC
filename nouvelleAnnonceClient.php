@@ -108,7 +108,7 @@ session_start();
                                                 <li><a href="home.php#about">A propos</a></li>
                         <li><a href="home.php#contact">Contact</a></li>
                         <li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
-          <span class="glyphicon glyphicon-user"></span> 
+          <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
                     <?php
@@ -258,13 +258,13 @@ session_start();
   <label class="col-md-4 control-label" for="sysE">Système d'exploitation:</label>
   <div class="col-md-5">
     <select id="sysE" name="sysE" class="form-control">
-      <option value="1">Windows XP</option>
-      <option value="2">Windows 7</option>
-      <option value="3">Windows 8</option>
-      <option value="4">Windows 10</option>
-      <option value="5">Windows Linux</option>
-      <option value="6">Mac OS</option>
-      <option value="7">Autres..</option>
+      <option value="Windows XP">Windows XP</option>
+      <option value="Windows 7">Windows 7</option>
+      <option value="Windows 8">Windows 8</option>
+      <option value="Windows 10">Windows 10</option>
+      <option value="Windows Linux">Windows Linux</option>
+      <option value="Mac OS">Mac OS</option>
+      <option value="Autres..">Autres..</option>
     </select>
   </div>
 </div>
@@ -273,10 +273,10 @@ session_start();
   <label class="col-md-4 control-label" for="ancienn">Ancienneté</label>
   <div class="col-md-5">
     <select id="ancienn" name="ancienn" class="form-control">
-      <option value="1">moins d'un ans</option>
-      <option value="2">1 ans</option>
-      <option value="3">Entre 2  et 5 ans </option>
-      <option value="4">Plus de 5 ans </option>
+      <option value="moins d'un ans">moins d'un ans</option>
+      <option value="1 ans">1 ans</option>
+      <option value="Entre 2  et 5 ans">Entre 2  et 5 ans </option>
+      <option value="Plus de 5 ans">Plus de 5 ans </option>
      </select>
   </div>
 </div>
@@ -345,7 +345,7 @@ session_start();
                   <div class="container">
                     <div class="col-md-16">
                      <div class="form-group">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" method="POST" action="./php/newAnnonce.php" enctype="multipart/form-data">
 
                         <div class="form-group">
                                   
@@ -356,7 +356,7 @@ session_start();
                                   
                                   <div class="col-md-4"> 
                                   <span class="btn btn-primary btn-md btn-file">
-                                  Parcourir… <input type="file" id="imgInp">
+                                  Parcourir… <input type="file" id="imgAnnonce" name="imgAnnonce">
                                    </span>
 
 
@@ -391,9 +391,7 @@ session_start();
 
 <!--
   <div>
-
     <p class="text-center">Copyright © 2017 <a target="_blank" href="#">SOS-PC</a>.</p>
-
   </div>-->
 </div>
 </div>
@@ -434,16 +432,17 @@ session_start();
               // les paramaitre de la formulaire 
                 model = $('#model').val();
                 prix = $('#prix').val();
-               /* email = $('#mail').val();
-                tel =$('#tel').val();
-                profession = $('#profession').val();
-                classement = $('#classement').val();
-                biographie = $('#desc').val();*/
+				processeur = $('#processeur').val();
+				RAM = $('#RAM').val();
+				sysE = $('#sysE').val();
+				ancienn = $('#ancienn').val(),
+				contenuAnnonce = $('#contenuAnnonce').val();
+				imgAnnonce = $('#imgAnnonce').val();
+                
                 // envoie avec un post les paramaitre + le nom de fichier 
-                $.post("php/newAnnonce.php",{model,prix},(data)=>{
+                $.post("php/newAnnonce.php",{model,prix,processeur,RAM,sysE,ancienn,contenuAnnonce,imgAnnonce},(data)=>{
                   alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
                 })
             }
      </script>
 </html>
-
