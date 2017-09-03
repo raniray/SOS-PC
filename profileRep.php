@@ -67,15 +67,7 @@
                           <a class="dropbtn" href="#">Réparation-PC</a>
                     
                           <div class="dropdown-content">
-<<<<<<< HEAD:profileRep.html
-                          <a href="Reparations.html">Réparations</a>
-                           <a href="demandeRep.html">Nouvelle réparation</a>
-                            <a href="liveHelpRep.html">Live help</a>
-                          </div>
-                        </li>
-                                                <li><a href="accueilRep.html#about">A propos</a></li>
-                        <li><a href="accueilRep.html#contact">Contact</a></li>
-=======
+
                           <a href="history.php">Historique de réparation</a>
                            <a href="demandeRep.php">Nouvelle réparation</a>
                             <a href="index2.php">Live help</a>
@@ -85,13 +77,11 @@
                          ?>
                                                 <li><a href="home.php#about">A propos</a></li>
                         <li><a href="home.php#contact">Contact</a></li>
->>>>>>> c2005459b02702240755ea6a02ea355f9b929d0e:profileRep.php
                         <li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
           <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
                     <?php
-                    session_start();
             if($_SESSION['login']==true) { 
                              ?>
                     <ul class="dropdown-menu">
@@ -107,8 +97,8 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
-                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
+                                        <p class="text-left"><strong><?php  echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
                                 </div>
@@ -168,7 +158,15 @@
       </div>
     </header>
     <!-- header end -->
-
+<?php 
+require('php/connexion.php');
+$db=data_base_connect();
+$id = $_GET['id'];
+$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser and User_.idUser=$id");
+$select->execute();
+$i=0;
+while($row = $select->fetch()){
+?>
 
   <div class="container">
       <div class="row">
@@ -189,39 +187,49 @@
                     <tbody>
                       <tr>
                         <td>Nom:</td>
-                        <td><input id="nom" name="nom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="nom" name="nom" type="text" value="<?php echo $row['nomUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
                         <td>Prénom:</td>
-                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="prenom" name="prenom" type="text" value="<?php echo $row['prenomUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
+                      <tr>
+                        <td>Date de naissance:</td>
+                        <td><div class="input-group date" data-provide="datepicker">
+                        <input id="date_de_naissance" type="text" value="<?php echo $row['dateNaissUser'];?>" class="form-control3">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
+                    </div></td>
+                      </tr>
+                   
+                         <tr>
                              <tr>
                         <td>Email:</td>
-                        <td><input id="mail" name="mail" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="mail" name="mail" value="<?php echo $row['mailUser'];?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
                         <tr>
                         <td>Numéro de téléphone:</td>
-                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="tel" name="tel" value="<?php echo $row['telUser'] ;?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
+
                       <tr>
                         <td>Profession:</td>
-                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="profession" name="profession" value="<?php echo $row['profession'];?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
-                      <tr>
+					  <tr>
                         <td>Classement:</td>
-                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="classement" name="classement" value="<?php echo $row['classement'];?>" type="text" class="form-control3 input-md" required=""></td>
+
                       </tr>
-                      <tr>
+					   <tr>
                         <td colspan="2">Biographie:</td>
                       </tr>
                       <tr>
-                        <td colspan="2"><textarea class="form-control" type="textarea" id="desc" placeholder="biographie" maxlength="140" rows="8"></textarea></td>
+                        <td colspan="2"><textarea class="form-control" value="<?php echo $row['biography'];?>" type="textarea" id="desc" placeholder="biographie" maxlength="140" rows="8"></textarea></td>
                       </tr>
-                      </tr>
-					   
                     </tbody>
                   </table>
-                
                 </div>
               </div>
             </div>
@@ -246,6 +254,7 @@
         </div>
       </div>
     </div>
+<?php }?>
 
 </div>
 </body>

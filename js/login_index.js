@@ -6,12 +6,11 @@ $('form').submit(function(e) {
            data: $("form").serialize(), // serializes the form's elements.
            success: function(data)
 {
-	alert(data);
-if (data.localeCompare('client')==0) {
+	// alert("!!!"+data+"d");
+	if(data.localeCompare("client")==0) {
 		$('form').empty();
 		$('.wrapper').addClass('form-success');
 		$('#head').empty();
-
 		$('#head').append("Bienvenue dans SOS-PC...");
 		var start = new Date().getTime();
 		for (var i = 0; i < 1e7; i++) {
@@ -35,7 +34,7 @@ if (data.localeCompare('client')==0) {
 			} 
 			window.open("accueilAdmin.php","_self");
 			}else   {
-				if (data.localeCompare('rep')==0) {
+				if (data.localeCompare("rep")==0) {
 				$('form').empty();
 				$('.wrapper').addClass('form-success');
 				$('#head').empty();

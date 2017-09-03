@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <?php session_start(); 
+require('php/connexion.php');
+$db = data_base_connect();
 ?>
 	<head>
 		<meta charset="utf-8">
@@ -184,25 +186,34 @@
 
 				<div class="space"></div>
 				<div class="isotope-container row grid-space-20">
+				
+				
+				<?php 	
+
+				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser LIMIT 4");
+				$select->execute();
+				$i=0;
+				while($row = $select->fetch()){
+				?>
+
+
 				<div class="col-sm-6 col-md-3 isotope-item web-design">
 
 					<div class="image-box">
 
-     					 <a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
+     					 <a class="imgover" href="#"><img src="<?php echo $row['profilePicUser'];?>" class="rounded" alt=""></a>
       					 <center>
-         				 <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
+         				 <h6 class="heading"><?php echo $row['nomUser']." ".$row['prenomUser'];?></h6>
+         				  <em>Evaluation=<?php echo $row['classement'];?></em>
          				</br>
          			</br>
-         			     <div class="btn button2"><a href="profileRep.php">Voir Profil</a></div>
+         			     <div class="btn button2"><a href="profileRep.php?id=<?php echo $row['idUser'];?>">Voir Profil</a></div>
 
          				</center>
-        
-       						
-      					
       				</div>
       			</div>
-      			<div class="col-sm-6 col-md-3 isotope-item web-design">
+				<?php }?>
+      			<!--<div class="col-sm-6 col-md-3 isotope-item web-design">
                     <div class="image-box">
       					<a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
         				
@@ -246,7 +257,7 @@
        					 </center> 
   				    </div>
   				</div>
- 
+ -->
                        </div>
                    </br>
 
