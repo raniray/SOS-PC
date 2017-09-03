@@ -32,6 +32,19 @@ var modal = document.getElementById('modelReparateur'+id);
     modal.style.display = "block";
 }
 
+function afficherSup(id) {
+var modal = document.getElementById('supprimer'+id);
+    modal.style.display = "block";
+}
+function ajouter(){
+  var model = document.getElementById('modelReparateur');
+  model.style.display = "block";
+}
+function annuler2(){
+  var model = document.getElementById('modelReparateur');
+  model.style.display = "none";
+}
+
 // When the user clicks on <span> (x), close the modal
 function fermer(){
     var modal = document.getElementById('modelReparateur');
@@ -50,6 +63,11 @@ function annuler(id){
   var modal = document.getElementById('modelReparateur'+id);
     modal.style.display = "none";
 }
+function annulersup(id){
+  var modal = document.getElementById('supprimer'+id);
+    modal.style.display = "none";
+}
+
 </script>
 
   </head>
@@ -191,16 +209,106 @@ function annuler(id){
                      <th>Evaluer réparateur</th>
                      <th>Modifier réparateur</th>
                       <th>Supprimer réparateur</th>
-                       <th>Ajouter Reparateur</th>
+                     <th><p onclick="ajouter();">Ajouter</p>
+                         <!--<button onclick="afficher();">Ajouter Reparateur</button>-->
+                       
+                       <!--////////////////////////////-->
+                      
+
+        <div id="modelReparateur" class="model-R">
+		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
+		<div class="infos-reparateur-content">
+    
+    <div class="formR" id="profileRep">
+	<ul id="listeprofil">
+
+	  <li> <div class="text-center img-container">
+          <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
+		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
+         
+          
+          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
+	
+        </div></li>
+	   </ul>
+	  <br>
+		<div class="meh-info" > 
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Nom:</td>
+                        <td><input id="nom" name="nom" type="text" value="" class="form-control3 input-md" required=""></td>
+                      </tr>
+                      <tr>
+                        <td>Prénom:</td>
+                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                      </tr>
+                      <tr>
+                        <td>Date de naissance:</td>
+                        <td><div class="input-group date" data-provide="datepicker">
+                        <input id="date_de_naissance" type="date" class="form-control3">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
+                    </div></td>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Email:</td>
+                        <td><input id="mail" name="mail" type="text" class="form-control3 input-md" required=""></td>
+                      </tr>
+                        <tr>
+                        <td>Numéro de téléphone:</td>
+                        <td><input id="tel" name="tel" type="text" class="form-control3 input-md" required=""></td>
+                      </tr>
+                      <tr>
+                        <td>Profession:</td>
+                        <td><input id="profession" name="profession" type="text" class="form-control3 input-md" required=""></td>
+                      </tr>
+					  <tr>
+                        <td>Classement:</td>
+                        <td><input id="classement" name="classement" type="text" class="form-control3 input-md" required=""></td>
+
+                      </tr>
+					   <tr>
+                        <td colspan="2">Biographie:</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2"><textarea class="form-control" type="textarea" id="desc" placeholder="biographie" maxlength="140" rows="8"></textarea></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                    
+                </div>
+	
+	       
+                <button class="btn button btn-block" onclick="ajouterRep();" style="bottom:15%;margin-left:-0.13%;">Enregistrer</button>
+
+				  <button type="button" onclick="annuler2();" class="btn btn-danger btn-block" style="bottom:10%;" data-dismiss="modal">Annuler</button>
+            
+	</div>
+  </div>
+  </div>
+                       <!--/////////////////////////////-->
+                       
+                       
+                       </th>
                    </thead>
     <tbody>
   <?php 
 require('php/connexion.php');
 $db=data_base_connect();
-$select = $db->prepare("SELECT * FROM reparateur_");
+$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
 $select->execute();
 $i=0;
 while($row = $select->fetch()){
+
+
+
+
+
+
   ?>
     <tr>
     <td><?php echo $row['nomUser']." ".$row['prenomUser'];?> </td>
@@ -243,12 +351,12 @@ while($row = $select->fetch()){
                       </tr>
                       <tr>
                         <td>Prénom:</td>
-                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="prenom" name="prenom" type="text" value="<?php echo $row['prenomUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
                         <td>Date de naissance:</td>
                         <td><div class="input-group date" data-provide="datepicker">
-                        <input id="date_de_naissance" type="text" class="form-control3">
+                        <input id="date_de_naissance" type="text" value="<?php echo $row['dateNaissUser'];?>" class="form-control3">
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>
@@ -258,26 +366,27 @@ while($row = $select->fetch()){
                          <tr>
                              <tr>
                         <td>Email:</td>
-                        <td><input id="mail" name="mail" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="mail" name="mail" value="<?php echo $row['mailUser'];?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
                         <tr>
                         <td>Numéro de téléphone:</td>
-                        <td><input id="tel" name="tel" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="tel" name="tel" value="<?php echo $row['telUser'] ;?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
+
                       <tr>
                         <td>Profession:</td>
-                        <td><input id="profession" name="profession" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="profession" name="profession" value="<?php echo $row['profession'];?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
 					  <tr>
                         <td>Classement:</td>
-                        <td><input id="classement" name="classement" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="classement" name="classement" value="<?php echo $row['classement'];?>" type="text" class="form-control3 input-md" required=""></td>
 
                       </tr>
 					   <tr>
                         <td colspan="2">Biographie:</td>
                       </tr>
                       <tr>
-                        <td colspan="2"><textarea class="form-control" type="textarea" id="desc" placeholder="biographie" maxlength="140" rows="8"></textarea></td>
+                        <td colspan="2"><textarea class="form-control" value="<?php echo $row['biography'];?>" type="textarea" id="desc" placeholder="biographie" maxlength="140" rows="8"></textarea></td>
                       </tr>
                     </tbody>
                   </table>
@@ -294,33 +403,36 @@ while($row = $select->fetch()){
   </div>
 	</td>
 
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
-	 <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="Suppresion" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer ce réparateur </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer ce réparateur?  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" onclick="ouisup(<?php echo $row['idUser']; ?>);" class="btn btn-success yesButton"><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
+    <td>                                                                      
+      <p data-placement="top" data-toggle="tooltip" title="Supprimer"><button onclick="afficherSup(<?php echo $row['idUser'];?>);" class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-remove"></span></button></p>
+      <div id="<?php echo "supprimer".$row['idUser'];?>" class="model-R">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            
+              <div class="modal-header">
+              <button type="button" onclick="annulersup(<?php echo $row['idUser']; ?>);" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></button>
+              <h4 class="modal-title custom_align" id="Heading">Supprimer ce réparateur </h4>
+              </div>
+
+              <div class="modal-body">
+              <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer ce réparateur?  </div>
+              </div>
+
+              <div class="modal-footer ">
+              <button type="button" onclick="ouisup(<?php echo $row['idUser']; ?>);" class="btn btn-success yesButton"><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+              <button type="button" onclick="annulersup(<?php echo $row['idUser']; ?>);" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+              </div>
+          </div>
         </div>
-   
-  </div></td>
-    
-    
-	</div>
+      </div>
+    </td>
+  
+  </div>
 	</td>
+  <?php if($i==0){?>
   <td rowspan="<?php echo $select->rowCount();?>"> <div style="text-align:center;position:relative;margin-top:30%;"><p class="nouveau-rep">Nouveau réparateur?</p><p class="nouveau-rep">Ajoutez-le!</p>
 	<button  class="btn button btn-xs" onclick="afficher(<?php echo $row['idUser']; ?>);" title="ajouter"><span class="glyphicon glyphicon-plus" ></span></button>
-       </td>
+  </td><?php } ?>
     </tr>
     <?php 
     
@@ -472,7 +584,9 @@ while($row = $select->fetch()){
                 console.log(id);
                 $.post("php/supprimerReparateur.php",{id},(data)=>{
                   alert(data);
-                })
+                });                
+                var modal = document.getElementById('supprimer'+id);
+                modal.style.display = "none";
             }
             function ajouterRep(){
               // les paramaitre de la formulaire 

@@ -2,50 +2,37 @@ Create database if not exists sosPc;
 use sosPc;
 SET @@auto_increment_increment=5; /*low security mesure*/ 
 
-/*Table client*/
-drop table if exists Client_;
-CREATE TABLE Client_ (
+
+/*Table User */
+drop table if exists User_;
+CREATE TABLE User_ (
 idUser int(30) auto_increment NOT NULL, 
 nomUser varchar(30) NOT NULL,
 prenomUser varchar(30) NOT NULL,
 mailUser varchar(30) unique NULL,
 pswdUser varchar(255) NOT NULL,
 statusAcount char not NULL,
-ccpUser int(20),
 profilePicUser varchar(60),
 telUser int(20),
 dateNaissUser date,
+dateInscription date,
+PRIMARY KEY (idUser) );
+
+/*Table client*/
+drop table if exists Client_;
+CREATE TABLE Client_ (
+idUser int(30) NOT NULL, 
+ccpUser int(20),
 PRIMARY KEY (idUser) );
 
 /*Table Réparateur*/
 drop table if exists Reparateur_;
 CREATE TABLE Reparateur_ (
-idUser int(30) auto_increment NOT NULL, 
-nomUser varchar(30) NOT NULL,
-prenomUser varchar(30) NOT NULL,
-mailUser varchar(30) unique NULL,
-pswdUser varchar(255) NOT NULL,
-statusAcount char not NULL,
-profilePicUser varchar(60),
-telUser int(20),
+idUser int(30) NOT NULL, 
 profession varchar(255),
 classement int(20),
 dateInscription date,
 biography LONGTEXT, 
-PRIMARY KEY (idUser) );
-
-
-/*Table Admin */
-drop table if exists Admin_;
-CREATE TABLE Admin_ (
-idUser int(30) auto_increment NOT NULL, 
-nomUser varchar(30) NOT NULL,
-prenomUser varchar(30) NOT NULL,
-mailUser varchar(30) unique NULL,
-pswdUser varchar(255) NOT NULL,
-statusAcount char not NULL,
-profilePicUser varchar(60),
-telUser int(20),
 PRIMARY KEY (idUser) );
 
 /*Table Annonce*/

@@ -12,6 +12,7 @@ $ancienn =  !empty($_POST['ancienn']) ? trim($_POST['ancienn']) : null;
 $contenuAnnonce = !empty($_POST['contenuAnnonce']) ? trim($_POST['contenuAnnonce']) : null;
 $imgAnnonce = !empty($_FILES['imgAnnonce']['name']) ? trim($_FILES['imgAnnonce']['name']) : null; 
 //$imgAnnonce =  !empty($_POST['imgAnnonce']) ? trim($_POST['imgAnnonce']) : null;
+echo $imgAnnonce;
 $nbre_vu = 0;
 $dureeValidite = 2;
 $t="";

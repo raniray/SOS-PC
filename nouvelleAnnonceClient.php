@@ -440,7 +440,7 @@ session_start();
 				imgAnnonce = $('#imgAnnonce').val();
                 
                 // envoie avec un post les paramaitre + le nom de fichier 
-                $.post("php/newAnnonce.php",{model,prix,processeur,RAM,sysE,ancienn,contenuAnnonce,imgAnnonce},(data)=>{
+                $.post("newAnnonce.php",{model,prix,processeur,RAM,sysE,ancienn,contenuAnnonce,imgAnnonce},(data)=>{
                   alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
                 })
             }
