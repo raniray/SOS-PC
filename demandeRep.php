@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html >
+<?php session_start();?>
   <head>
     <meta charset="UTF-8">
     <title>Nouvelle demande</title>
@@ -86,7 +87,6 @@
             
                          <li><a href="home.php#portfolio">Vente</a></li>
                          <?php
-                            session_start();
                             if($_SESSION['login']==true) { 
                              ?> 
                         <li class="dropdown" >
@@ -107,7 +107,6 @@
                         Mon compte 
                     </a>
                     <?php
-                    session_start();
             if($_SESSION['login']==true) { 
                              ?>
                     <ul class="dropdown-menu">
@@ -123,8 +122,8 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
-                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
+                                        <p class="text-left"><strong><?php echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
                                 </div>
@@ -224,7 +223,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="nome">Modèle PC:</label>  
   <div class="col-md-5">
-  <input id="nome" name="nome" type="text" placeholder="Modèle PC ex : Dell latitude" class="form-control input-md" required="">
+  <input id="model" name="model" type="text" placeholder="Modèle PC ex : Dell latitude" class="form-control input-md" required="">
     
   </div>
 </div>
@@ -232,7 +231,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="nome">Processeur:</label>  
   <div class="col-md-5">
-  <input id="nome" name="nome" type="text" placeholder="Processeur ex : i3" class="form-control input-md" required="">
+  <input id="processeur" name="processeur" type="text" placeholder="Processeur ex : i3" class="form-control input-md" required="">
     
   </div>
 </div>
@@ -240,7 +239,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="nome">RAM:</label>  
   <div class="col-md-5">
-  <input id="nome" name="nome" type="text" placeholder="RAM ex 8 GB" class="form-control input-md" required="">
+  <input id="ram" name="ram" type="text" placeholder="RAM ex 8 GB" class="form-control input-md" required="">
     
   </div>
 </div>
@@ -250,14 +249,14 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="sla">Système d'exploitation:</label>
   <div class="col-md-5">
-    <select id="sla" name="sla" class="form-control">
-      <option value="1">Windows XP</option>
-      <option value="2">Windows 7</option>
-      <option value="3">Windows 8</option>
-      <option value="4">Windows 10</option>
-      <option value="5">Windows Linux</option>
-      <option value="6">Mac OS</option>
-      <option value="7">Autres..</option>
+    <select id="sys" name="sys" class="form-control">
+      <option value="Windows XP">Windows XP</option>
+      <option value="Windows 7">Windows 7</option>
+      <option value="Windows 8">Windows 8</option>
+      <option value="Windows 10">Windows 10</option>
+      <option value="Linux">Linux</option>
+      <option value="Mac OS">Mac OS</option>
+      <option value="Autres">Autres..</option>
     </select>
   </div>
 </div>
@@ -265,11 +264,11 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="sla">Ancienneté</label>
   <div class="col-md-5">
-    <select id="sla" name="sla" class="form-control">
-      <option value="1">moins d'un ans</option>
-      <option value="2">1 ans</option>
-      <option value="3">Entre 2  et 5 ans </option>
-      <option value="4">Plus de 5 ans </option>
+    <select id="anne" name="anne" class="form-control">
+      <option value="moins d'un ans">moins d'un ans</option>
+      <option value="1 ans">1 ans</option>
+      <option value="Entre 2  et 5 ans">Entre 2  et 5 ans </option>
+      <option value="Plus de 5 ans">Plus de 5 ans </option>
      </select>
   </div>
 </div>
@@ -301,7 +300,7 @@
                               <div class="form-group">
                                <label class="col-md-4 control-label" for="nome">intitulé de la panne:</label>  
                                 <div class="col-md-5">
-                                 <input id="nome" name="nome" type="text" placeholder="RAM ex 8 GB" class="form-control input-md" required="">
+                                 <input id="title" name="title" type="text" placeholder="RAM ex 8 GB" class="form-control input-md" required="">
     
                                </div>
                               </div>
@@ -311,7 +310,7 @@
                                 <div class="form-group">
                                   <label class="col-md-4 control-label" for="sla">Type de panne</label>
                                   <div class="col-md-5">
-                                    <select id="sla" name="sla" class="form-control">
+                                    <select id="type" name="type" class="form-control">
                                       <option value="1">Software</option>
                                       <option value="2">Hardware</option>
                                       <option value="3">Je ne sais pas...</option>
@@ -345,7 +344,7 @@
                 <h1 class="text-center"> Etape 3</h1>
                 <h4 class="text-center"> Description de la panne</h4>
 
-                              <textarea class="form-control" type="textarea" id="desc" placeholder="Decrire la panne" maxlength="140" rows="10"></textarea>
+                              <textarea class="form-control" type="textarea" name="desc" id="desc" placeholder="Decrire la panne" maxlength="140" rows="10"></textarea>
                             
                                <div class="container">
 
@@ -386,7 +385,7 @@
                                   
                                   <div class="col-md-4"> 
                                   <span class="btn btn-primary btn-md btn-file">
-                                  Parcourir… <input type="file" id="imgInp">
+                                  Parcourir… <input type="file" id="imgInp" name="imgInp">
                                    </span>
 
 
@@ -399,7 +398,7 @@
     </div>
 </div>
 </div>
-            <button id="activate-step-3" class="btn btn-primary btn-md">Envoyer la demande</button>    
+            <button id="activate-step-3" onclick="creerdemande();" class="btn btn-primary btn-md">Envoyer la demande</button>    
             </div>
         </div>
     </div>
@@ -450,5 +449,25 @@
 
      <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
   
+    <script type="text/javascript">
+            
+           function creerdemande(){
+              // les paramaitre de la formulaire 
+                model = $('#model').val();
+                processeur = $('#processeur').val();
+                ram = $('#ram').val();
+                sys = $('#sys').val();
+                anne = $('#anne').val();
+                title = $('#title').val();
+                type = $('#type').val();
+                desc = $('#desc').val();
+                imgInp = $('#imgInp').val();
+                
+                // envoie avec un post les paramaitre + le nom de fichier 
+                $.post("php/demandeReparation.php",{model,type,title,processeur,ram,sys,anne,desc,imgInp},(data)=>{
+                  alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
+                })
+            }
+     </script>
 </html>
 

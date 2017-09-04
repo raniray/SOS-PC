@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html >
+  <?php session_start();?>
   <head>
     <meta charset="UTF-8">
     <title>Nouvelle demande</title>
@@ -59,7 +60,6 @@
             
                          <li><a href="home.php#portfolio">Vente</a></li>
                          <?php
-                            session_start();
                             if($_SESSION['login']==true) { 
                              ?> 
                         <li class="dropdown" >
@@ -80,7 +80,6 @@
                         Mon compte 
                     </a>
                     <?php
-                    session_start();
             if($_SESSION['login']==true) { 
                              ?>
                     <ul class="dropdown-menu">
@@ -96,8 +95,8 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
-                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
+                                        <p class="text-left"><strong><?php  echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
                                 </div>
@@ -183,70 +182,26 @@
                    </thead>
     <tbody>
     
+    <?php 
+require('php/connexion.php');
+$db=data_base_connect();
+$id = $_SESSION['id'];
+$select = $db->prepare("SELECT * FROM demande_ where idClient=$id");
+$select->execute();
+$i=0;
+while($row = $select->fetch()){
+    ?>
     <tr>
-    
-    <td>Ici on met le titre de la panne </td>
-    <td>DD/MM/YYYY</td>
-    <td>En cours</td>
-    <td>NOM PRENOM </td>
+    <td><?php echo $row['intitulePanne'];?></td>
+    <td><?php echo $row['dateCreation'];?></td>
+    <td><?php echo $row['etatDemande'];?></td>
+    <td><?php echo $row['idReparateur'];?></td>
     <td><p data-placement="top" data-toggle="tooltip" title="Consulter"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
     <td><div class="btn btn-default"><a href="deman.html">Afficher demande</a></div></td>
     </tr>
-    
- <tr>
-    
-    <td>Ici on met le titre de la panne </td>
-    <td>DD/MM/YYYY</td>
-    <td>En cours</td>
-    <td>NOM PRENOM </td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Consulter"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><div class="btn btn-default"><a href="deman.html">Afficher demande</a></div></td></td>
-    </tr>
-    
-  <tr>
-    
-    <td>Ici on met le titre de la panne </td>
-    <td>DD/MM/YYYY</td>
-    <td>En cours</td>
-    <td>NOM PRENOM </td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Consulter"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><div class="btn btn-default"><a href="deman.html">Afficher demande</a></div></td></td>
-    </tr>  
- <tr>
-    
-    <td>Ici on met le titre de la panne </td>
-    <td>DD/MM/YYYY</td>
-    <td>En cours</td>
-    <td>NOM PRENOM </td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Consulter"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><div class="btn btn-default"><a href="deman.html">Afficher demande</a></div></td></td>
-    </tr>
-   
-    
- 
-<tr>
-    
-    <td>Ici on met le titre de la panne </td>
-    <td>DD/MM/YYYY</td>
-    <td>En cours</td>
-    <td>NOM PRENOM </td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Consulter"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><div class="btn btn-default"><a href="deman.html">Afficher demande</a></div></td></td>
-    </tr>
-  
-  <tr>
-    
-    <td>Ici on met le titre de la panne </td>
-    <td>DD/MM/YYYY</td>
-    <td>En cours</td>
-    <td>NOM PRENOM </td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Consulter"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><div class="btn btn-default"><a href="deman.html">Afficher demande</a></div></td></td>
-    </tr>  
-   
-    
-   
-    
+    <?php 
+    $i++;
+    }?>
     </tbody>
         
 </table>

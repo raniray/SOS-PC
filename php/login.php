@@ -20,6 +20,7 @@ $stmt = $db->prepare("SELECT * FROM User_ WHERE mailUser=:mail LIMIT 1");
                      // On commence la session
                     $_SESSION['login_user']=$userRow['nomUser']." ".$userRow['prenomUser'];
                     $_SESSION['login']=true;
+                    $_SESSION['id']=$userRow['idUser'];
                     $_SESSION['mail']=$mail;
                     $_SESSION['picture']=$userRow['profilePicUser'];
                     $type = $userRow['statusAcount'];

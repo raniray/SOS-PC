@@ -159,10 +159,17 @@
                       <th>Avancement</th>
                    </thead>
     <tbody>
-    
+    <?php 
+require('php/connexion.php');
+$db=data_base_connect();
+$id = $_SESSION['id'];
+$select = $db->prepare("SELECT * FROM demande_ where idReparateur=$id");
+$select->execute();
+$i=0;
+while($row = $select->fetch()){
+    ?>
     <tr>
-    
-    <td><a data-toggle="modal" data-target="#demande1">Le titre de la demande</a> 
+    <td><a data-toggle="modal" data-target="#demande1"><?php echo $row['intitulePanne'];?></a> 
 	<div class="modal fade" id="demande1" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -201,212 +208,7 @@
    
     </tr>
     
- <tr>
-    
-    <td><a data-toggle="modal" data-target="#demande2">Le titre de la demande</a>
-	<div class="modal fade" id="demande2" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Demande N°37</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de la demande.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-	</td>
-    <td>DD/MM/YYYY</td>
-    <td>
-	<select id="etat-reparation" name="etat-reparation" class="form-control">
-      <option value="1">En cours</option>
-      <option value="2">Pas encore</option>
-      <option value="3">Terminé</option>
-    </select>
-	</td>
- 
-    <td title="modifier"><p data-editable>70%</p></td>
-    
-    </tr>
-    
-  <tr>
-    
-    <td><a data-toggle="modal" data-target="#demande3">Le titre de la demande </a>
-	<div class="modal fade" id="demande3" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Demande N°37</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de la demande.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-	</td>
-    <td>DD/MM/YYYY</td>
-    <td>
-	<select id="etat-reparation" name="etat-reparation" class="form-control">
-      <option value="1">En cours</option>
-      <option value="2">Pas encore</option>
-      <option value="3">Terminé</option>
-    </select>
-	</td>
-    
-    <td title="modifier"><p data-editable>70%</p></td>
-    
-    </tr>  
- <tr>
-    
-    <td><a data-toggle="modal" data-target="#demande4">Le titre de la demande</a> 
-	<div class="modal fade" id="demande4" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Demande N°37</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de la demande.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-	
-	</td>
-    <td>DD/MM/YYYY</td>
-    <td>
-	<select id="etat-reparation" name="etat-reparation" class="form-control">
-      <option value="1">En cours</option>
-      <option value="2">Pas encore</option>
-      <option value="3">Terminé</option>
-    </select>
-	</td>
-    
-   <td title="modifier"><p data-editable>70%</p></td>
-   
-    </tr>
-   
-    
- 
-<tr>
-    
-    <td><a data-toggle="modal" data-target="#demande5">Le titre de la demande</a> 
-	<div class="modal fade" id="demande5" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Demande N°37</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de la demande.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-	</td>
-    <td>DD/MM/YYYY</td>
-    <td>
-	<select id="etat-reparation" name="etat-reparation" class="form-control">
-      <option value="1">En cours</option>
-      <option value="2">Pas encore</option>
-      <option value="3">Terminé</option>
-    </select>
-	</td>
-    
-    <td title="modifier"><p data-editable>70%</p></td>
-    
-    </tr>
-  
-  <tr>
-    
-    <td><a data-toggle="modal" data-target="#demande6">Le titre de la demande</a>
-     <div class="modal fade" id="demande6" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Demande N°37</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de la demande.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-	</td>
-    <td>DD/MM/YYYY</td>
-    <td>
-	<select id="etat-reparation" name="etat-reparation" class="form-control">
-      <option value="1">En cours</option>
-      <option value="2">Pas encore</option>
-      <option value="3">Terminé</option>
-    </select>
-	</td>
-
-   <td title="modifier"><p data-editable>70%</p></td>
-    
-    </tr>  
+  <?php } ?>
    
     
    

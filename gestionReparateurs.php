@@ -304,11 +304,6 @@ $select->execute();
 $i=0;
 while($row = $select->fetch()){
 
-
-
-
-
-
   ?>
     <tr>
     <td><?php echo $row['nomUser']." ".$row['prenomUser'];?> </td>
@@ -347,16 +342,16 @@ while($row = $select->fetch()){
                     <tbody>
                       <tr>
                         <td>Nom:</td>
-                        <td><input id="nom" name="nom" type="text" value="<?php echo $row['nomUser'];?>" class="form-control3 input-md" required=""></td>
+                        <td><input id="<?php echo "nom".$row['idUser'];?>" name="nom" type="text" value="<?php echo $row['nomUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
                         <td>Prénom:</td>
-                        <td><input id="prenom" name="prenom" type="text" value="<?php echo $row['prenomUser'];?>" class="form-control3 input-md" required=""></td>
+                        <td><input id="<?php echo "prenom".$row['idUser'];?>" name="prenom" type="text" value="<?php echo $row['prenomUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
                         <td>Date de naissance:</td>
                         <td><div class="input-group date" data-provide="datepicker">
-                        <input id="date_de_naissance" type="text" value="<?php echo $row['dateNaissUser'];?>" class="form-control3">
+                        <input id="<?php echo "date_de_naissance".$row['idUser'];?>" type="text" value="<?php echo $row['dateNaissUser'];?>" class="form-control3">
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>
@@ -366,27 +361,27 @@ while($row = $select->fetch()){
                          <tr>
                              <tr>
                         <td>Email:</td>
-                        <td><input id="mail" name="mail" value="<?php echo $row['mailUser'];?>" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="<?php echo "mail".$row['idUser'];?>" name="mail" value="<?php echo $row['mailUser'];?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
                         <tr>
                         <td>Numéro de téléphone:</td>
-                        <td><input id="tel" name="tel" value="<?php echo $row['telUser'] ;?>" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="<?php echo "tel".$row['idUser'];?>" name="tel" value="<?php echo $row['telUser'] ;?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
 
                       <tr>
                         <td>Profession:</td>
-                        <td><input id="profession" name="profession" value="<?php echo $row['profession'];?>" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="<?php echo "profession".$row['idUser'];?>" name="profession" value="<?php echo $row['profession'];?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
 					  <tr>
                         <td>Classement:</td>
-                        <td><input id="classement" name="classement" value="<?php echo $row['classement'];?>" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="<?php echo "classement".$row['idUser'];?>" name="classement" value="<?php echo $row['classement'];?>" type="text" class="form-control3 input-md" required=""></td>
 
                       </tr>
 					   <tr>
                         <td colspan="2">Biographie:</td>
                       </tr>
                       <tr>
-                        <td colspan="2"><textarea class="form-control" value="<?php echo $row['biography'];?>" type="textarea" id="desc" placeholder="biographie" maxlength="140" rows="8"></textarea></td>
+                        <td colspan="2"><textarea class="form-control" value="<?php echo $row['biography'];?>" type="textarea" id="<?php echo "desc".$row['idUser'];?>" placeholder="biographie" maxlength="140" rows="8"></textarea></td>
                       </tr>
                     </tbody>
                   </table>
@@ -394,7 +389,7 @@ while($row = $select->fetch()){
                 </div>
 	
 	       
-                <button class="btn button btn-block" onclick="ajouterRep();" style="bottom:15%;margin-left:-0.13%;">Enregistrer</button>
+                <button class="btn button btn-block" onclick="modifierRep(<?php echo $row['idUser']; ?>);" style="bottom:15%;margin-left:-0.13%;">Enregistrer</button>
 
 				  <button type="button" onclick="annuler(<?php echo $row['idUser']; ?>);" class="btn btn-danger btn-block" style="bottom:10%;" data-dismiss="modal">Annuler</button>
             
@@ -600,6 +595,21 @@ while($row = $select->fetch()){
                 biographie = $('#desc').val();
                 // envoie avec un post les paramaitre + le nom de fichier 
                 $.post("php/ajouterReparateur.php",{nom,prenom,date_de_naissance,email,tel,profession,classement,biographie},(data)=>{
+                  alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
+                })
+            }
+            function modifierRep(id){
+                // les paramaitre de la formulaire 
+                nom = $('#nom'+id).val();
+                prenom = $('#prenom'+id).val();
+                date_de_naissance = $('#date_de_naissance'+id).val();
+                email = $('#mail'+id).val();
+                tel =$('#tel'+id).val();
+                profession = $('#profession'+id).val();
+                classement = $('#classement'+id).val();
+                biographie = $('#desc'+id).val();
+                // envoie avec un post les paramaitre + le nom de fichier 
+                $.post("php/modifierReparateur.php",{id,nom,prenom,date_de_naissance,email,tel,profession,classement,biographie},(data)=>{
                   alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
                 })
             }

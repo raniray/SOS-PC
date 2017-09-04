@@ -26,12 +26,15 @@ var btn = document.getElementById("myBtnRep");
 var span = document.getElementsByClassName("close-infos")[0];
 
 // When the user clicks the button, open the modal 
- function afficher() {
-var modal = document.getElementById('modelReparateur');
-
+ function afficher(id) {
+var modal = document.getElementById('modelReparateur'+id);
     modal.style.display = "block";
 }
 
+function afficherSup(id) {
+var modal = document.getElementById('supprimer'+id);
+    modal.style.display = "block";
+}
 // When the user clicks on <span> (x), close the modal
 function fermer(){
     var modal = document.getElementById('modelReparateur');
@@ -46,8 +49,12 @@ var modal = document.getElementById('modelReparateur');
     }
 }
 
-function annuler(){
-  var modal = document.getElementById('modelReparateur');
+function annuler(id){
+  var modal = document.getElementById('modelReparateur'+id);
+    modal.style.display = "none";
+}
+function annulersup(id){
+  var modal = document.getElementById('supprimer'+id);
     modal.style.display = "none";
 }
 </script>
@@ -127,8 +134,8 @@ function annuler(){
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
-                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
+                                        <p class="text-left"><strong><?php  echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
 
@@ -194,13 +201,23 @@ function annuler(){
                    </thead>
     <tbody>
     
+
+<?php 
+require('php/connexion.php');
+$db=data_base_connect();
+$select = $db->prepare("SELECT * FROM client_ join user_ where user_.idUser=client_.idUser");
+$select->execute();
+$i=0;
+while($row = $select->fetch()){
+
+
+?>
     <tr>
+    <td><?php echo $row['nomUser']." ".$row['prenomUser'];?></td>
+    <td><?php echo $row['dateInscription'];?></td>
     
-    <td>NOM PRENOM </td>
-    <td>DD/MM/YYYY</td>
-    
-    <td><p data-placement="top" data-toggle="tooltip" title="Consulter"><button onclick="afficher();" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-eye"></span></button></p>
-        <div id="modelReparateur" class="model-R">
+    <td><p data-placement="top" data-toggle="tooltip" title="Consulter"><button onclick="afficher(<?php echo $row['idUser']; ?>);" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-eye"></span></button></p>
+        <div id="<?php echo "modelReparateur".$row['idUser'];?>" class="model-R">
 		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
 		<div class="gClient">
     
@@ -209,10 +226,7 @@ function annuler(){
 	  <li> <div class="text-center img-container">
           <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
 		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
-         
-          
-          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
-	
+       <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
         </div></li>
 	   </ul>
 	  <br>
@@ -221,16 +235,16 @@ function annuler(){
                     <tbody>
                       <tr>
                         <td>Nom:</td>
-                        <td><input id="nom" name="nom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="nom" name="nom" type="text" value="<?php echo $row['nomUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
                         <td>Prénom:</td>
-                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="prenom" name="prenom" value="<?php echo $row['prenomUser'];?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
                         <td>Date de naissance:</td>
                         <td><div class="input-group date" data-provide="datepicker">
-                        <input type="text" class="form-control3">
+                        <input type="text" value="<?php echo $row['dateNaissUser'];?>" class="form-control3">
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>
@@ -240,15 +254,15 @@ function annuler(){
                          <tr>
                              <tr>
                         <td>Email:</td>
-                        <td><input id="mail" name="mail" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="mail" name="mail" type="text" value="<?php echo $row['mailUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
                         <tr>
                         <td>Numéro de téléphone:</td>
-                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="prenom" name="prenom" type="text"  value="<?php echo $row['telUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
                         <td>Numéro de CCP:</td>
-                        <td><input id="prenom" name="cpp" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="prenom" name="cpp" type="text"  value="<?php echo $row['ccpUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
 					 
                      
@@ -259,55 +273,18 @@ function annuler(){
 	
 	       
                 
-				  <button type="button" onclick="annuler();" class="btn btn-danger btn-block" style="bottom:10%;" data-dismiss="modal">Fermer</button>
+				  <button type="button" onclick="annuler(<?php echo $row['idUser']; ?>);" class="btn btn-danger btn-block" style="bottom:10%;" data-dismiss="modal">Fermer</button>
             
 	</div>
   </div>
   </div>
 	</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p></td>
-   
-    </tr>
-    
- <tr>
-    
-    <td>NOM PRENOM </td>
-    <td>DD/MM/YYYY</td>
-    
-    <td>
-	<p data-placement="top" data-toggle="tooltip" title="Consulter"><button onclick="afficher();" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-eye"></span></button></p>
-        <div id="modelReparateur" class="model-R">
-		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
-		<div class="gClient">
-    
-    <div class="formR">
-	<ul id="listeprofil">
-	  <li> <div class="text-center img-container">
-          <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
-		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
-         
-          
-          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
-	
-        </div></li>
-	   </ul>
-	  <br>
-	
-	
-	       
-               
-				  <button class="btn btn-danger btn-block" style="bottom:10%;">Fermer</button>
-            
-	</div>
-  </div>
-  </div>
-	</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
+        <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" onclick="afficherSup(<?php echo $row['idUser'];?>);" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
 	 <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="Suppresion" aria-hidden="true">
       <div class="modal-dialog">
     <div class="modal-content">
           <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <button type="button" class="close" onclick="annulersup(<?php echo $row['idUser']; ?>);" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
         <h4 class="modal-title custom_align" id="Heading">Supprimer ce client </h4>
       </div>
           <div class="modal-body">
@@ -316,245 +293,15 @@ function annuler(){
        
       </div>
         <div class="modal-footer ">
-        <button type="button" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+        <button type="button" onclick="ouisup(<?php echo $row['idUser']; ?>);" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" onclick="annulersup(<?php echo $row['idUser']; ?>);" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
       </div>
         </div>
     <!-- /.modal-content --> 
   </div>
 	</td>
-
     </tr>
-    
-  <tr>
-    
-    <td>NOM PRENOM </td>
-    <td>DD/MM/YYYY</td>
-  
-    <td>
-	<p data-placement="top" data-toggle="tooltip" title="Consulter"><button onclick="afficher();" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-eye"></span></button></p>
-        <div id="modelReparateur" class="model-R">
-		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
-		<div class="gClient">
-    
-    <div class="formR">
-	<ul id="listeprofil">
-	  <li> <div class="text-center img-container">
-          <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
-		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
-         
-          
-          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
-	
-        </div></li>
-	   </ul>
-	  <br>
-		
-	       
-               
-				  <button class="btn btn-danger btn-block" style="bottom:10%;">Fermer</button>
-            
-	</div>
-  </div>
-  </div>
-	</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
-	 <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="Suppresion" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer ce client </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer ce client?  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-	</td>
-   
-    </tr>  
- <tr>
-    
-    <td>NOM PRENOM </td>
-    <td>DD/MM/YYYY</td>
-   
-    <td>
-	<p data-placement="top" data-toggle="tooltip" title="Consulter"><button onclick="afficher();" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-eye"></span></button></p>
-        <div id="modelReparateur" class="model-R">
-		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
-		<div class="gClient" >
-    
-    <div class="formR">
-	<ul id="listeprofil">
-	  <li> <div class="text-center img-container">
-          <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
-		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
-         
-          
-          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
-	
-        </div></li>
-	   </ul>
-	  <br>
-		
-	
-	       
-               
-				  <button class="btn btn-danger btn-block" style="bottom:10%;">Fermer</button>
-            
-	</div>
-  </div>
-  </div>
-	</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Suppression" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
-	    <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="Suppresion" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer ce client </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer ce client?  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
-
-	</td>
-   
-    </tr>
-   
-    
- 
-<tr>
-    
-    <td>NOM PRENOM </td>
-    <td>DD/MM/YYYY</td>
-   
-    <td><p data-placement="top" data-toggle="tooltip" title="Consulter"><button onclick="afficher();" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-eye"></span></button></p>
-        <div id="modelReparateur" class="model-R">
-		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
-		<div class="gClient">
-    
-    <div class="formR"
-	<ul id="listeprofil">
-	  <li> <div class="text-center img-container">
-          <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
-		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
-         
-          
-          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
-	
-        </div></li>
-	   </ul>
-	  <br>
-		
-	       
-                
-				  <button class="btn btn-danger btn-block" style="bottom:10%;">Fermer</button>
-            
-	</div>
-  </div>
-  </div>
-	</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
-	 <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="Suppresion" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer cet client </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer ce client?  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-	</td>
-   
-    </tr>
-  
-  <tr>
-    
-    <td>NOM PRENOM </td>
-    <td>DD/MM/YYYY</td>
-   
-    <td>
-	<p data-placement="top" data-toggle="tooltip" title="Consulter"><button onclick="afficher();" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-eye"></span></button></p>
-        <div id="modelReparateur" class="model-R">
-		<span id="span-wrapper"><span class="close-infos" onclick="fermer();">&times;</span></span>
-		<div class="gClient">
-    
-    <div class="formR">
-	<ul id="listeprofil">
-	  <li> <div class="text-center img-container">
-          <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
-		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
-         
-          
-          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
-	
-        </div></li>
-	   </ul>
-	  <br>
-		
-	       
-               
-				  <button class="btn btn-danger btn-block" style="bottom:10%;" onclick="annuler();" >Fermer</button>
-            
-	</div>
-  </div>
-  </div>
-	</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Edit" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-remove"></span></button></p>
-	 <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="Suppresion" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer ce client </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer ce client?  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class="btn btn-success yesButton" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="btn btn-default noButton" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-	</td>
-   
-    </tr>  
-   
-    
+    <?php } ?>   
    
     
     </tbody>
@@ -632,5 +379,16 @@ function annuler(){
 
      <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
   
+     <script type="text/javascript">
+     function ouisup(id){
+                $.post("php/supprimerClient.php",{id},(data)=>{
+                  alert(data);
+                });                
+                var modal = document.getElementById('supprimer'+id);
+                modal.style.display = "none";
+            } 
+            
+    </script>
+
 </html>
 

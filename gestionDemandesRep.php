@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html >
+  <?php session_start(); ?>
   <head>
     <meta charset="UTF-8">
     <title>Gestion demandes de réparation</title>
@@ -72,7 +73,7 @@
                         Mon compte 
                     </a>
                     <?php
-          session_start();
+          
           if($_SESSION['login']==true) { 
             ?>  
                     <ul class="dropdown-menu">
@@ -89,8 +90,8 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
-                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
+                                        <p class="text-left"><strong><?php  echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
 
@@ -153,9 +154,18 @@
                    </thead>
     <tbody>
     
-    <tr>
-    
-    <td><a data-toggle="modal" data-target="#demande1">Titre de la demande</a>
+        
+    <?php 
+require('php/connexion.php');
+$db=data_base_connect();
+$id = $_SESSION['id'];
+$select = $db->prepare("SELECT * FROM demande_");
+$select->execute();
+$i=0;
+while($row = $select->fetch()){
+    ?>
+    <tr>  
+    <td><a data-toggle="modal" data-target="#demande1"><?php echo $row['intitulePanne'];?></a>
 	<div class="modal fade" id="demande1" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -164,10 +174,15 @@
 												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
 											</div>
 											<div class="modal-body">
-												<h3>Demande N°29</h3>
+												<h3>Demande N°<?php echo $row['idDemande'];?></h3>
 												<div class="row">
 													<div class="col-md-6">
-														<p>Ici c'est le corps de la demande.</p>
+														<p>	
+<?php echo "Modèle: ".$row['modelePc']."\n "."Processeur: ".$row['processeur']."\n
+"."RAM: ".$row['ramPc']."\n "."Système d'exploitation:".$row['osPc']."\n "."Anciennete:".$row['ancientePc']."\n "."Detail:".$row['descriptionPanne'];
+
+?>
+</p>
 													</div>
 													<div class="col-md-6">
 														<img src="images/320x320.png" alt="">
@@ -180,247 +195,28 @@
 										</div>
 									</div>
 								</div>
-	</td>
-    
-    
+	</td> 
     <td> 
 	<div class="col-md-9">
     <select id="affecter-rep" name="affecter-rep" class="form-control">
       <option value="1">Aucun</option>
-      <option value="2">NOM PRENOM</option>
-      <option value="3">NOM PRENOM</option>
-      <option value="4">NOM PRENOM</option>
-      <option value="5">NOM PRENOM</option>
-      <option value="6">NOM PRENOM </option>
-      <option value="7">NOM PRENOM</option>
-    </select>
-  </div></td>
-     <td>En cours</td>
-	
-    </tr>
-    
- <tr>
-    
-    <td><a data-toggle="modal" data-target="#demande2">Titre de la demande </a>
-	<div class="modal fade" id="demande2" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Demande N°30</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de la demande.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div></td>
-   
-   
-    <td>
-	<div class="col-md-9">
-    <select id="affecter-rep2" name="affecter-rep" class="form-control">
-      <option value="1">Aucun</option>
-      <option value="2">NOM PRENOM</option>
-      <option value="3">NOM PRENOM</option>
-      <option value="4">NOM PRENOM</option>
-      <option value="5">NOM PRENOM</option>
-      <option value="6">NOM PRENOM </option>
-      <option value="7">NOM PRENOM</option>
+
+      <?php 
+$selectR = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
+$selectR->execute();
+$i=0;
+while($row2 = $selectR->fetch()){?>
+      <option value="2"><?php echo $row2['nomUser']." ".$row2['prenomUser'];?></option>
+<?php } ?>
     </select>
   </div>
-	</td>
-  <td>Terminée</td>
-    </tr>
-    
-  <tr>
-    
-    <td><a data-toggle="modal" data-target="#demande3">Titre de la demande </a>
-	<div class="modal fade" id="demande3" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Demande N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de la demande.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div> </td>
-   
-    
-    <td>
-	<div class="col-md-9">
-    <select id="affecter-rep" name="affecter-rep3" class="form-control">
-      <option value="1">Aucun</option>
-      <option value="2">NOM PRENOM</option>
-      <option value="3">NOM PRENOM</option>
-      <option value="4">NOM PRENOM</option>
-      <option value="5">NOM PRENOM</option>
-      <option value="6">NOM PRENOM </option>
-      <option value="7">NOM PRENOM</option>
-    </select>
-  </div></td>
-   <td>Pas encore</td>
-    </tr>  
- <tr>
-    
-    <td><a data-toggle="modal" data-target="#demande4">Titre de la demande </a>
-	<div class="modal fade" id="demande4" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Demane N°17</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici le corps de la demande.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div></td>
-    
-   
-    
-    <td><div class="col-md-9">
-    <select id="affecter-rep" name="affecter-rep4" class="form-control">
-      <option value="1">Aucun</option>
-      <option value="2">NOM PRENOM</option>
-      <option value="3">NOM PRENOM</option>
-      <option value="4">NOM PRENOM</option>
-      <option value="5">NOM PRENOM</option>
-      <option value="6">NOM PRENOM </option>
-      <option value="7">NOM PRENOM</option>
-    </select>
-  </div></td>
-      <td>En cours</td>
+  </td>
+
+     <td><?php echo $row['etatDemande'];?></td>
+	
     </tr>
    
-    
- 
-<tr>
-    
-    <td><a data-toggle="modal" data-target="#demande5">Titre de la demande </a>
-	<div class="modal fade" id="demande5" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Demande N°37</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de la demande.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div></td>
-   
-    
-    <td>
-	<div class="col-md-9">
-    <select id="affecter-rep" name="affecter-rep5" class="form-control">
-      <option value="1">Aucun</option>
-      <option value="2">NOM PRENOM</option>
-      <option value="3">NOM PRENOM</option>
-      <option value="4">NOM PRENOM</option>
-      <option value="5">NOM PRENOM</option>
-      <option value="6">NOM PRENOM </option>
-      <option value="7">NOM PRENOM</option>
-    </select>
-  </div></td>
-   <td>Terminée</td>
-    </tr>
-  
-  <tr>
-    
-    <td><a data-toggle="modal" data-target="#demande6">Titre de la demande </a>
-	<div class="modal fade" id="demande6" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Demande N°17</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de la demande.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div></td>
-    
-    <td>
-	<div class="col-md-9">
-    <select id="affecter-rep" name="affecter-rep6" class="form-control">
-      <option value="1">Aucun</option>
-      <option value="2">NOM PRENOM</option>
-      <option value="3">NOM PRENOM</option>
-      <option value="4">NOM PRENOM</option>
-      <option value="5">NOM PRENOM</option>
-      <option value="6">NOM PRENOM </option>
-      <option value="7">NOM PRENOM</option>
-    </select>
-  </div></td>
-   <td>En cours</td>
-    </tr>  
-   
-    
+<?php } ?>
    
     
     </tbody>
