@@ -78,11 +78,11 @@ $db = data_base_connect();
                                                 <li><a href="#about">A propos</a></li>
 												<li><a href="#contact">Contact</a></li>
 												<li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
-          <span class="glyphicon glyphicon-user"></span> 
+          <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
                     <?php
-				    if($_SESSION['login']==true) { 
+				    if(isset($_SESSION['login'])==true) { 
    											     ?>
                     <ul class="dropdown-menu">
                         <li>
@@ -189,7 +189,6 @@ $db = data_base_connect();
 				
 				
 				<?php 	
-
 				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser LIMIT 4");
 				$select->execute();
 				$i=0;
@@ -229,7 +228,6 @@ $db = data_base_connect();
       					
                      </div>
                 </div>
-
                      <div class="col-sm-6 col-md-3 isotope-item web-design">
                      <div class="image-box">
       				<a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
@@ -246,7 +244,6 @@ $db = data_base_connect();
                      </div>
  					<div class="col-sm-6 col-md-3 isotope-item web-design">
                      <div class="image-box">
-
                        <a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
       					 <center>         				
          				  <h6 class="heading">NOM Prénom</h6>
@@ -293,27 +290,35 @@ $db = data_base_connect();
 				<div class="row object-non-visible" data-animation-effect="fadeIn" style="margin-top:9%;">
 =======-->
 				<br>
+				<?php  if(isset($_SESSION['login'])==true){?>
 				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceClient.php" >Nouvelle annonce</a></div>
                	<br>
                	<br>
                	<br>
-               	<br>		
+               	<br>
+				<?php }?>				
 				<div class="row object-non-visible" data-animation-effect="fadeIn">
 					<div class="col-md-12">
 						<div class="isotope-container row grid-space-20">
+						<?php 	
+				$select = $db->prepare("SELECT * FROM annonce_");
+				$select->execute();
+				$i=0;
+				while($row = $select->fetch()){
+				?>
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-1">
+										<a class="overlay" data-toggle="modal" data-target="<?php echo "#project".$row['idAnnonce'];?>" >
 											<i class="fa fa-search-plus"></i>
 											<span>Voir l'annonce</span>
 										</a>
 									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-1">Voir l'annonce</a>
+									<a class="btn btn-default btn-block" data-toggle="modal" data-target="<?php echo "#project".$row['idAnnonce'];?>" >Voir l'annonce</a>
 								</div>
 								<!-- Modal -->
-								<div class="modal fade" id="project-1" tabindex="-1" role="dialog" aria-labelledby="project-1-label" aria-hidden="true">
+								<div class="modal fade" id="<?php echo "project".$row['idAnnonce'];?>" tabindex="-1" role="dialog" aria-labelledby="project-1-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -321,10 +326,13 @@ $db = data_base_connect();
 												<h4 class="modal-title" id="project-1-label">SOS-PC</h4>
 											</div>
 											<div class="modal-body">
-												<h3>Annonce N°99</h3>
+												<h3><?php echo "Annonce N°".$row['idAnnonce']; ?></h3>
 												<div class="row">
 													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
+														<p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."<br>".
+														$row['dateCreation']."<br>"."Durée de validité:".$row['durreeValidite']."<br>".
+														$row['nombreDeVues']; 
+														?></p>
 													</div>
 													<div class="col-md-6">
 														<img src="images/320x320.png" alt="">
@@ -339,8 +347,8 @@ $db = data_base_connect();
 								</div>
 								<!-- Modal end -->
 							</div>
-
-							<div class="col-sm-6 col-md-3 isotope-item app-development">
+				<?php } ?>
+							<!--<div class="col-sm-6 col-md-3 isotope-item app-development">
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="images/320x320.png" alt="">
@@ -351,7 +359,7 @@ $db = data_base_connect();
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-2">Voir l'annonce</a>
 								</div>
-								<!-- Modal -->
+								
 								<div class="modal fade" id="project-2" tabindex="-1" role="dialog" aria-labelledby="project-2-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -376,7 +384,7 @@ $db = data_base_connect();
 										</div>
 									</div>
 								</div>
-								<!-- Modal end -->
+							
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
@@ -390,7 +398,7 @@ $db = data_base_connect();
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-3">Voir l'annonce</a>
 								</div>
-								<!-- Modal -->
+							
 								<div class="modal fade" id="project-3" tabindex="-1" role="dialog" aria-labelledby="project-3-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -415,7 +423,7 @@ $db = data_base_connect();
 										</div>
 									</div>
 								</div>
-								<!-- Modal end -->
+							
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item site-building">
@@ -429,7 +437,7 @@ $db = data_base_connect();
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-4">Voir l'annonce</a>
 								</div>
-								<!-- Modal -->
+							
 								<div class="modal fade" id="project-4" tabindex="-1" role="dialog" aria-labelledby="project-4-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -454,7 +462,7 @@ $db = data_base_connect();
 										</div>
 									</div>
 								</div>
-								<!-- Modal end -->
+							
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item app-development">
@@ -468,7 +476,7 @@ $db = data_base_connect();
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-5">Voir l'annonce</a>
 								</div>
-								<!-- Modal -->
+							
 								<div class="modal fade" id="project-5" tabindex="-1" role="dialog" aria-labelledby="project-5-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -493,7 +501,7 @@ $db = data_base_connect();
 										</div>
 									</div>
 								</div>
-								<!-- Modal end -->
+						
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
@@ -507,7 +515,7 @@ $db = data_base_connect();
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-6">Voir l'annonce</a>
 								</div>
-								<!-- Modal -->
+					
 								<div class="modal fade" id="project-6" tabindex="-1" role="dialog" aria-labelledby="project-6-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -532,7 +540,7 @@ $db = data_base_connect();
 										</div>
 									</div>
 								</div>
-								<!-- Modal end -->
+							
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item site-building">
@@ -546,7 +554,7 @@ $db = data_base_connect();
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-7">Voir l'annonce</a>
 								</div>
-								<!-- Modal -->
+							
 								<div class="modal fade" id="project-7" tabindex="-1" role="dialog" aria-labelledby="project-7-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -571,7 +579,7 @@ $db = data_base_connect();
 										</div>
 									</div>
 								</div>
-								<!-- Modal end -->
+							
 							</div>
 							
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
@@ -585,7 +593,7 @@ $db = data_base_connect();
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-8">Voir l'annonce</a>
 								</div>
-								<!-- Modal -->
+								
 								<div class="modal fade" id="project-8" tabindex="-1" role="dialog" aria-labelledby="project-8-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -610,7 +618,7 @@ $db = data_base_connect();
 										</div>
 									</div>
 								</div>
-								<!-- Modal end -->
+							
 							</div>
 
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
@@ -624,7 +632,7 @@ $db = data_base_connect();
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-9">Voir l'annonce</a>
 								</div>
-								<!-- Modal -->
+								
 								<div class="modal fade" id="project-9" tabindex="-1" role="dialog" aria-labelledby="project-9-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -649,7 +657,7 @@ $db = data_base_connect();
 										</div>
 									</div>
 								</div>
-								<!-- Modal end -->
+								
 							</div>
 
 							<div class="col-sm-6 col-md-3 isotope-item site-building">
@@ -663,7 +671,7 @@ $db = data_base_connect();
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-10">Voir l'annonce</a>
 								</div>
-								<!-- Modal -->
+							
 								<div class="modal fade" id="project-10" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -688,7 +696,7 @@ $db = data_base_connect();
 										</div>
 									</div>
 								</div>
-								<!-- Modal end -->
+								
 							</div>
 
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
@@ -702,7 +710,7 @@ $db = data_base_connect();
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-11">Voir l'annonce</a>
 								</div>
-								<!-- Modal -->
+						
 								<div class="modal fade" id="project-11" tabindex="-1" role="dialog" aria-labelledby="project-11-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -727,7 +735,7 @@ $db = data_base_connect();
 										</div>
 									</div>
 								</div>
-								<!-- Modal end -->
+							
 							</div>
 
 							<div class="col-sm-6 col-md-3 isotope-item app-development">
@@ -741,7 +749,7 @@ $db = data_base_connect();
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-12">Voir l'annonce</a>
 								</div>
-								<!-- Modal -->
+							
 								<div class="modal fade" id="project-12" tabindex="-1" role="dialog" aria-labelledby="project-12-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -766,8 +774,8 @@ $db = data_base_connect();
 										</div>
 									</div>
 								</div>
-								<!-- Modal end -->
-							</div>
+								
+							</div>-->
 
 						</div>
 						<!-- portfolio items end -->

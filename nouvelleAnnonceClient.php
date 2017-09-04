@@ -252,6 +252,13 @@ session_start();
     
   </div>
 </div>
+<div class="form-group">
+  <label class="col-md-4 control-label" for="duree">Durée de validité:</label>  
+  <div class="col-md-5">
+  <input id="duree" name="duree" type="text" placeholder="ex: 2 jours" class="form-control input-md" required="">
+    
+  </div>
+</div>
 
 <!-- Select Basic -->
 <div class="form-group">
@@ -345,7 +352,9 @@ session_start();
                   <div class="container">
                     <div class="col-md-16">
                      <div class="form-group">
-                    <form class="form-horizontal" method="POST" action="./php/newAnnonce.php" enctype="multipart/form-data">
+					 <p id="f1_upload_process">Loading...<br/><img src="loader.gif" /></p>
+                     <p id="result"></p>
+                    <form class="form-horizontal" method="POST" action="php/upload.php" enctype="multipart/form-data" target="upload_target" onsubmit="startUpload();">
 
                         <div class="form-group">
                                   
@@ -364,9 +373,11 @@ session_start();
 
 
                        </div> 
-                                         </form>
+					   <button class="btn btn-primary btn-md"type="submit" name="submitBtn" onclick="creerAnnonce();" >Créer annonce</button>  
 
-<button class="btn btn-primary btn-md" onclick="creerAnnonce();" >Créer annonce</button>  
+                                         </form>
+  <iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
+
     </div>
 </div>
 </div>
@@ -437,12 +448,15 @@ session_start();
 				sysE = $('#sysE').val();
 				ancienn = $('#ancienn').val(),
 				contenuAnnonce = $('#contenuAnnonce').val();
-				imgAnnonce = $('#imgAnnonce').val();
+				duree = $('#duree').val();
+				
                 
                 // envoie avec un post les paramaitre + le nom de fichier 
-                $.post("newAnnonce.php",{model,prix,processeur,RAM,sysE,ancienn,contenuAnnonce,imgAnnonce},(data)=>{
+                $.post("php/newAnnonce.php",{model,prix,processeur,RAM,sysE,ancienn,contenuAnnonce,duree},(data)=>{
                   alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
                 })
             }
+			
+			
      </script>
 </html>
