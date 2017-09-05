@@ -79,7 +79,7 @@
 
                       <?php
                     session_start();
-				    if($_SESSION['login']==true) { 
+				    if($_SESSION['login']==true) {
    											     ?>
                     <ul class="dropdown-menu">
                         <li>
@@ -742,14 +742,7 @@
 		</br>
 	</br>
 			<div class="filters text-center">
-
-
-
 							<center>
-								
-
-
-
 								<div class="btn button"><a href="galery2.php">tout</a></div>
 								<div class="btn button"><a href="galery2.php">Les plus récentes</a></div>
 								<div class="btn button"><a href="galery2.php">Les plus consultées</a></div>

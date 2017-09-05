@@ -45,7 +45,7 @@ $('form').submit(function(e) {
 				break;
 				}
 				} 
-				window.open("accueilRep.php","_self");
+				window.open("home.php","_self");
 				}else   {
 					errorMessage = "Mauvais mot de passe ou nom d'utilisateur  ! ";
 					$('#err').show();

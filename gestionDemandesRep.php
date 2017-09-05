@@ -198,10 +198,10 @@ while($row = $select->fetch()){
 	</td> 
     <td> 
 	<div class="col-md-9">
-    <select id="affecter-rep" name="affecter-rep" class="form-control">
+    <select id="affecter-rep" name="affecter-rep" onchange="changeEtat(<?php echo $row['idDemande'];?>)" class="form-control">
       <option value="1">Aucun</option>
 
-      <?php 
+      <?php
 $selectR = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
 $selectR->execute();
 $i=0;
@@ -275,6 +275,13 @@ while($row2 = $selectR->fetch()){?>
 
      <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
   
+     <script type="text/javascript">
+      function changeEtat(id) {
+      var etat = document.getElementById("etat-reparation").value;
+      $.post("php/etatrep.php",{etat,id},(data)=>{
+      })
+      }
+      </script>
 </html>
 
 

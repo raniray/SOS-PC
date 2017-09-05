@@ -443,13 +443,12 @@ session_start();
               // les paramaitre de la formulaire 
                 model = $('#model').val();
                 prix = $('#prix').val();
-				processeur = $('#processeur').val();
-				RAM = $('#RAM').val();
-				sysE = $('#sysE').val();
-				ancienn = $('#ancienn').val(),
-				contenuAnnonce = $('#contenuAnnonce').val();
-				duree = $('#duree').val();
-				
+                processeur = $('#processeur').val();
+                RAM = $('#RAM').val();
+                sysE = $('#sysE').val();
+                ancienn = $('#ancienn').val(),
+                contenuAnnonce = $('#contenuAnnonce').val();
+                duree = $('#duree').val();
                 
                 // envoie avec un post les paramaitre + le nom de fichier 
                 $.post("php/newAnnonce.php",{model,prix,processeur,RAM,sysE,ancienn,contenuAnnonce,duree},(data)=>{

@@ -63,20 +63,8 @@ $url = "";
     }
 //}
  
-   $email =  $_SESSION['mail'];
- $stmt1 = $db->prepare("SELECT idUser FROM User_ WHERE mailUser=:mail");
- $stmt1->bindValue(':mail',$email);
- try{
-    $stmt1->execute();	 
-    while($row = $stmt1->fetch(PDO::FETCH_ASSOC)) 
-{
-  $ID = $row['idUser'];
-
-}
-}catch (Exception $e) {
-        echo $e->getMessage();
-      }
-	  
+   $ID =  $_SESSION['id'];
+    	  
 $stmt = $db->prepare("INSERT INTO annonce_ (annoncePic,annonceContent,dateCreation,prix,nombreDeVues,durreeValidite,idUser) VALUES (:img,:annonceContenu,:dateC,:prixA,:nbreVues,:dureeValid,:idU)");
 $stmt->bindValue(':annonceContenu', $content);
 $stmt->bindValue(':dateC', $date_creation);

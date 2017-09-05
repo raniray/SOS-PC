@@ -169,7 +169,7 @@ $i=0;
 while($row = $select->fetch()){
     ?>
     <tr>
-    <td><a data-toggle="modal" data-target="#demande1"><?php echo $row['intitulePanne'];?></a> 
+    <td><a data-toggle="modal" data-target="#demande1"><?php echo $row['intitulePanne'];?></a>
 	<div class="modal fade" id="demande1" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
@@ -178,10 +178,15 @@ while($row = $select->fetch()){
 												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
 											</div>
 											<div class="modal-body">
-												<h3>Demande N°37</h3>
+												<h3>Demande N°<?php echo $row['idDemande'];?></h3>
 												<div class="row">
 													<div class="col-md-6">
-														<p>Ici c'est le corps de la demande.</p>
+														<p>	
+<?php echo "Modèle: ".$row['modelePc']."\n "."Processeur: ".$row['processeur']."\n
+"."RAM: ".$row['ramPc']."\n "."Système d'exploitation:".$row['osPc']."\n "."Anciennete:".$row['ancientePc']."\n "."Detail:".$row['descriptionPanne'];
+
+?>
+</p>
 													</div>
 													<div class="col-md-6">
 														<img src="images/320x320.png" alt="">
@@ -195,16 +200,16 @@ while($row = $select->fetch()){
 									</div>
 								</div>
 	</td>
-    <td>DD/MM/YYYY</td>
+    <td><?php echo $row['dateCreation'];?></td>
     <td>
-	 <select id="etat-reparation" name="etat-reparation" class="form-control">
-      <option value="1">En cours</option>
-      <option value="2">Pas encore</option>
-      <option value="3">Terminé</option>
+	 <select id="etat-reparation" name="etat-reparation" onchange="changeEtat(<?php echo $row['idDemande'];?>)" class="form-control">
+      <option <?php if(strcmp($row['etatDemande'],"En cours")==0){ echo "selected='true'"; } ?> value="En cours">En cours</option>
+      <option <?php if(strcmp($row['etatDemande'],"Pas encore")==0){ echo "selected='true'"; } ?> value="Pas encore">Pas encore</option>
+      <option <?php if(strcmp($row['etatDemande'],"Terminé")==0){ echo "selected='true'"; } ?> value="Terminé">Terminé</option>
     </select>
 	</td>
   
-    <td title="modifier"><p data-editable>70%</p></td>
+    <td title="modifier"><input id="taux-reparation" onchange="changetaux(<?php echo $row['idDemande'];?>);" value="<?php echo $row['tauxAvancement'];?>">%</td>
    
     </tr>
     
@@ -286,6 +291,17 @@ while($row = $select->fetch()){
      <script type="text/javascript" src="js/image.js"></script>
 
      <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
-  
+      <script type="text/javascript">
+      function changeEtat(id) {
+      var etat = document.getElementById("etat-reparation").value;
+      $.post("php/etatrep.php",{etat,id},(data)=>{
+      })
+      }
+      function changetaux(id){
+        var taux = document.getElementById("taux-reparation").value;
+        $.post("php/tauxrep.php",{taux,id},(data)=>{
+        })
+      }
+      </script>
 </html>
 

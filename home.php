@@ -62,7 +62,7 @@ $db = data_base_connect();
 						
 												 <li><a href="#portfolio">Vente</a></li>
 												 <?php
-												    if(isset($_SESSION['login'])==true) { 
+												 if(strcmp($_SESSION['Account_type'],'C')==0) {
    											     ?>	
 												<li class="dropdown" >
 													<a class="dropbtn" href="#">Réparation-PC</a>
@@ -73,8 +73,23 @@ $db = data_base_connect();
 												    <a href="index2.php">Live help</a>
 												  </div>
 												</li>
-												 <?php };
+												 <?php }else{
+												 if(strcmp($_SESSION['Account_type'],'R')==0) {?>
+												 <li class="dropdown" >
+													<a class="dropbtn" href="#">Réparation PC</a>
+  									
+  												<div class="dropdown-content">
+    											<a href="Reparations.php">Réparations</a>
+   												 <a href="ficheReparation.php">Fiche réparation</a>
+												    <a href="liveHelpRep.php">Live help</a>
+												  </div>
+												</li>
+												 <?php 
+												}}
 												 ?>
+
+
+
                                                 <li><a href="#about">A propos</a></li>
 												<li><a href="#contact">Contact</a></li>
 												<li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
@@ -212,49 +227,6 @@ $db = data_base_connect();
       				</div>
       			</div>
 				<?php }?>
-      			<!--<div class="col-sm-6 col-md-3 isotope-item web-design">
-                    <div class="image-box">
-      					<a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-        				
-        				
-        				  <center>
-         				  <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				  </br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRep.php">Voir Profil</a></div>
-      					 </center>          
-        					
-      					
-                     </div>
-                </div>
-                     <div class="col-sm-6 col-md-3 isotope-item web-design">
-                     <div class="image-box">
-      				<a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-      					 <center>        				
-         				 <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				  </br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRep.php">Voir Profil</a></div>
-       					 </center>        
-        				
-      				
-      			     </div>
-                     </div>
- 					<div class="col-sm-6 col-md-3 isotope-item web-design">
-                     <div class="image-box">
-                       <a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-      					 <center>         				
-         				  <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				</br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRep.php">Voir Profil</a></div>
-       					 </center> 
-  				    </div>
-  				</div>
- -->
                        </div>
                    </br>
 
@@ -282,13 +254,7 @@ $db = data_base_connect();
 			<div class="container">
 				<h1 class="text-center title" id="portfolio">Espace vente PC</h1>
 				<div class="separator"></div>
-<!--<<<<<<< HEAD
-				<br>			
-				<div class="separator"></div>
-				<br>		
-				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceClient.html" >Nouvelle annonce</a></div>
-				<div class="row object-non-visible" data-animation-effect="fadeIn" style="margin-top:9%;">
-=======-->
+
 				<br>
 				<?php  if(isset($_SESSION['login'])==true){?>
 				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceClient.php" >Nouvelle annonce</a></div>
@@ -348,434 +314,6 @@ $db = data_base_connect();
 								<!-- Modal end -->
 							</div>
 				<?php } ?>
-							<!--<div class="col-sm-6 col-md-3 isotope-item app-development">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-2">
-											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-2">Voir l'annonce</a>
-								</div>
-								
-								<div class="modal fade" id="project-2" tabindex="-1" role="dialog" aria-labelledby="project-2-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
-												<h4 class="modal-title" id="project-2-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Annonce N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-3">
-											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-3">Voir l'annonce</a>
-								</div>
-							
-								<div class="modal fade" id="project-3" tabindex="-1" role="dialog" aria-labelledby="project-3-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">SOS-PC</span></button>
-												<h4 class="modal-title" id="project-3-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Annonce N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item site-building">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-4">
-											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-4">Voir l'annonce</a>
-								</div>
-							
-								<div class="modal fade" id="project-4" tabindex="-1" role="dialog" aria-labelledby="project-4-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-4-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Annonce N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item app-development">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-5">
-											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-5">Voir l'annonce</a>
-								</div>
-							
-								<div class="modal fade" id="project-5" tabindex="-1" role="dialog" aria-labelledby="project-5-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-5-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Annonce N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-						
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-6">
-											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-6">Voir l'annonce</a>
-								</div>
-					
-								<div class="modal fade" id="project-6" tabindex="-1" role="dialog" aria-labelledby="project-6-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-6-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Annonce N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item site-building">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-7">
-											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-7">Voir l'annonce</a>
-								</div>
-							
-								<div class="modal fade" id="project-7" tabindex="-1" role="dialog" aria-labelledby="project-7-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-7-label">SOS-PC</h4>
-											</div>
-										<div class="modal-body">
-												<h3>Annonce N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-8">
-											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-8">Voir l'annonce</a>
-								</div>
-								
-								<div class="modal fade" id="project-8" tabindex="-1" role="dialog" aria-labelledby="project-8-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-8-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Annonce N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							
-							</div>
-
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-9">
-											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-9">Voir l'annonce</a>
-								</div>
-								
-								<div class="modal fade" id="project-9" tabindex="-1" role="dialog" aria-labelledby="project-9-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-9-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Annonce N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-
-							<div class="col-sm-6 col-md-3 isotope-item site-building">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-10">
-											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-10">Voir l'annonce</a>
-								</div>
-							
-								<div class="modal fade" id="project-10" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Annonce N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-11">
-											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-11">Voir l'annonce</a>
-								</div>
-						
-								<div class="modal fade" id="project-11" tabindex="-1" role="dialog" aria-labelledby="project-11-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-11-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Annonce N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							
-							</div>
-
-							<div class="col-sm-6 col-md-3 isotope-item app-development">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-12">
-											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-12">Voir l'annonce</a>
-								</div>
-							
-								<div class="modal fade" id="project-12" tabindex="-1" role="dialog" aria-labelledby="project-12-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-12-label">SOS-PC</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Annonce N°99</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Ici c'est le corps de l'annonce.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-							</div>-->
 
 						</div>
 						<!-- portfolio items end -->
@@ -786,13 +324,7 @@ $db = data_base_connect();
 		</br>
 	</br>
 			<div class="filters text-center">
-
-
-
 							<center>
-								
-
-
 								<div class="btn button"><a href="galery.php">tout</a></div>
 								<div class="btn button"><a href="galery.php">Les plus récentes</a></div>
 								<div class="btn button"><a href="galery.php">Les plus consultées</a></div>
@@ -1040,23 +572,23 @@ $db = data_base_connect();
 						</div>
 						<div class="col-sm-6">
 							<div class="footer-content">
-								<form role="form" id="footer-form">
+								<form>
 									<div class="form-group has-feedback">
 										<label class="sr-only" for="name2">Nom et prénom</label>
-										<input type="text" class="form-control" id="name2" placeholder="Nom et prénom" name="name2" required>
+										<input type="text" class="form-control" id="nom" placeholder="Nom et prénom" name="nom" required>
 										<i class="fa fa-user form-control-feedback"></i>
 									</div>
 									<div class="form-group has-feedback">
 										<label class="sr-only" for="email2">Email</label>
-										<input type="email" class="form-control" id="email2" placeholder="Email" name="email2" required>
+										<input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
 										<i class="fa fa-envelope form-control-feedback"></i>
 									</div>
 									<div class="form-group has-feedback">
 										<label class="sr-only" for="message2"> Votre message</label>
-										<textarea class="form-control" rows="8" id="message2" placeholder="Message" name="message2" required></textarea>
+										<textarea class="form-control" rows="8" id="message" placeholder="Message" name="message" required></textarea>
 										<i class="fa fa-pencil form-control-feedback"></i>
 									</div>
-									<input type="submit" value="Envoyer" class="btn button2">
+									<button onclick="contacter();" class="btn button2">Envoyer</button>
 								</form>
 							</div>
 						</div>
@@ -1093,5 +625,22 @@ $db = data_base_connect();
 
 		<!-- Custom Scripts -->
 		<script type="text/javascript" src="js/custom.js"></script>
+
+		  <script type="text/javascript">
+            
+           function contacter(){
+              // les paramaitre de la formulaire 
+                nom = $('#nom').val();
+                mail = $('#email').val();
+                message = $('#message').val();
+                
+                // envoie avec un post les paramaitre + le nom de fichier 
+                $.post("php/envoiemsg.php",{message,mail,nom},(data)=>{
+                  alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
+                })
+            }
+			
+			
+     </script>
 	</body>
 </html>
