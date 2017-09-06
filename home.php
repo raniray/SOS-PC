@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
-<?php session_start(); 
+<?php 
+session_start();
+if(!isset($_SESSION['login'])){
+	header("Location: login.php");   
+}
 require('php/connexion.php');
 $db = data_base_connect();
 ?>
@@ -61,8 +65,8 @@ $db = data_base_connect();
 												<li class="active"><a href="#banner">Accueil</a></li>
 						
 												 <li><a href="#vente">Vente</a></li>
-												 <?php
-												    if(isset($_SESSION['login'])==true) { 
+												 	 <?php
+													if(strcmp($_SESSION['Account_type'],"C")==0){
    											     ?>	
 												<li class="dropdown" >
 													<a class="dropbtn" href="#">Réparation-PC</a>
@@ -73,7 +77,18 @@ $db = data_base_connect();
 												    <a href="index2.php">Live help</a>
 												  </div>
 												</li>
-												 <?php };
+												 <?php }elseif(strcmp($_SESSION['Account_type'],"R")==0){
+													 ?>
+													 <li class="dropdown" >
+													<a class="dropbtn" href="#">Réparation PC</a>
+											
+														<div class="dropdown-content">
+														<a href="Reparations.php">Réparations</a>
+														<a href="ficheReparation.php">Fiche réparation</a>
+															<a href="liveHelpRep.php">Live help</a>
+														</div>
+														</li><?php 
+												 }
 												 ?>
                                                 <li><a href="#about">A propos</a></li>
 												<li><a href="#contact">Contact</a></li>
@@ -212,49 +227,6 @@ $db = data_base_connect();
       				</div>
       			</div>
 				<?php }?>
-      			<!--<div class="col-sm-6 col-md-3 isotope-item web-design">
-                    <div class="image-box">
-      					<a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-        				
-        				
-        				  <center>
-         				  <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				  </br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRep.php">Voir Profil</a></div>
-      					 </center>          
-        					
-      					
-                     </div>
-                </div>
-                     <div class="col-sm-6 col-md-3 isotope-item web-design">
-                     <div class="image-box">
-      				<a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-      					 <center>        				
-         				 <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				  </br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRep.php">Voir Profil</a></div>
-       					 </center>        
-        				
-      				
-      			     </div>
-                     </div>
- 					<div class="col-sm-6 col-md-3 isotope-item web-design">
-                     <div class="image-box">
-                       <a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-      					 <center>         				
-         				  <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				</br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRep.php">Voir Profil</a></div>
-       					 </center> 
-  				    </div>
-  				</div>
- -->
                        </div>
                    </br>
 
@@ -282,13 +254,6 @@ $db = data_base_connect();
 			<div class="container">
 				<h1 class="text-center title" id="vente">Espace vente PC</h1>
 				<div class="separator"></div>
-<!--<<<<<<< HEAD
-				<br>			
-				<div class="separator"></div>
-				<br>		
-				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceClient.html" >Nouvelle annonce</a></div>
-				<div class="row object-non-visible" data-animation-effect="fadeIn" style="margin-top:9%;">
-=======-->
 				<br>
 				<?php  if(isset($_SESSION['login'])==true){?>
 				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceClient.php" >Nouvelle annonce</a></div>
@@ -300,7 +265,18 @@ $db = data_base_connect();
 				<div class="row object-non-visible" data-animation-effect="fadeIn">
 					<div class="col-md-12">
 						<div class="isotope-container row grid-space-20">
-						<?php 	
+				
+				<!--=============-->
+				
+				<!--=============-->
+				
+				<!--=============-->
+
+				<!-- Tous -->
+
+				<div id="tous">
+
+				<?php 	
 				$select = $db->prepare("SELECT * FROM annonce_");
 				$select->execute();
 				$i=0;
@@ -312,7 +288,7 @@ $db = data_base_connect();
 										<img src="images/320x320.png" alt="">
 										<a class="overlay" id="<?php echo $row['idAnnonce']; ?>" name="<?php echo $row['idAnnonce']; ?>" onclick="voirAnnonce(<?php echo $row['idAnnonce'];?>);" data-toggle="modal" data-target="<?php  echo "#project".$row['idAnnonce'];?>" >
 											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
+											<span>Voir l'annonce tous</span>
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="<?php echo "#project".$row['idAnnonce'];?>" >Voir l'annonce</a>
@@ -342,9 +318,11 @@ $db = data_base_connect();
 													</div>
 												</div>
 											</div>
+											
 											<div class="modal-footer">
 												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
 											</div>
+
 										</div>
 									</div>
 								</div>
@@ -352,7 +330,7 @@ $db = data_base_connect();
 							</div>
 				<?php } ?>
 						
-
+				</div>
 						</div>
 						<!-- portfolio items end -->
 					
@@ -369,10 +347,10 @@ $db = data_base_connect();
 								
 
 
-								<div class="btn button"><a href="home.php#vente">tout</a></div>
-								<div class="btn button"><a href="plusRecentes.php#vente">Les plus récentes</a></div>
-								<div class="btn button"><a href="plusConsultees.php#vente">Les plus consultées</a></div>
-								<div class="btn button"><a href="moinsCheres.php#vente">Les moins chères</a></div>
+								<div class="btn button"><button class="btn button" onclick="Annonces('T');">tout</button></div>
+								<div class="btn button"><button class="btn button" onclick="Annonces('R');">Les plus récentes</button></div>
+								<div class="btn button"><button class="btn button" onclick="Annonces('C');" >Les plus consultées</button></div>
+								<div class="btn button"><button class="btn button" onclick="Annonces('M');" >Les moins chères</button></div>
 
 							</center>
 						</div>
@@ -672,16 +650,15 @@ $db = data_base_connect();
 	</body>
 	
 	<script type="text/javascript">
-            
            function voirAnnonce(id){
-             
-                
-                
-                $.post("php/voirAnnonce.php",{id},(data)=>{
+             	$.post("php/voirAnnonce.php",{id},(data)=>{
                   alert(data);
                 })
             }
-			
-			
+			function Annonces(type){
+				$.post("php/choixAnnonces.php",{type},(data)=>{
+				$("#tous").html(data);
+                })
+			}
      </script>
 </html>

@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
- <?php session_start(); 
-require('php/connexion.php');
-$db = data_base_connect();
+<?php session_start();
+if(!isset($_SESSION['login'])){
+		header("Location: login.php");
+}else{
+	if(strcmp($_SESSION['Account_type'],"A")!=0){
+		header("Location: login.php");   
+	}
+}
+
 ?>
 	<head>
 		<meta charset="utf-8">
