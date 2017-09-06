@@ -452,8 +452,8 @@ $(function () {
 							<center>
 								
 
-								<div class="btn button"><a href="home.php#vente">tout</a></div>
-								<div class="btn button"><a href="">Les plus récentes</a></div>
+								<div class="btn button"><a href="accueilAdmin.php#vente">tout</a></div>
+								<div class="btn button"><a href="plusRecentes.php#vente">Les plus récentes</a></div>
 								<div class="btn button"><a href="plusConsultees.php#vente">Les plus consultées</a></div>
 								<div class="btn button"><a href="moinsCheres.php#vente">Les moins chères</a></div>
 								

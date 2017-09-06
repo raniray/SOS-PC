@@ -60,7 +60,7 @@ $db = data_base_connect();
 											<ul class="nav navbar-nav navbar-right">
 												<li class="active"><a href="#banner">Accueil</a></li>
 						
-												 <li><a href="#portfolio">Vente</a></li>
+												 <li><a href="#vente">Vente</a></li>
 												 <?php
 												    if(isset($_SESSION['login'])==true) { 
    											     ?>	

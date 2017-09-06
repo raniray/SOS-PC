@@ -60,7 +60,7 @@ $db = data_base_connect();
 											<ul class="nav navbar-nav navbar-right">
 												<li class="active"><a href="#banner">Accueil</a></li>
 						
-												 <li><a href="#portfolio">Vente</a></li>
+												 <li><a href="#vente">Vente</a></li>
 												 <?php
 												    if(isset($_SESSION['login'])==true) { 
    											     ?>	
@@ -370,7 +370,7 @@ $db = data_base_connect();
 
 
 								<div class="btn button"><a href="home.php#vente">tout</a></div>
-								<div class="btn button"><a href="">Les plus récentes</a></div>
+								<div class="btn button"><a href="plusRecentes.php#vente">Les plus récentes</a></div>
 								<div class="btn button"><a href="plusConsultees.php#vente">Les plus consultées</a></div>
 								<div class="btn button"><a href="moinsCheres.php#vente">Les moins chères</a></div>
 
