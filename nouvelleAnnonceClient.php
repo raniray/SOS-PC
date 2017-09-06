@@ -85,6 +85,7 @@ session_start();
                         <span class="icon-bar"></span>
                       </button>
                     </div>
+					<?php if($_SESSION['Account_type']=='C'){ ?>
                     <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
                       <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="home.php#banner">Accueil</a></li>
@@ -170,17 +171,150 @@ session_start();
                          ?>
                 </li>
             </li>
-            
+           
                       </ul>
                     </div>
+					<?php }?>
+					
+					<?php if($_SESSION['Account_type']=='A') { ?>
+					     										<div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
+											<ul class="nav navbar-nav navbar-right">
+												<li class="active"><a href="accueilAdmin.php">Accueil</a></li>
+						
+												 <li><a href="#portfolio">Vente</a></li>
+												<li class="active" >
+													<a  href="dashboard.php">Administration</a>					
+  												
+												  
+												</li>
+                                                <li><a href="#about">A propos</a></li>
+												<li><a href="#contact">Contact</a></li>
+												<li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
+          <span class="glyphicon glyphicon-user"></span> 
+                        Mon compte 
+                    </a>
+                    <?php
+					if(isset($_SESSION['login'])==true) { 
+   					?>	
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login">
+                                <div>
+                                    <div class="col-lg-5">
+                                         <div class="col-lg-5">
+                                        <p class="text-center">
+                                        	
+                                        	<img class="round" src="<?php echo $_SESSION['picture'];?>">
+   
+                                            
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-left"><strong><?php echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
+                                        
+                                    </div>
 
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                             <a href="./php/logout.php" class="btn button btn-block">Se déconnecter</a>
+                                             <a href="profileAdmin.php" class="btn button btn-block">Mon profil</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <?php };
+												 ?>
+                </li>
+            </li>
+						
+											</ul>
+										</div>
+					
                   </div>
                 </nav>
                 <!-- navbar end -->
 
               </div>
-              <!-- main-navigation end -->
+			  <?php };?>
+			  
+			  <?php if($_SESSION['Account_type']=='R') { ?>
+			  										<div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
+											<ul class="nav navbar-nav navbar-right">
+												<li class="active"><a href="accueilRep.php">Accueil</a></li>
+						
+												 <li><a href="accueilRep.php#portfolio">Vente</a></li>
+												<li class="dropdown" >
+													<a class="dropbtn" href="#">Réparation PC</a>
+  									
+  												<div class="dropdown-content">
+    											<a href="Reparations.php">Réparations</a>
+   												 <a href="ficheReparation.php">Fiche réparation</a>
+												    <a href="liveHelpRep.php">Live help</a>
+												  </div>
+												</li>
+                                                <li><a href="accueilRep.php#about">A propos</a></li>
+												<li><a href="accueilRep.php#contact">Contact</a></li>
+												<li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
+          <span class="glyphicon glyphicon-user"></span> 
+                        Mon compte 
+                    </a>
 
+                      <?php
+                    session_start();
+				    if($_SESSION['login']==true) { 
+   											     ?>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login">
+                                <div>
+                                    <div class="col-lg-5">
+                                        <p class="text-center">
+                                        	
+                                        	<img class="round" src="<?php echo $_SESSION['picture'];?>">
+   
+                                            
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                             <a href="./php/logout.php" class="btn button btn-block">Se déconnecter</a>
+                                             <a href="profile.php" class="btn button btn-block">Mon profil</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <?php };
+												 ?>            </li>
+            </li>
+						
+											</ul>
+										</div>
+			  <?php } ?>
+              <!-- main-navigation end -->
+                  
             </div>
             <!-- header-right end -->
 
@@ -220,7 +354,7 @@ session_start();
               <center>
                 <h1> ETAPE 1</h1>
                 <form class="form-horizontal" action="./php/newAnnonce.php" method="post" >
-   <?php echo "LOL!"; ?>
+  
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="modelePC">Modèle PC:</label>  
@@ -443,12 +577,13 @@ session_start();
               // les paramaitre de la formulaire 
                 model = $('#model').val();
                 prix = $('#prix').val();
-                processeur = $('#processeur').val();
-                RAM = $('#RAM').val();
-                sysE = $('#sysE').val();
-                ancienn = $('#ancienn').val(),
-                contenuAnnonce = $('#contenuAnnonce').val();
-                duree = $('#duree').val();
+				processeur = $('#processeur').val();
+				RAM = $('#RAM').val();
+				sysE = $('#sysE').val();
+				ancienn = $('#ancienn').val(),
+				contenuAnnonce = $('#contenuAnnonce').val();
+				duree = $('#duree').val();
+				
                 
                 // envoie avec un post les paramaitre + le nom de fichier 
                 $.post("php/newAnnonce.php",{model,prix,processeur,RAM,sysE,ancienn,contenuAnnonce,duree},(data)=>{
