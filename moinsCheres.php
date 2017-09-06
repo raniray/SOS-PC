@@ -218,7 +218,7 @@ $db = data_base_connect();
         				
         				
         				  <center>
-         				  <h6 class="heading">NOM Pr√©nom</h6>
+         				  <h6 class="heading">NOM PrÈnom</h6>
          				  <em>Evaluation=9999</em>
          				  </br>
          			</br>
@@ -232,7 +232,7 @@ $db = data_base_connect();
                      <div class="image-box">
       				<a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
       					 <center>        				
-         				 <h6 class="heading">NOM Pr√©nom</h6>
+         				 <h6 class="heading">NOM PrÈnom</h6>
          				  <em>Evaluation=9999</em>
          				  </br>
          			</br>
@@ -246,7 +246,7 @@ $db = data_base_connect();
                      <div class="image-box">
                        <a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
       					 <center>         				
-         				  <h6 class="heading">NOM Pr√©nom</h6>
+         				  <h6 class="heading">NOM PrÈnom</h6>
          				  <em>Evaluation=9999</em>
          				</br>
          			</br>
@@ -301,7 +301,7 @@ $db = data_base_connect();
 					<div class="col-md-12">
 						<div class="isotope-container row grid-space-20">
 						<?php 	
-				$select = $db->prepare("SELECT * FROM annonce_");
+				$select = $db->prepare("SELECT * FROM annonce_ ORDER BY prix ASC LIMIT 4");
 				$select->execute();
 				$i=0;
 				while($row = $select->fetch()){
@@ -326,12 +326,12 @@ $db = data_base_connect();
 												<h4 class="modal-title" id="project-1-label">SOS-PC</h4>
 											</div>
 											<div class="modal-body">
-												<h3><?php echo "Annonce N¬∞".$row['idAnnonce']; ?></h3>
+												<h3><?php echo "Annonce N∞".$row['idAnnonce']; ?></h3>
 												<div class="row">
 													<div class="col-md-6">
 													
 														<p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."<br>".
-														$row['dateCreation']."<br>"."Dur√©e de validit√©:".$row['durreeValidite']."<br>".
+														$row['dateCreation']."<br>"."DurÈe de validitÈ:".$row['durreeValidite']."<br>".
 														
 														'<i class="fa fa-eye" aria-hidden="true">'.'</i>'.'&nbsp;&nbsp;'.
 														$row['nombreDeVues']; 
@@ -361,7 +361,7 @@ $db = data_base_connect();
 			</div>
 		</br>
 	</br>
-			<div class="filters text-center">
+			<div class="filters text-center" >
 
 
 
@@ -399,7 +399,7 @@ $db = data_base_connect();
 								<img src="images/testimonial-1.png" alt="">
 							</div>
 							<div class="media-body">
-								<h3 class="media-heading">Mot cl√© !</h3>
+								<h3 class="media-heading">Mot cl√©!</h3>
 								<blockquote>
 									<p> Ici on met l'avis</p>
 									<footer>Nom Pr√©nom</footer>
@@ -639,7 +639,7 @@ $db = data_base_connect();
 						
 					</div><br>
 
-							<p class="text-center">Copyright ¬© 2017 <a target="_blank" href="#">SOS-PC</a>.</p>
+							<p class="text-center">Copyright &copy; 2017 <a target="_blank" href="#">SOS-PC</a>.</p>
 			<!-- .footer end -->
 				</div>		
 </div>			

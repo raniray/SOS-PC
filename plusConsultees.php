@@ -60,7 +60,7 @@ $db = data_base_connect();
 											<ul class="nav navbar-nav navbar-right">
 												<li class="active"><a href="#banner">Accueil</a></li>
 						
-												 <li><a href="#portfolio">Vente</a></li>
+												 <li><a href="#vente">Vente</a></li>
 												 <?php
 												    if(isset($_SESSION['login'])==true) { 
    											     ?>	
@@ -301,7 +301,7 @@ $db = data_base_connect();
 					<div class="col-md-12">
 						<div class="isotope-container row grid-space-20">
 						<?php 	
-				$select = $db->prepare("SELECT * FROM annonce_");
+				$select = $db->prepare("SELECT * FROM annonce_ ORDER BY nombreDeVues DESC LIMIT 4");
 				$select->execute();
 				$i=0;
 				while($row = $select->fetch()){
@@ -361,7 +361,7 @@ $db = data_base_connect();
 			</div>
 		</br>
 	</br>
-			<div class="filters text-center">
+			<div class="filters text-center" >
 
 
 
