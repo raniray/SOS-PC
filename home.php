@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
-<?php session_start(); 
+<?php 
+session_start();
+if(!isset($_SESSION['login'])){
+	header("Location: login.php");   
+}
 require('php/connexion.php');
 $db = data_base_connect();
 ?>
@@ -142,8 +146,8 @@ $db = data_base_connect();
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="signUp.html" class="btn button btn-block">S'inscrire</a>
-                                             <a href="login.html" class="btn button btn-block">Se connecter</a>
+                                             <a href="signUp.php" class="btn button btn-block">S'inscrire</a>
+                                             <a href="login.php" class="btn button btn-block">Se connecter</a>
                                         </p>
                                     </div>
                                 </div>

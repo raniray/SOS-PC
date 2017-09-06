@@ -1,5 +1,15 @@
 <!DOCTYPE html>
-<html >
+<html>
+	<?php 
+    session_start(); 
+    if(isset($_SESSION['login'])==true){
+        if(strcmp($_SESSION['Account_type'],"A")==0) {
+            header("Location: accueilAdmine.php");
+        }else{
+            header("Location: home.php");
+        }   
+    }
+    ?>
 <head>
   <meta charset="UTF-8">
   <title>SignUP</title>
@@ -27,6 +37,8 @@
 			<button  type="submit" id="login-button">S'inscrire</button>
 		</br>
 	</br>
+	            <strong>vous avez un compte ? ...<a href="login.php"> connectez-vous</a></strong>
+</br>
 			<div class="alert alert-danger" style="display:none;" id="err">
  		    <strong>Attention!</strong> Indicates a dangerous or potentially negative action.
 			</div>

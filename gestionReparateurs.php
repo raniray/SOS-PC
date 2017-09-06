@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html >
-<?php           session_start(); ?>
+<?php     
+session_start();
+if(!isset($_SESSION['login'])){
+		header("Location: login.php");
+}else{
+	if(strcmp($_SESSION['Account_type'],"A")!=0){
+		header("Location: login.php");   
+	}
+} ?>
   <head>
     <meta charset="UTF-8">
     <title>Gestion Réparateurs</title>

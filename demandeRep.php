@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html >
-<?php session_start();?>
+<?php
+session_start();
+if(!isset($_SESSION['login'])){
+	header("Location: login.php");   
+}
+?>
   <head>
     <meta charset="UTF-8">
     <title>Nouvelle demande</title>
@@ -152,8 +157,8 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="signUp.html" class="btn button btn-block">S'inscrire</a>
-                                             <a href="login.html" class="btn button btn-block">Se connecter</a>
+                                             <a href="signUp.php" class="btn button btn-block">S'inscrire</a>
+                                             <a href="login.php" class="btn button btn-block">Se connecter</a>
                                         </p>
                                     </div>
                                 </div>

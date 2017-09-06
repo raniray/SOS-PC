@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html >
+<?php 
+session_start();
+if(!isset($_SESSION['login'])){
+	header("Location: login.php");   
+}?>
   <head>
     <meta charset="UTF-8">
     <title>Nouvelle demande</title>
@@ -119,8 +124,8 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
-                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
+                                        <p class="text-left"><strong><?php  echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
                                 </div>
@@ -140,8 +145,25 @@
                             </div>
                         </li>
                     </ul>
-                    <?php };
-                         ?>            </li>
+                   
+                    <?php }else{
+												 ?>
+                    <ul class="dropdown-menu">
+                     
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                             <a href="signUp.php" class="btn button btn-block">S'inscrire</a>
+                                             <a href="login.php" class="btn button btn-block">Se connecter</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                                        <?php };?>        </li>
             </li>
             
                       </ul>

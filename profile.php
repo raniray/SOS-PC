@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html >
+<?php 
+session_start();
+if(!isset($_SESSION['login'])){
+	header("Location: login.php");   
+}
+require('php/connexion.php');
+$db = data_base_connect();
+?>
   <head>
     <meta charset="UTF-8">
     <title>Profile</title>
@@ -84,7 +92,6 @@
             
                          <li><a href="home.php#portfolio">Vente</a></li>
                          <?php
-                            session_start();
                             if($_SESSION['login']==true) { 
                              ?> 
                         <li class="dropdown" >
@@ -105,7 +112,6 @@
                         Mon compte 
                     </a>
                     <?php
-                    session_start();
             if($_SESSION['login']==true) { 
                              ?>
                     <ul class="dropdown-menu">
@@ -121,8 +127,8 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
-                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
+                                        <p class="text-left"><strong><?php  echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
                                 </div>
@@ -151,8 +157,8 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="signUp.html" class="btn button btn-block">S'inscrire</a>
-                                             <a href="login.html" class="btn button btn-block">Se connecter</a>
+                                             <a href="signUp.php" class="btn button btn-block">S'inscrire</a>
+                                             <a href="login.php" class="btn button btn-block">Se connecter</a>
                                         </p>
                                     </div>
                                 </div>
@@ -182,16 +188,20 @@
       </div>
     </header>
     <!-- header end -->
-
+<?php 
+$id = $_SESSION['id'];
+$select = $db->prepare("SELECT * FROM User_ where idUser=:id");
+$select->bindValue(':id', $id);
+$select->execute();
+while($row = $select->fetch()){?>
   <div class="container">
       <div class="row">
   
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
    
-   
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">NOM PRENOM</h3>
+              <h3 class="panel-title"><?php echo $row['nomUser']." ".$row['prenomUser'];?></h3>
             </div>
             <div class="panel-body">
               <div class="row">
@@ -202,16 +212,16 @@
                     <tbody>
                       <tr>
                         <td>Nom:</td>
-                        <td><input id="nom" name="nom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input  id="<?php echo "nom".$row['idUser'];?>" name="nom" type="text" value="<?php echo $row['nomUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
                         <td>Prénom:</td>
-                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="<?php echo "prenom".$row['idUser'];?>" name="prenom" type="text" value="<?php echo $row['prenomUser'];?>" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
                         <td>Date de naissance:</td>
                         <td><div class="input-group date" data-provide="datepicker">
-                        <input type="text" class="form-control3">
+                        <input id="<?php echo "date_de_naissance".$row['idUser'];?>" type="text" value="<?php echo $row['dateNaissUser'];?>"  class="form-control3">
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>
@@ -221,11 +231,11 @@
                          <tr>
                              <tr>
                         <td>Email:</td>
-                        <td><input id="mail" name="mail" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="<?php echo "mail".$row['idUser'];?>" name="mail" value="<?php echo $row['mailUser'];?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
                         <tr>
                         <td>Numéro de téléphone:</td>
-                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                        <td><input id="<?php echo "tel".$row['idUser'];?>" name="tel" value="<?php echo $row['telUser'] ;?>" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
                       <tr>
                         <td>Numéro de CCP:</td>
@@ -241,7 +251,7 @@
                        
                      <div class="row">
                       <div class="col-md-6">  
-                      <a href="#" class="btn button btn-block">Modifier mon profil</a>
+                      <a onclick="modifierRep(<?php echo $row['idUser']; ?>);" class="btn button btn-block">Modifier mon profil</a>
                     </div>
 
                       <div class="col-md-6">
@@ -249,17 +259,15 @@
                       </div>
                     </div>
                   </div>
-
-                      
-
                     </div>
-            
           </div>
         </div>
       </div>
     </div>
+<?php } ?>
 
 </div>
+
 </body>
   <!-- Jquery and Bootstap core js files -->
     <script type="text/javascript" src="plugins/jquery.min.js"></script>
@@ -289,5 +297,21 @@
 
      <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
   
+  <script type="text/javascript">
+            function modifierRep(id){
+                // les paramaitre de la formulaire 
+                nom = $('#nom'+id).val();
+                prenom = $('#prenom'+id).val();
+                date_de_naissance = $('#date_de_naissance'+id).val();
+                email = $('#mail'+id).val();
+                tel =$('#tel'+id).val();
+                // ccp = 
+                // envoie avec un post les paramaitre + le nom de fichier 
+                // $.post("php/modifierReparateur.php",{id,nom,prenom,date_de_naissance,email,tel,profession,classement,biographie},(data)=>{
+                //   alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
+                // })
+            }
+
+     </script>
 </html>
 

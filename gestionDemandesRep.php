@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html >
-  <?php session_start(); ?>
+  <?php session_start(); 
+if(!isset($_SESSION['login'])){
+		header("Location: login.php");
+}else{
+	if(strcmp($_SESSION['Account_type'],"A")!=0){
+		header("Location: login.php");   
+	}
+}
+?>
   <head>
     <meta charset="UTF-8">
     <title>Gestion demandes de réparation</title>
@@ -198,15 +206,14 @@ while($row = $select->fetch()){
 	</td> 
     <td> 
 	<div class="col-md-9">
-    <select id="affecter-rep" name="affecter-rep" onchange="changeEtat(<?php echo $row['idDemande'];?>)" class="form-control">
-      <option value="1">Aucun</option>
-
+    <select id="affecter-rep<?php echo $row['idDemande'];?>" name="affecter-rep<?php echo $row['idDemande'];?>" onchange="changeEtat(<?php echo $row['idDemande'];?>)" class="form-control">
+      <option>Aucun</option>
       <?php
 $selectR = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
 $selectR->execute();
 $i=0;
 while($row2 = $selectR->fetch()){?>
-      <option value="2"><?php echo $row2['nomUser']." ".$row2['prenomUser'];?></option>
+      <option  <?php if(strcmp($row2['idUser'],$row['idReparateur'])==0){ echo "selected='true'"; } ?> value="<?php echo $row2['idUser'];?>"><?php echo $row2['nomUser']." ".$row2['prenomUser'];?></option>
 <?php } ?>
     </select>
   </div>
@@ -277,9 +284,9 @@ while($row2 = $selectR->fetch()){?>
   
      <script type="text/javascript">
       function changeEtat(id) {
-      var etat = document.getElementById("etat-reparation").value;
-      $.post("php/etatrep.php",{etat,id},(data)=>{
-      })
+        var rep = document.getElementById("affecter-rep"+id).value;
+        $.post("php/repdemande.php",{rep,id},(data)=>{
+        })
       }
       </script>
 </html>

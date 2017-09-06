@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html >
+  <?php 
+session_start();
+if(!isset($_SESSION['login'])){
+		header("Location: login.php");
+}else{
+	if(strcmp($_SESSION['Account_type'],"A")!=0){
+		header("Location: login.php");   
+	}
+}?>
   <head>
     <meta charset="UTF-8">
     <title>Gestion Clients</title>
@@ -117,7 +126,6 @@ function annulersup(id){
                         Mon compte 
                     </a>
                     <?php
-          session_start();
           if($_SESSION['login']==true) { 
             ?>  
                     <ul class="dropdown-menu">
