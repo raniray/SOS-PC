@@ -108,7 +108,6 @@ if(!isset($_SESSION['login'])){
                     </a>
 
                       <?php
-                    session_start();
             if($_SESSION['login']==true) { 
                              ?>
                     <ul class="dropdown-menu">

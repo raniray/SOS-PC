@@ -66,7 +66,7 @@ $db = data_base_connect();
 						
 												 <li><a href="#portfolio">Vente</a></li>
 												 <?php
-												    if(isset($_SESSION['login'])==true) { 
+													if(strcmp($_SESSION['Account_type'],"C")==0){
    											     ?>	
 												<li class="dropdown" >
 													<a class="dropbtn" href="#">Réparation-PC</a>
@@ -77,7 +77,18 @@ $db = data_base_connect();
 												    <a href="index2.php">Live help</a>
 												  </div>
 												</li>
-												 <?php };
+												 <?php }elseif(strcmp($_SESSION['Account_type'],"R")==0){
+													 ?>
+													 <li class="dropdown" >
+													<a class="dropbtn" href="#">Réparation PC</a>
+											
+														<div class="dropdown-content">
+														<a href="Reparations.php">Réparations</a>
+														<a href="ficheReparation.php">Fiche réparation</a>
+															<a href="liveHelpRep.php">Live help</a>
+														</div>
+														</li><?php 
+												 }
 												 ?>
                                                 <li><a href="#about">A propos</a></li>
 												<li><a href="#contact">Contact</a></li>
