@@ -4,7 +4,10 @@
 session_start();
 if(!isset($_SESSION['login'])){
 	header("Location: login.php");   
-}?>
+}
+require('php/connexion.php');
+$db = data_base_connect();
+?>
   <head>
     <meta charset="UTF-8">
     <title>Nouvelle demande</title>
@@ -215,15 +218,23 @@ if(!isset($_SESSION['login'])){
 <div class="form-group">
   <label class="col-md-4 control-label" for="nome">Numéro de la demande:</label>  
   <div class="col-md-5">
-  <input id="nome" name="nome" type="text" placeholder=" ex : N°17" class="form-control input-md" required="">
-    
+    <select id="idDemande" name="idDemande" class="form-control">
+        <?php
+				$select = $db->prepare("SELECT * FROM demande_ where idReparateur=:id");
+        $select->bindValue(':id', $_SESSION['id']);
+				$select->execute();
+				while($row = $select->fetch()){
+        ?>
+        <option value="<?php echo $row['idDemande'];?>"><?php echo $row['idDemande']." ".$row['intitulePanne'];?></option>
+        <?php } ?>
+    </select>
   </div>
 </div>
 
 <div class="form-group">
   <label class="col-md-4 control-label" for="nome">Temps total estimé de la réparation:</label>  
   <div class="col-md-5">
-  <input id="nome" name="nome" type="text" placeholder="ex:2 heures" class="form-control input-md" required="">
+  <input id="temps" name="temps" type="text" placeholder="ex:2 heures" class="form-control input-md" required="">
     
   </div>
 </div>
@@ -235,10 +246,10 @@ if(!isset($_SESSION['login'])){
 <div class="form-group">
   <label class="col-md-4 control-label" for="sla">Type de la réparation:</label>
   <div class="col-md-5">
-    <select id="sla" name="sla" class="form-control">
-      <option value="1">Software</option>
-      <option value="2">Hardware</option>
-      <option value="7">Software,Hardware</option>
+    <select id="type" name="sla" class="form-control">
+      <option value="Software">Software</option>
+      <option value="Hardware">Hardware</option>
+      <option value="Software,Hardware">Software,Hardware</option>
     </select>
   </div>
 </div>
@@ -246,7 +257,7 @@ if(!isset($_SESSION['login'])){
 <div class="form-group">
   <label class="col-md-4 control-label" for="nome">Prix total de la réparation:</label>  
   <div class="col-md-5">
-  <input id="nome" name="prix" type="text" placeholder="ex:2000DA" class="form-control input-md" required="">
+  <input id="prix" name="prix" type="text" placeholder="ex:2000DA" class="form-control input-md" required="">
     
   </div>
 </div>
@@ -273,7 +284,7 @@ if(!isset($_SESSION['login'])){
                 <h1 class="text-center"> Etape 2</h1>
                 <h4 class="text-center"> Autres détails</h4>
 
-                              <textarea class="form-control" type="textarea" id="desc" placeholder="Autres détails concernant cette réparation" maxlength="140" rows="10"></textarea>
+                              <textarea class="form-control" type="textarea" id="details" placeholder="Autres détails concernant cette réparation" maxlength="140" rows="10"></textarea>
                             
                                <div class="container">
 
@@ -285,7 +296,7 @@ if(!isset($_SESSION['login'])){
 
 
                 
-                <button id="activate-step-3" class="btn btn-primary btn-md">Envoyer</button>
+                <button id="activate-step-3" onclick="ajouterFiche();" class="btn btn-primary btn-md">Envoyer</button>
                 
             </div>
             </div>
@@ -349,6 +360,20 @@ if(!isset($_SESSION['login'])){
      <script type="text/javascript" src="js/image.js"></script>
 
      <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
-  
+  <script>
+  function ajouterFiche(){
+                // les paramaitre de la formulaire 
+                idDemande = $('#idDemande').val();
+                prix = $('#prix').val();
+                temps = $('#temps').val();
+                type =$('#type').val();
+                details = $('#details').val();
+                //var rep = document.getElementById("idDemande").value;
+                // envoie avec un post les paramaitre + le nom de fichier 
+                $.post("php/insererFiche.php",{idDemande,prix,temps,type,details},(data)=>{
+                  alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
+                })
+            }
+  </script>
 </html>
 

@@ -83,7 +83,7 @@ $db = data_base_connect();
 
                       <?php
                  
-				    if($_SESSION['login']==true) { 
+				    if(isset($_SESSION['login'])==true) { 
    											     ?>
                     <ul class="dropdown-menu">
                         <li>
@@ -98,8 +98,8 @@ $db = data_base_connect();
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
-                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
+                                        <p class="text-left"><strong><?php  echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
                                 </div>

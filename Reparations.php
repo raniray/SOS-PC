@@ -192,8 +192,8 @@ $i=0;
 while($row = $select->fetch()){
     ?>
     <tr>
-    <td><a data-toggle="modal" data-target="#demande1"><?php echo $row['intitulePanne'];?></a>
-	<div class="modal fade" id="demande1" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
+    <td><a data-toggle="modal" data-target="#demande<?php echo $row['idDemande'];?>"><?php echo $row['intitulePanne'];?></a>
+	<div class="modal fade" id="demande<?php echo $row['idDemande'];?>" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -207,12 +207,11 @@ while($row = $select->fetch()){
 														<p>	
 <?php echo "Modèle: ".$row['modelePc']."\n "."Processeur: ".$row['processeur']."\n
 "."RAM: ".$row['ramPc']."\n "."Système d'exploitation:".$row['osPc']."\n "."Anciennete:".$row['ancientePc']."\n "."Detail:".$row['descriptionPanne'];
-
 ?>
 </p>
 													</div>
 													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
+														<img src="<?php echo 'images/reparations/'.$row['pannePic'];?>" alt="">
 													</div>
 												</div>
 											</div>
@@ -231,11 +230,8 @@ while($row = $select->fetch()){
       <option <?php if(strcmp($row['etatDemande'],"Terminé")==0){ echo "selected='true'"; } ?> value="Terminé">Terminé</option>
     </select>
 	</td>
-  
     <td title="modifier"><input id="taux-reparation" onchange="changetaux(<?php echo $row['idDemande'];?>);" value="<?php echo $row['tauxAvancement'];?>">%</td>
-   
     </tr>
-    
   <?php } ?>
    
     

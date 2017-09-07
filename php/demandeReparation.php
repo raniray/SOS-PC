@@ -2,6 +2,50 @@
 require('connexion.php');
 $db = data_base_connect();
 session_start();
+
+$target_dir = "../images/reparations/";
+$target_file = $target_dir.basename($_FILES["imgInp"]["name"]);
+$uploadOk = 1;
+$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+// Check if image file is a actual image or fake image
+if(isset($_POST["submit"])) {
+    $check = getimagesize($_FILES["imgInp"]["tmp_name"]);
+    if($check !== false) {
+        echo "File is an image - " . $check["mime"] . ".";
+        $uploadOk = 1;
+    } else {
+        echo "File is not an image.";
+        $uploadOk = 0;
+    }
+}
+// Check if file already exists
+if (file_exists($target_file)) {
+    echo "Sorry, file already exists.";
+    $uploadOk = 0;
+}
+// Check file size
+if ($_FILES["imgInp"]["size"] > 500000) {
+    echo "Sorry, your file is too large.";
+    $uploadOk = 0;
+}
+// Allow certain file formats
+// if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+// && $imageFileType != "gif" ) {
+//     echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+//     $uploadOk = 0;
+// }
+// Check if $uploadOk is set to 0 by an error
+if ($uploadOk == 0) {
+    echo "Sorry, your file was not uploaded.";
+// if everything is ok, try to upload file
+} else {
+    if (move_uploaded_file($_FILES["imgInp"]["tmp_name"], $target_file)) {
+        echo "The file ".basename( $_FILES["imgInp"]["name"])." has been uploaded.";
+    } else {
+        echo "Sorry, there was an error uploading your file.";
+    }
+}
+
 /*
 $content ="Modèle:".$model." "."Processeur:"." ".$processeur." "."RAM:".$RAM." "."Système d'exploitation:".$sysE." "."Anciennete:".$ancienn." "."Detail:".$contenuAnnonce;
 $target_dir = "‪C:/wamp/www/SOS-PC-master1/imges/";  //Choisir là où l'image sera placée
@@ -76,7 +120,7 @@ $stmt = $db->prepare("INSERT INTO demande_ (idClient,modelePc,processeur,ramPc,o
                                             prixAnnonce,discussionId)
                                      VALUES (:idClient,:modelePc,:processeur,:ramPc,:osPc,:acientePc,
                                             :intitulePanne,:typePanne,:descriptionPanne,:pannePic,
-                                            null,:dateCreation,'R',0,
+                                            null,:dateCreation,'Pas encore',0,
                                             0,null)");
 $stmt->bindValue(':idClient', !empty($_SESSION['id']) ? trim($_SESSION['id']) : null);
 $stmt->bindValue(':modelePc', $model);
@@ -95,4 +139,5 @@ try{
 }catch (Exception $e) {
         echo $e->getMessage();
       }
+header("Location: ../Reparations.php");
 ?>

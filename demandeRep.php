@@ -222,7 +222,7 @@ if(!isset($_SESSION['login'])){
             <div class="well text-center">
               <center>
                 <h1> ETAPE 1</h1>
-                <form class="form-horizontal">
+                <form class="form-horizontal" enctype="multipart/form-data" action="php/demandeReparation.php" method="post">
 
 <!-- Text input-->
 <div class="form-group">
@@ -279,7 +279,7 @@ if(!isset($_SESSION['login'])){
 </div>
                 
 </center>               
-</form>
+
                 
                 
                 <button id="activate-step-2" class="btn btn-primary btn-md">Activer Etape 2</button>
@@ -300,7 +300,7 @@ if(!isset($_SESSION['login'])){
                        <div class="container">
                         <div class="row clearfix">
                          <div class="col-md-16 column">
-                           <form class="form-horizontal">
+                           <!--<form class="form-horizontal">-->
 
                               <div class="form-group">
                                <label class="col-md-4 control-label" for="nome">intitulé de la panne:</label>  
@@ -322,7 +322,7 @@ if(!isset($_SESSION['login'])){
                                     </select>
                                   </div>
                                 </div> 
-                              </form>
+                              <!--</form>-->
             </div>
           </div>
     </div> 
@@ -379,7 +379,7 @@ if(!isset($_SESSION['login'])){
                   <div class="container">
                     <div class="col-md-16">
                      <div class="form-group">
-                    <form class="form-horizontal">
+                    <!--<form class="form-horizontal">-->
 
                         <div class="form-group">
                                   
@@ -398,8 +398,10 @@ if(!isset($_SESSION['login'])){
 
 
                        </div> 
+                       <input type="submit" value="Envoyer">
+                              </form>
 
-                  </form>
+                  <!--</form>-->
     </div>
 </div>
 </div>

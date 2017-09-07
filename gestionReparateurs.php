@@ -4,11 +4,12 @@
 session_start();
 if(!isset($_SESSION['login'])){
 		header("Location: login.php");
-}else{
-	if(strcmp($_SESSION['Account_type'],"A")!=0){
-		header("Location: login.php");   
-	}
-} ?>
+ }
+ //else{
+// 	if(strcmp($_SESSION['Account_type'],"A")!=0){
+// 		header("Location: login.php");   
+// 	}
+// } ?>
   <head>
     <meta charset="UTF-8">
     <title>Gestion Réparateurs</title>
@@ -233,9 +234,10 @@ function annulersup(id){
 	  <li> <div class="text-center img-container">
           <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
 		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
-         
-          
-          <div class="cercle" ><input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;"><span id="telcharg"><i class="fa fa-upload"></i></span></div>
+          <div class="cercle" >
+          <input type="file" class="form-control" id="cercle" style="position:absolute;top:10px;left:-27%;opacity:0;height:100px;width:100px;z-index:2;">
+          <span id="telcharg">
+          <i class="fa fa-upload"></i></span></div>
 	
         </div></li>
 	   </ul>
@@ -336,7 +338,7 @@ while($row = $select->fetch()){
 	<ul id="listeprofil">
 
 	  <li> <div class="text-center img-container">
-          <img src="img/avatar.jpg" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
+          <img src="<?php echo $row['profilePicUser']; ?>" id ="photo-pro"class="avatar img-circle" alt="avatar" style=" margin-top:40px;height:100px;width:100px;">
 		  <!--<div class="cercle" ><span id="telcharg"><p>Télécharger</p><p> photo</p></span></div>-->
          
           
@@ -434,7 +436,7 @@ while($row = $select->fetch()){
 	</td>
   <?php if($i==0){?>
   <td rowspan="<?php echo $select->rowCount();?>"> <div style="text-align:center;position:relative;margin-top:30%;"><p class="nouveau-rep">Nouveau réparateur?</p><p class="nouveau-rep">Ajoutez-le!</p>
-	<button  class="btn button btn-xs" onclick="afficher(<?php echo $row['idUser']; ?>);" title="ajouter"><span class="glyphicon glyphicon-plus" ></span></button>
+	<button  class="btn button btn-xs" onclick="ajouter();" title="ajouter"><span class="glyphicon glyphicon-plus" ></span></button>
   </td><?php } ?>
     </tr>
     <?php 
@@ -601,6 +603,7 @@ while($row = $select->fetch()){
                 profession = $('#profession').val();
                 classement = $('#classement').val();
                 biographie = $('#desc').val();
+               // image = $('#image').val();
                 // envoie avec un post les paramaitre + le nom de fichier 
                 $.post("php/ajouterReparateur.php",{nom,prenom,date_de_naissance,email,tel,profession,classement,biographie},(data)=>{
                   alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)

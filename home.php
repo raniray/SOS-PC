@@ -2,9 +2,6 @@
 <html lang="fr">
 <?php 
 session_start();
-if(!isset($_SESSION['login'])){
-	header("Location: login.php");   
-}
 require('php/connexion.php');
 $db = data_base_connect();
 ?>
@@ -66,6 +63,7 @@ $db = data_base_connect();
 						
 												 <li><a href="#vente">Vente</a></li>
 												 	 <?php
+													  if(isset($_SESSION['login'])==true){
 													if(strcmp($_SESSION['Account_type'],"C")==0){
    											     ?>	
 												<li class="dropdown" >
@@ -89,6 +87,7 @@ $db = data_base_connect();
 														</div>
 														</li><?php 
 												 }
+												 }
 												 ?>
                                                 <li><a href="#about">A propos</a></li>
 												<li><a href="#contact">Contact</a></li>
@@ -97,7 +96,7 @@ $db = data_base_connect();
                         Mon compte 
                     </a>
                     <?php
-				    if(isset($_SESSION['login'])==true) { 
+				    if(isset($_SESSION['login'])==true) {
    											     ?>
                     <ul class="dropdown-menu">
                         <li>
@@ -212,9 +211,7 @@ $db = data_base_connect();
 
 
 				<div class="col-sm-6 col-md-3 isotope-item web-design">
-
 					<div class="image-box">
-
      					 <a class="imgover" href="#"><img src="<?php echo $row['profilePicUser'];?>" class="rounded" alt=""></a>
       					 <center>
          				 <h6 class="heading"><?php echo $row['nomUser']." ".$row['prenomUser'];?></h6>
@@ -222,17 +219,16 @@ $db = data_base_connect();
          				</br>
          			</br>
          			     <div class="btn button2"><a href="profileRep.php?id=<?php echo $row['idUser'];?>">Voir Profil</a></div>
-
          				</center>
       				</div>
       			</div>
+
 				<?php }?>
-                       </div>
-                   </br>
 
-					</div>
 
-       
+				</div>
+			</br>
+		</div>
 		</div>
 
 		<!-- section end -->
