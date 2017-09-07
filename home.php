@@ -281,7 +281,7 @@ $db = data_base_connect();
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
 								<div class="image-box">
 									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
+										<img src="<?php echo "images/annonces/".$row['annoncePic'];?>" alt="">
 										<a class="overlay" id="<?php echo $row['idAnnonce']; ?>" name="<?php echo $row['idAnnonce']; ?>" onclick="voirAnnonce(<?php echo $row['idAnnonce'];?>);" data-toggle="modal" data-target="<?php  echo "#project".$row['idAnnonce'];?>" >
 											<i class="fa fa-search-plus"></i>
 											<span>Voir l'annonce tous</span>
@@ -310,7 +310,7 @@ $db = data_base_connect();
 														?></p>
 													</div>
 													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
+														<img src="<?php echo "images/annonces/".$row['annoncePic'];?>" alt="">
 													</div>
 												</div>
 											</div>

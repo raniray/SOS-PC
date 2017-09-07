@@ -353,7 +353,7 @@ session_start();
             <div class="well text-center">
               <center>
                 <h1> ETAPE 1</h1>
-                <form class="form-horizontal" action="./php/newAnnonce.php" method="post" >
+                <form class="form-horizontal" method="POST" action="php/newAnnonce.php" enctype="multipart/form-data" >
   
 <!-- Text input-->
 <div class="form-group">
@@ -423,7 +423,7 @@ session_start();
 </div>
                 
 </center>               
-</form>
+
                 
                 
                 <button id="activate-step-2" class="btn btn-primary btn-md">Activer Etape 2</button>
@@ -486,20 +486,20 @@ session_start();
                   <div class="container">
                     <div class="col-md-16">
                      <div class="form-group">
-					 <p id="f1_upload_process">Loading...<br/><img src="loader.gif" /></p>
+					<!-- <p id="f1_upload_process">Loading...<br/><img src="loader.gif" /></p>-->
                      <p id="result"></p>
-                    <form class="form-horizontal" method="POST" action="php/upload.php" enctype="multipart/form-data" target="upload_target" onsubmit="startUpload();">
+                   
 
                         <div class="form-group">
                                   
                          
-                                  <div class="col-md-8 control-label">
+                                  <div class="col-md-8 control-label" >
                                     <input id="prev" type="text" class="form-control2" readonly>
                                   </div>
                                   
-                                  <div class="col-md-4"> 
-                                  <span class="btn btn-primary btn-md btn-file">
-                                  Parcourir… <input type="file" id="imgAnnonce" name="imgAnnonce">
+                                  <div class="col-md-4" > 
+                                  <span class="btn btn-primary btn-md btn-file" style="float:left;margin-left:35%;margin-top:-2.3%;">
+                                  Parcourir… <input type="file" id="imgAnnonce" name="imgAnnonce" >
                                    </span>
 
 
@@ -507,10 +507,11 @@ session_start();
 
 
                        </div> 
-					   <button class="btn btn-primary btn-md"type="submit" name="submitBtn" onclick="creerAnnonce();" >Créer annonce</button>  
+					   </br></br></br>
+					   <input class="btn btn-primary btn-md" type="submit" name="submitBtn" value="Créer annonce" ></input>  
 
                                          </form>
-  <iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
+  
 
     </div>
 </div>
@@ -571,7 +572,7 @@ session_start();
 
      <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
   
-  <script type="text/javascript">
+ <!-- <script type="text/javascript">
             
            function creerAnnonce(){
               // les paramaitre de la formulaire 
@@ -592,5 +593,5 @@ session_start();
             }
 			
 			
-     </script>
+     </script>-->
 </html>
