@@ -1,5 +1,4 @@
 <?php 	
-
 require('connexion.php');
 $db = data_base_connect();
 $type = $_POST['type'];
@@ -16,7 +15,7 @@ switch($type) {
                         $select = $db->prepare("SELECT * FROM annonce_ ORDER BY prix ASC LIMIT 4");
                           break;       
                     }
-                      case 'C': { // plus consultÃ©es 
+                      case 'C': { // plus consultées 
                         $select = $db->prepare("SELECT * FROM annonce_ ORDER BY prix ASC LIMIT 4");
                           break;       
                     }
@@ -28,10 +27,10 @@ while($row = $select->fetch()){
 <div class="col-sm-6 col-md-3 isotope-item web-design">
     <div class="image-box">
         <div class="overlay-container">
-            <img src="images/320x320.png" alt="">
+            <img src="<?php echo "images/annonces/".$row['annoncePic'];?>" alt="">
             <a class="overlay" id="<?php echo $row['idAnnonce']; ?>" name="<?php echo $row['idAnnonce']; ?>" onclick="voirAnnonce(<?php echo $row['idAnnonce'];?>);" data-toggle="modal" data-target="<?php  echo "#project".$row['idAnnonce'];?>" >
                 <i class="fa fa-search-plus"></i>
-                <span>Voir l'annonce consulrÃ©es</span>
+                <span>Voir l'annonce consulrées</span>
             </a>
         </div>
         <a class="btn btn-default btn-block" data-toggle="modal" data-target="<?php echo "#project".$row['idAnnonce'];?>" >Voir l'annonce C</a>
@@ -45,19 +44,19 @@ while($row = $select->fetch()){
                     <h4 class="modal-title" id="project-1-label">SOS-PC</h4>
                 </div>
                 <div class="modal-body">
-                    <h3><?php echo "Annonce NÂ°".$row['idAnnonce']; ?></h3>
+                    <h3><?php echo "Annonce N°".$row['idAnnonce']; ?></h3>
                     <div class="row">
                         <div class="col-md-6">
                         
                             <p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."<br>".
-                            $row['dateCreation']."<br>"."DurÃ©e de validitÃ©:".$row['durreeValidite']."<br>".
+                            $row['dateCreation']."<br>"."Durée de validité:".$row['durreeValidite']."<br>".
                             
                             '<i class="fa fa-eye" aria-hidden="true">'.'</i>'.'&nbsp;&nbsp;'.
                             $row['nombreDeVues']; 
                             ?></p>
                         </div>
                         <div class="col-md-6">
-                            <img src="images/320x320.png" alt="">
+                            <img src="<?php echo "images/annonces/".$row['annoncePic'];?>" alt="">
                         </div>
                     </div>
                 </div>
