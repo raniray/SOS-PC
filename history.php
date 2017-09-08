@@ -201,7 +201,7 @@ while($row = $select->fetch()){
     <td><?php echo $row['etatDemande'];?></td>
     <td><?php echo $row['idReparateur'];?></td>
     <td><p data-placement="top" data-toggle="tooltip" title="Consulter"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><div class="btn btn-default"><a href="deman.html">Afficher demande</a></div></td>
+    <td><div class="btn btn-default"><a href="deman.php?id=<?php echo $row['idDemande'];?>">Afficher demande</a></div></td>
     </tr>
     <?php 
     $i++;

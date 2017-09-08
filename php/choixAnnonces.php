@@ -15,7 +15,7 @@ switch($type) {
                         $select = $db->prepare("SELECT * FROM annonce_ ORDER BY prix ASC LIMIT 4");
                           break;       
                     }
-                      case 'C': { // plus consultées 
+                      case 'C': { // plus consultï¿½es 
                         $select = $db->prepare("SELECT * FROM annonce_ ORDER BY prix ASC LIMIT 4");
                           break;       
                     }
@@ -30,10 +30,10 @@ while($row = $select->fetch()){
             <img src="<?php echo "images/annonces/".$row['annoncePic'];?>" alt="">
             <a class="overlay" id="<?php echo $row['idAnnonce']; ?>" name="<?php echo $row['idAnnonce']; ?>" onclick="voirAnnonce(<?php echo $row['idAnnonce'];?>);" data-toggle="modal" data-target="<?php  echo "#project".$row['idAnnonce'];?>" >
                 <i class="fa fa-search-plus"></i>
-                <span>Voir l'annonce consulrées</span>
+                <span>Voir l'annonce consulrï¿½es</span>
             </a>
         </div>
-        <a class="btn btn-default btn-block" data-toggle="modal" data-target="<?php echo "#project".$row['idAnnonce'];?>" >Voir l'annonce C</a>
+        <a class="btn btn-default btn-block" data-toggle="modal" data-target="<?php echo "#project".$row['idAnnonce'];?>" >Voir l'annonce </a>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="<?php echo "project".$row['idAnnonce'];?>" tabindex="-1" role="dialog" aria-labelledby="project-1-label" aria-hidden="true">
@@ -44,12 +44,12 @@ while($row = $select->fetch()){
                     <h4 class="modal-title" id="project-1-label">SOS-PC</h4>
                 </div>
                 <div class="modal-body">
-                    <h3><?php echo "Annonce N°".$row['idAnnonce']; ?></h3>
+                    <h3><?php echo "Annonce Nï¿½".$row['idAnnonce']; ?></h3>
                     <div class="row">
                         <div class="col-md-6">
                         
                             <p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."<br>".
-                            $row['dateCreation']."<br>"."Durée de validité:".$row['durreeValidite']."<br>".
+                            $row['dateCreation']."<br>"."Durï¿½e de validitï¿½:".$row['durreeValidite']."<br>".
                             
                             '<i class="fa fa-eye" aria-hidden="true">'.'</i>'.'&nbsp;&nbsp;'.
                             $row['nombreDeVues']; 

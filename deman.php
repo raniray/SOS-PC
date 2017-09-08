@@ -107,7 +107,6 @@
                         Mon compte 
                     </a>
                     <?php
-                    session_start();
             if($_SESSION['login']==true) { 
                              ?>
                     <ul class="dropdown-menu">
@@ -123,8 +122,8 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <p class="text-left"><strong><?php  session_start();echo $_SESSION['login_user']; ?></strong></p>
-                                        <p class="text-left small"><?php session_start();echo $_SESSION['mail']; ?></p>
+                                        <p class="text-left"><strong><?php  echo $_SESSION['login_user']; ?></strong></p>
+                                        <p class="text-left small"><?php echo $_SESSION['mail']; ?></p>
                                         
                                     </div>
                                 </div>
@@ -153,8 +152,8 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="signUp.html" class="btn button btn-block">S'inscrire</a>
-                                             <a href="login.html" class="btn button btn-block">Se connecter</a>
+                                             <a href="signUp.php" class="btn button btn-block">S'inscrire</a>
+                                             <a href="login.php" class="btn button btn-block">Se connecter</a>
                                         </p>
                                     </div>
                                 </div>
@@ -184,7 +183,16 @@
       </div>
     </header>
     <!-- header end -->
+<?php 
 
+        require('php/connexion.php');
+        $db = data_base_connect();
+        $id = $_GET['id'];
+				$select = $db->prepare("SELECT * FROM demande_ where idDemande=$id");
+				$select->execute();
+				$i=0;
+				while($row = $select->fetch()){
+?>
   <div class="container">
    <div class="row">
    <div class="col-md-9">
@@ -194,14 +202,16 @@
         <div class="toppad" >
              <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">Titre de la panne</h3>
+              <h3 class="panel-title"><?php echo $row['intitulePanne'];?></h3>
             </div>
             <div class="panel-body">
               <div class="row">
                 
               
                 <div class=" col-md-9 col-lg-9 "> 
-                  <p>Ici on met la description de la panne </p> 
+                  <p><?php echo "Modèle: ".$row['modelePc']."\n "."Processeur: ".$row['processeur']."\n
+"."RAM: ".$row['ramPc']."\n "."Système d'exploitation:".$row['osPc']."\n "."Anciennete:".$row['ancientePc']."\n "."Detail:".$row['descriptionPanne'];
+?></p> 
                   
                 </div>
               </div>
@@ -218,11 +228,7 @@
                       </div>
                     </div>
                   </div>
-
-                      
-
                     </div>
-            
           </div>
         </div>
       </div>
@@ -240,24 +246,41 @@
                     <tbody>
                       <tr>
                         <td>Crée par</td>
-                        <td>NOM PRENOM</td>
+                      <?php 
+                        $idUser=$row['idClient'];
+                      	$select2 = $db->prepare("SELECT nomUser,prenomUser FROM User_ where idUser=$idUser");
+                        $select2->execute();
+                        $i=0;
+                        while($row2 = $select2->fetch()){
+                      ?>
+                        <td><?php echo $row2['nomUser']." ".$row2['prenomUser'];?></td>
+
+                      <?php } ?>
                       </tr>
                       <tr>
                         <td>Date de création:</td>
-                        <td>DD/MM/YYYY</td>
+                        <td><?php echo $row['intitulePanne'];?></td>
                       </tr>
                       <tr>
                         <td>Réparateur:</td>
-                        <td>NOM Prénom</td>
-                      </tr>
+                      <?php 
+                        $idUser2=$row['idReparateur'];
+                      	$select3 = $db->prepare("SELECT nomUser,prenomUser FROM User_ where idUser=$idUser2");
+                        $select3->execute();
+                        $i=0;
+                        while($row3 = $select3->fetch()){
+                      ?>
+                        <td><?php echo $row3['nomUser']." ".$row3['prenomUser'];?></td>
+
+                      <?php } ?>                      </tr>
                   
                              <tr>
                         <td>Etat de la demande:</td>
-                        <td>En cours de traitement</td>
+                        <td><?php echo $row['etatDemande'];?></td>
                       </tr>
                         <tr>
                         <td>Avancement</td>
-                        <td>60%</td>
+                        <td><?php echo $row['tauxAvancement'];?></td>
                       </tr>
                       
                     </tbody>
@@ -277,31 +300,18 @@
                     <div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-md-2">
                       <button type="button" class="btn-circle"><i class="glyphicon glyphicon-heart"></i></button>
                     </div>
-
                   </div>
-                    
                   </div>
-
-                      
-
                     </div>
-            
           </div>
         </div>
       </div>
-
-
    </div>
-
    </div>
-
-
  </div>
-
-
     </div>
-
 </div>
+        <?php } ?>
 </body>
   <!-- Jquery and Bootstap core js files -->
     <script type="text/javascript" src="plugins/jquery.min.js"></script>

@@ -398,14 +398,14 @@ if(!isset($_SESSION['login'])){
 
 
                        </div> 
-                       <input type="submit" value="Envoyer">
+                       <input class="btn btn-primary btn-md" type="submit" value="Envoyer">
+      <!--<button id="activate-step-3" onclick="creerdemande();" class="btn btn-primary btn-md">Envoyer la demande</button>    -->
                               </form>
 
                   <!--</form>-->
     </div>
 </div>
 </div>
-            <button id="activate-step-3" onclick="creerdemande();" class="btn btn-primary btn-md">Envoyer la demande</button>    
             </div>
         </div>
     </div>
