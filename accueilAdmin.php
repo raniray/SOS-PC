@@ -9,6 +9,9 @@ if(!isset($_SESSION['login'])){
 	}
 }
 
+require('php/connexion.php');
+$db = data_base_connect();
+
 ?>
 	<head>
 		<meta charset="utf-8">
@@ -29,6 +32,7 @@ if(!isset($_SESSION['login'])){
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
 		<script>
 $(function () { 
+
     Highcharts.setOptions({
     lang: {
         months: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
@@ -70,6 +74,7 @@ $(function () {
           backgroundColor: '#424242'
        
     },
+
         xAxis:
 		   
 		   
@@ -166,7 +171,7 @@ $(function () {
                                                 <li><a href="#about">A propos</a></li>
 												<li><a href="#contact">Contact</a></li>
 												<li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
-          <span class="glyphicon glyphicon-user"></span> 
+          <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
                     <?php
@@ -207,7 +212,24 @@ $(function () {
                             </div>
                         </li>
                     </ul>
-                    <?php };
+                    <?php }else{
+												 ?>
+                    <ul class="dropdown-menu">
+                     
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                             <a href="signUp.php" class="btn button btn-block">S'inscrire</a>
+                                             <a href="login.php" class="btn button btn-block">Se connecter</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                                        <?php };
 												 ?>
                 </li>
             </li>
@@ -262,10 +284,16 @@ $(function () {
 
 				<div class="space"></div>
 				<div class="isotope-container row grid-space-20">
+				
+				<?php 	
+				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser ORDER BY classement DESC LIMIT 4");
+				$select->execute();
+				$i=0;
+				while($row = $select->fetch()){
+				?>
+
 				<div class="col-sm-6 col-md-3 isotope-item web-design">
-
 					<div class="image-box">
-
      					 <a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
       					 <center>
          				 <h6 class="heading">NOM Prénom</h6>
@@ -280,58 +308,12 @@ $(function () {
       					
       				</div>
       			</div>
-      			<div class="col-sm-6 col-md-3 isotope-item web-design">
-                    <div class="image-box">
-      					<a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-        				
-        				
-        				  <center>
-         				  <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				  </br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRepCons.php">Voir Profil</a></div>
-      					 </center>          
-        					
-      					
-                     </div>
-                </div>
+				<?php } ?>
 
-                     <div class="col-sm-6 col-md-3 isotope-item web-design">
-                     <div class="image-box">
-      				<a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-      					 <center>        				
-         				 <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				  </br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRepCons.php">Voir Profil</a></div>
-       					 </center>        
-        				
-      				
-      			     </div>
-                     </div>
- 					<div class="col-sm-6 col-md-3 isotope-item web-design">
-                     <div class="image-box">
-
-                       <a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-      					 <center>         				
-         				  <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				</br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRepCons.php">Voir Profil</a></div>
-       					 </center> 
-  				    </div>
-  				</div>
- 
                        </div>
                    </br>
-
 					</div>
-
-       
-		</div>
+					</div>
 
 		<!-- section end -->
 
@@ -355,35 +337,52 @@ $(function () {
 				<div class="separator"></div>
 				<br>		
 
-				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceClient.php" >Nouvelle annonce</a></div>
+				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceAdmin.php" >Nouvelle annonce</a></div>
                
 				<div class="row object-non-visible" data-animation-effect="fadeIn" style="margin-top:9%;">
 					<div class="col-md-12">
 						<div class="isotope-container row grid-space-20">
 						
-						<?php 	
+				<div id="tous">
+
+				<?php 	
 				$select = $db->prepare("SELECT * FROM annonce_");
 				$select->execute();
 				$i=0;
 				while($row = $select->fetch()){
 				?>
-
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
-							<div>
 								<div class="image-box">
 									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
+										<img src="<?php echo "images/annonces/".$row['annoncePic'];?>" alt="">
 										<a class="overlay" id="<?php echo $row['idAnnonce']; ?>" name="<?php echo $row['idAnnonce']; ?>" onclick="voirAnnonce(<?php echo $row['idAnnonce'];?>);" data-toggle="modal" data-target="<?php  echo "#project".$row['idAnnonce'];?>" >
 											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce</span>
+											<span>Voir l'annonce tous</span>
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="<?php echo "#project".$row['idAnnonce'];?>" >Voir l'annonce</a>
 								</div>
-								<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="<?php echo "#delete".$row['idAnnonce']?>">Supprimer annonce</a>
-								  
+										<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
+								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    	<div class="modal-content">
+					<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+					<h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
+					</div>
+					<div class="modal-body">
+					<div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+					</div>
+					<div class="modal-footer ">
+					<button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+					<button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+					</div>
+        </div>
+    <!-- /.modal-content --> 
+  	</div>
 
-								</div>
+      <!-- /.modal-dialog --> 
+    </div>
 								<!-- Modal -->
 								<div class="modal fade" id="<?php echo "project".$row['idAnnonce'];?>" tabindex="-1" role="dialog" aria-labelledby="project-1-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
@@ -405,43 +404,22 @@ $(function () {
 														?></p>
 													</div>
 													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
+														<img src="<?php echo "images/annonces/".$row['annoncePic'];?>" alt="">
 													</div>
 												</div>
 											</div>
+											
 											<div class="modal-footer">
 												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
 											</div>
+
 										</div>
 									</div>
 								</div>
 								<!-- Modal end -->
-								
-								 <div class="modal fade" id="<?php echo "delete".$row['idAnnonce']?>" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content" id="supAnnonce">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="<?php echo $row['idAnnonce']?>">Supprimer annonce </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class=" yesButton btn btn-success" onclick="supprimerAnnonce(<?php echo $row['idAnnonce']?>);" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
-								
 							</div>
-                                <?php } ?>
-							
+				<?php } ?>
+							</div>
 
 						</div>
 						<!-- portfolio items end -->
@@ -458,11 +436,11 @@ $(function () {
 							<center>
 								
 
-								<div class="btn button"><a href="accueilAdmin.php#vente">tout</a></div>
-								<div class="btn button"><a href="plusRecentes.php#vente">Les plus récentes</a></div>
-								<div class="btn button"><a href="plusConsultees.php#vente">Les plus consultées</a></div>
-								<div class="btn button"><a href="moinsCheres.php#vente">Les moins chères</a></div>
-								
+
+								<div class="btn button"><button class="btn button" onclick="Annonces('T');">tout</button></div>
+								<div class="btn button"><button class="btn button" onclick="Annonces('R');">Les plus récentes</button></div>
+								<div class="btn button"><button class="btn button" onclick="Annonces('C');" >Les plus consultées</button></div>
+								<div class="btn button"><button class="btn button" onclick="Annonces('M');" >Les moins chères</button></div>
 
 							</center>
 						</div>
@@ -897,33 +875,18 @@ $(function () {
 
 		<!-- Custom Scripts -->
 		<script type="text/javascript" src="js/custom.js"></script>
-		
+			<script type="text/javascript">
+           function voirAnnonce(id){
+             	$.post("php/voirAnnonce.php",{id},(data)=>{
+                 // alert(data);
+                })
+            }
+			function Annonces(type){
+				$.post("php/choixAnnonces.php",{type},(data)=>{
+				$("#tous").html(data);
+                })
+			}
+     </script>
 
 	</body>
-	<script type="text/javascript">
-            
-           function voirAnnonce(id){
-             
-                
-                
-                $.post("php/voirAnnonce.php",{id},(data)=>{
-                  alert(data);
-                })
-            }
-			
-			 
-			
-     </script>
-	<script type="text/javascript">
-	function supprimerAnnonce(id){
-             
-                
-                
-                $.post("php/supprimerAnnonce.php",{id},(data)=>{
-                  alert(data);
-				  
-                })
-				$('#supAnnonce').css("visibility", "hidden");
-            }
-	</script>
 </html>
