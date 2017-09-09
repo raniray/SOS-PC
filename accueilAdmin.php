@@ -356,7 +356,7 @@ $(function () {
 				<div class="separator"></div>
 				<br>		
 
-				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceClient.php" >Nouvelle annonce</a></div>
+				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonce.php" >Nouvelle annonce</a></div>
                
 				<div class="row object-non-visible" data-animation-effect="fadeIn" style="margin-top:9%;">
 					<div class="col-md-12">
@@ -398,7 +398,7 @@ $(function () {
 												<div class="row">
 													<div class="col-md-6">
 													
-														<p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."<br>".
+														<p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."DA"."<br>".
 														$row['dateCreation']."<br>"."Durée de validité:".$row['durreeValidite']."<br>".
 														
 														'<i class="fa fa-eye" aria-hidden="true">'.'</i>'.'&nbsp;&nbsp;'.

@@ -64,6 +64,7 @@ $db = data_base_connect();
 												 <li><a href="#vente">Vente</a></li>
 												 	 <?php
 													  if(isset($_SESSION['login'])==true){
+														 
 													if(strcmp($_SESSION['Account_type'],"C")==0){
    											     ?>	
 												<li class="dropdown" >
@@ -76,6 +77,7 @@ $db = data_base_connect();
 												  </div>
 												</li>
 												 <?php }elseif(strcmp($_SESSION['Account_type'],"R")==0){
+													
 													 ?>
 													 <li class="dropdown" >
 													<a class="dropbtn" href="#">Réparation PC</a>
@@ -141,8 +143,8 @@ $db = data_base_connect();
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="signUp.php" class="btn button btn-block">S'inscrire</a>
-                                             <a href="login.php" class="btn button btn-block">Se connecter</a>
+                                             <a href="signUp.html" class="btn button btn-block">S'inscrire</a>
+                                             <a href="login.html" class="btn button btn-block">Se connecter</a>
                                         </p>
                                     </div>
                                 </div>
@@ -203,7 +205,7 @@ $db = data_base_connect();
 				
 				
 				<?php 	
-				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser ORDER BY classement DESC LIMIT 4");
+				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser LIMIT 4");
 				$select->execute();
 				$i=0;
 				while($row = $select->fetch()){
@@ -252,7 +254,7 @@ $db = data_base_connect();
 				<div class="separator"></div>
 				<br>
 				<?php  if(isset($_SESSION['login'])==true){?>
-				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceClient.php" >Nouvelle annonce</a></div>
+				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonce.php" >Nouvelle annonce</a></div>
                	<br>
                	<br>
                	<br>
@@ -302,7 +304,7 @@ $db = data_base_connect();
 												<div class="row">
 													<div class="col-md-6">
 													
-														<p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."<br>".
+														<p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."DA"."<br>".
 														$row['dateCreation']."<br>"."Durée de validité:".$row['durreeValidite']."<br>".
 														
 														'<i class="fa fa-eye" aria-hidden="true">'.'</i>'.'&nbsp;&nbsp;'.
@@ -648,7 +650,7 @@ $db = data_base_connect();
 	<script type="text/javascript">
            function voirAnnonce(id){
              	$.post("php/voirAnnonce.php",{id},(data)=>{
-                 // alert(data);
+                  alert(data);
                 })
             }
 			function Annonces(type){
