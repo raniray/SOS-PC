@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <?php session_start();
+require('php/connexion.php');
+$db = data_base_connect();
 if(!isset($_SESSION['login'])){
 		header("Location: login.php");
 }else{
@@ -8,7 +10,6 @@ if(!isset($_SESSION['login'])){
 		header("Location: login.php");   
 	}
 }
-
 ?>
 	<head>
 		<meta charset="utf-8">
@@ -350,7 +351,7 @@ $(function () {
 		<!-- ================ -->
 		<div class="section">
 			<div class="container">
-				<h1 class="text-center title" id="portfolio">Espace vente PC</h1>
+				<h1 class="text-center title" id="vente">Espace vente PC</h1>
                  
 				<div class="separator"></div>
 				<br>		
@@ -360,7 +361,7 @@ $(function () {
 				<div class="row object-non-visible" data-animation-effect="fadeIn" style="margin-top:9%;">
 					<div class="col-md-12">
 						<div class="isotope-container row grid-space-20">
-						
+						 <div id="tous">
 						<?php 	
 				$select = $db->prepare("SELECT * FROM annonce_");
 				$select->execute();
@@ -368,11 +369,11 @@ $(function () {
 				while($row = $select->fetch()){
 				?>
 
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
+							<div class="col-sm-6 col-md-3 isotope-item web-design" >
 							<div>
 								<div class="image-box">
 									<div class="overlay-container">
-										<img src="images/320x320.png" alt="">
+										<img src="<?php echo "images/annonces/".$row['annoncePic'];?>" alt="">
 										<a class="overlay" id="<?php echo $row['idAnnonce']; ?>" name="<?php echo $row['idAnnonce']; ?>" onclick="voirAnnonce(<?php echo $row['idAnnonce'];?>);" data-toggle="modal" data-target="<?php  echo "#project".$row['idAnnonce'];?>" >
 											<i class="fa fa-search-plus"></i>
 											<span>Voir l'annonce</span>
@@ -405,7 +406,7 @@ $(function () {
 														?></p>
 													</div>
 													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
+														<img src="<?php echo "images/annonces/".$row['annoncePic'];?>" alt="">
 													</div>
 												</div>
 											</div>
@@ -442,7 +443,7 @@ $(function () {
 							</div>
                                 <?php } ?>
 							
-
+        </div>
 						</div>
 						<!-- portfolio items end -->
 					
@@ -458,10 +459,10 @@ $(function () {
 							<center>
 								
 
-								<div class="btn button"><a href="accueilAdmin.php#vente">tout</a></div>
-								<div class="btn button"><a href="plusRecentes.php#vente">Les plus récentes</a></div>
-								<div class="btn button"><a href="plusConsultees.php#vente">Les plus consultées</a></div>
-								<div class="btn button"><a href="moinsCheres.php#vente">Les moins chères</a></div>
+								<div class="btn button"><button class="btn button" onclick="Annonces('T');">tout</button></div>
+								<div class="btn button"><button class="btn button" onclick="Annonces('R');">Les plus récentes</button></div>
+								<div class="btn button"><button class="btn button" onclick="Annonces('C');" >Les plus consultées</button></div>
+								<div class="btn button"><button class="btn button" onclick="Annonces('M');" >Les moins chères</button></div>
 								
 
 							</center>
@@ -925,5 +926,11 @@ $(function () {
                 })
 				$('#supAnnonce').css("visibility", "hidden");
             }
+			
+			function Annonces(type){
+				$.post("php/choixAnnonces.php",{type},(data)=>{
+				$("#tous").html(data);
+                })
+			}
 	</script>
 </html>
