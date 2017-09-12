@@ -2,6 +2,9 @@
 <html >
 <?php     
 session_start();
+require('php/connexion.php');
+$db=data_base_connect();
+
 if(!isset($_SESSION['login'])){
 		header("Location: login.php");
  }
@@ -27,20 +30,16 @@ if(!isset($_SESSION['login'])){
 <script>
 // Get the modal
 var modal = document.getElementById('modelReparateur');
-
 // Get the button that opens the modal
 var btn = document.getElementById("myBtnRep");
  
-
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close-infos")[0];
-
 // When the user clicks the button, open the modal 
  function afficher(id) {
 var modal = document.getElementById('modelReparateur'+id);
     modal.style.display = "block";
 }
-
 function afficherSup(id) {
 var modal = document.getElementById('supprimer'+id);
     modal.style.display = "block";
@@ -53,13 +52,11 @@ function annuler2(){
   var model = document.getElementById('modelReparateur');
   model.style.display = "none";
 }
-
 // When the user clicks on <span> (x), close the modal
 function fermer(){
     var modal = document.getElementById('modelReparateur');
     modal.style.display = "none";
 }
-
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
 var modal = document.getElementById('modelReparateur');
@@ -67,7 +64,6 @@ var modal = document.getElementById('modelReparateur');
         modal.style.display = "none";
     }
 }
-
 function annuler(id){
   var modal = document.getElementById('modelReparateur'+id);
     modal.style.display = "none";
@@ -76,7 +72,6 @@ function annulersup(id){
   var modal = document.getElementById('supprimer'+id);
     modal.style.display = "none";
 }
-
 </script>
 
   </head>
@@ -134,7 +129,7 @@ function annulersup(id){
                                                 <li><a href="accueilAdmin.php#about">A propos</a></li>
                         <li><a href="accueilAdmin.php#contact">Contact</a></li>
                         <li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
-          <span class="glyphicon glyphicon-user"></span> 
+          <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
                     <?php
@@ -307,26 +302,98 @@ function annulersup(id){
                    </thead>
     <tbody>
   <?php 
-require('php/connexion.php');
-$db=data_base_connect();
+
 $select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
 $select->execute();
 $i=0;
 while($row = $select->fetch()){
-
   ?>
-    <tr>
+    <tr >
     <td><?php echo $row['nomUser']." ".$row['prenomUser'];?> </td>
     <td><?php echo $row['dateInscription'];?> </td>
  
-    <td style="position:relative;left:-3.4%;">
-	<fieldset class="rating">
-    <input type="radio" id="star5" name="rating1" value="5" /><label for="star5" title="Excellent">5 stars</label>
-    <input type="radio" id="star4" name="rating1" value="4" /><label for="star4" title="Très bien">4 stars</label>
-    <input type="radio" id="star3" name="rating1" value="3" /><label for="star3" title="Bien">3 stars</label>
-    <input type="radio" id="star2" name="rating1" value="2" /><label for="star2" title="Un peu mauvais">2 stars</label>
-    <input type="radio" id="star1" name="rating1" value="1" /><label for="star1" title="Mauvais">1 star</label>
-</fieldset>
+    <td style="position:relative;left:-3.4%;"  >
+	<?php $class =$row['classement'];
+	//echo $class;
+	switch($class){
+		case(5):{
+?>
+	<fieldset  class="rating">
+	
+
+	
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."5"; ?>" name="<?php echo "Rep".$row['idUser']."5"; ?>"  value="5" checked="true"  /><label for="<?php echo "Rep".$row['idUser']."5"; ?>" title="Excellent" onclick="evaluer(<?php echo $row['idUser']?>,'5');">5 stars</label>
+  <input type="radio" id="<?php echo "Rep".$row['idUser']."4"; ?>" name="<?php echo "Rep".$row['idUser']."4"; ?>"  checked="true" value="4"  /><label for="<?php echo "Rep".$row['idUser']."4"; ?>" title="Très bien" onclick="evaluer(<?php echo $row['idUser']?>,'4');">4 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."3"; ?>" name="<?php echo "Rep".$row['idUser']."3"; ?>" checked="true" value="3" /><label for="<?php echo "Rep".$row['idUser']."3"; ?>" title="Bien" onclick="evaluer(<?php echo $row['idUser']?>,'3');">3 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."2"; ?>" name="<?php echo "Rep".$row['idUser']."2"; ?>" checked="true" value="2" /><label for="<?php echo "Rep".$row['idUser']."2"; ?>" title="Un peu mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'2');">2 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."1"; ?>" name="<?php echo "Rep".$row['idUser']."1"; ?>" checked="true" value="1"  /><label for="<?php echo "Rep".$row['idUser']."1"; ?>" title="Mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'1');">1 star</label>
+  
+	</fieldset>
+	<?php  break; } ?>
+	
+	<?php 
+	case(4):{
+?>
+	<fieldset  class="rating">
+	
+
+	
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."5"; ?>" name="<?php echo "Rep".$row['idUser']."5"; ?>"  value="5"   /><label for="<?php echo "Rep".$row['idUser']."5"; ?>" title="Excellent" onclick="evaluer(<?php echo $row['idUser']?>,'5');">5 stars</label>
+  <input type="radio" id="<?php echo "Rep".$row['idUser']."4"; ?>" name="<?php echo "Rep".$row['idUser']."4"; ?>"  checked="true" value="4"  /><label for="<?php echo "Rep".$row['idUser']."4"; ?>" title="Très bien" onclick="evaluer(<?php echo $row['idUser']?>,'4');">4 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."3"; ?>" name="<?php echo "Rep".$row['idUser']."3"; ?>" checked="true" value="3" /><label for="<?php echo "Rep".$row['idUser']."3"; ?>" title="Bien" onclick="evaluer(<?php echo $row['idUser']?>,'3');">3 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."2"; ?>" name="<?php echo "Rep".$row['idUser']."2"; ?>" checked="true" value="2" /><label for="<?php echo "Rep".$row['idUser']."2"; ?>" title="Un peu mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'2');">2 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."1"; ?>" name="<?php echo "Rep".$row['idUser']."1"; ?>" checked="true" value="1"  /><label for="<?php echo "Rep".$row['idUser']."1"; ?>" title="Mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'1');">1 star</label>
+  
+	</fieldset>
+	<?php break;}; ?>
+	
+	<?php 
+	case(3):{
+?>
+	<fieldset  class="rating">
+	
+
+	
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."5"; ?>" name="<?php echo "Rep".$row['idUser']."5"; ?>"  value="5"   /><label for="<?php echo "Rep".$row['idUser']."5"; ?>" title="Excellent" onclick="evaluer(<?php echo $row['idUser']?>,'5');">5 stars</label>
+  <input type="radio" id="<?php echo "Rep".$row['idUser']."4"; ?>" name="<?php echo "Rep".$row['idUser']."4"; ?>"   value="4"  /><label for="<?php echo "Rep".$row['idUser']."4"; ?>" title="Très bien" onclick="evaluer(<?php echo $row['idUser']?>,'4');">4 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."3"; ?>" name="<?php echo "Rep".$row['idUser']."3"; ?>" checked="true" value="3" /><label for="<?php echo "Rep".$row['idUser']."3"; ?>" title="Bien" onclick="evaluer(<?php echo $row['idUser']?>,'3');">3 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."2"; ?>" name="<?php echo "Rep".$row['idUser']."2"; ?>" checked="true" value="2" /><label for="<?php echo "Rep".$row['idUser']."2"; ?>" title="Un peu mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'2');">2 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."1"; ?>" name="<?php echo "Rep".$row['idUser']."1"; ?>" checked="true" value="1"  /><label for="<?php echo "Rep".$row['idUser']."1"; ?>" title="Mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'1');">1 star</label>
+  
+	</fieldset>
+	<?php break;}; ?>
+	
+	<?php 
+	case(2):{
+?>
+	<fieldset  class="rating">
+	
+
+	
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."5"; ?>" name="<?php echo "Rep".$row['idUser']."5"; ?>"  value="5"   /><label for="<?php echo "Rep".$row['idUser']."5"; ?>" title="Excellent" onclick="evaluer(<?php echo $row['idUser']?>,'5');">5 stars</label>
+  <input type="radio" id="<?php echo "Rep".$row['idUser']."4"; ?>" name="<?php echo "Rep".$row['idUser']."4"; ?>"   value="4"  /><label for="<?php echo "Rep".$row['idUser']."4"; ?>" title="Très bien" onclick="evaluer(<?php echo $row['idUser']?>,'4');">4 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."3"; ?>" name="<?php echo "Rep".$row['idUser']."3"; ?>" value="3" /><label for="<?php echo "Rep".$row['idUser']."3"; ?>" title="Bien" onclick="evaluer(<?php echo $row['idUser']?>,'3');">3 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."2"; ?>" name="<?php echo "Rep".$row['idUser']."2"; ?>" checked="true" value="2" /><label for="<?php echo "Rep".$row['idUser']."2"; ?>" title="Un peu mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'2');">2 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."1"; ?>" name="<?php echo "Rep".$row['idUser']."1"; ?>" checked="true" value="1"  /><label for="<?php echo "Rep".$row['idUser']."1"; ?>" title="Mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'1');">1 star</label>
+  
+	</fieldset>
+	<?php break;}; ?>
+	
+	<?php 
+	case(1):{
+?>
+	<fieldset  class="rating">
+	
+
+	
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."5"; ?>" name="<?php echo "Rep".$row['idUser']."5"; ?>"  value="5"   /><label for="<?php echo "Rep".$row['idUser']."5"; ?>" title="Excellent" onclick="evaluer(<?php echo $row['idUser']?>,'5');">5 stars</label>
+  <input type="radio" id="<?php echo "Rep".$row['idUser']."4"; ?>" name="<?php echo "Rep".$row['idUser']."4"; ?>"   value="4"  /><label for="<?php echo "Rep".$row['idUser']."4"; ?>" title="Très bien" onclick="evaluer(<?php echo $row['idUser']?>,'4');">4 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."3"; ?>" name="<?php echo "Rep".$row['idUser']."3"; ?>"  value="3" /><label for="<?php echo "Rep".$row['idUser']."3"; ?>" title="Bien" onclick="evaluer(<?php echo $row['idUser']?>,'3');">3 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."2"; ?>" name="<?php echo "Rep".$row['idUser']."2"; ?>"  value="2" /><label for="<?php echo "Rep".$row['idUser']."2"; ?>" title="Un peu mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'2');">2 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."1"; ?>" name="<?php echo "Rep".$row['idUser']."1"; ?>" checked="true" value="1"  /><label for="<?php echo "Rep".$row['idUser']."1"; ?>" title="Mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'1');">1 star</label>
+  
+	</fieldset>
+	<?php break;}}; ?>
 	</td>
  
     <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button onclick="afficher(<?php echo $row['idUser']; ?>);" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
@@ -431,9 +498,10 @@ while($row = $select->fetch()){
         </div>
       </div>
     </td>
-  
+
   </div>
 	</td>
+
   <?php if($i==0){?>
   <td rowspan="<?php echo $select->rowCount();?>"> <div style="text-align:center;position:relative;margin-top:30%;"><p class="nouveau-rep">Nouveau réparateur?</p><p class="nouveau-rep">Ajoutez-le!</p>
 	<button  class="btn button btn-xs" onclick="ajouter();" title="ajouter"><span class="glyphicon glyphicon-plus" ></span></button>
@@ -504,7 +572,6 @@ while($row = $select->fetch()){
    /.modal-content
   </div>
 	</td>
-
     </tr>  
    -->
     
@@ -624,7 +691,13 @@ while($row = $select->fetch()){
                   alert(data);// les actions faire aprés le resulta (data contient ce qu'on a ecrit dans le fichier ajouterReparateur par un echo)
                 })
             }
-
+			
+			function evaluer(id,num){
+				$.post("php/choixNum.php",{id,num},(data)=>{
+				alert(data);
+                })
+			}
+			
+			
      </script>
 </html>
-
