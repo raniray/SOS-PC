@@ -26,20 +26,16 @@ if(!isset($_SESSION['login'])){
 <script>
 // Get the modal
 var modal = document.getElementById('modelReparateur');
-
 // Get the button that opens the modal
 var btn = document.getElementById("myBtnRep");
  
-
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close-infos")[0];
-
 // When the user clicks the button, open the modal 
  function afficher(id) {
 var modal = document.getElementById('modelReparateur'+id);
     modal.style.display = "block";
 }
-
 function afficherSup(id) {
 var modal = document.getElementById('supprimer'+id);
     modal.style.display = "block";
@@ -49,7 +45,6 @@ function fermer(){
     var modal = document.getElementById('modelReparateur');
     modal.style.display = "none";
 }
-
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
 var modal = document.getElementById('modelReparateur');
@@ -57,7 +52,6 @@ var modal = document.getElementById('modelReparateur');
         modal.style.display = "none";
     }
 }
-
 function annuler(id){
   var modal = document.getElementById('modelReparateur'+id);
     modal.style.display = "none";
@@ -122,7 +116,7 @@ function annulersup(id){
                                                 <li><a href="accueilAdmin.php#about">A propos</a></li>
                         <li><a href="accueilAdmin.php#contact">Contact</a></li>
                         <li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
-          <span class="glyphicon glyphicon-user"></span> 
+          <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
                     <?php
@@ -213,12 +207,33 @@ function annulersup(id){
 <?php 
 require('php/connexion.php');
 $db=data_base_connect();
-$select = $db->prepare("SELECT * FROM client_ join user_ where user_.idUser=client_.idUser");
+if (isset($_GET['pageno'])) {
+   $pageno = $_GET['pageno'];
+} else {
+   $pageno = 1;
+} 
+//Récuéprer le nombre des lignes du résultat de la requête
+$result = $db->prepare("SELECT count(*) FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
+$result->execute();
+$numrows = $result->fetchColumn(0);
+//Définir le nombre de lignes par page
+$rows_per_page = 6;
+$lastpage      = ceil($numrows/$rows_per_page);
+
+//Assurer que le nombre de page est entier et qu'il est entre 1 et le nombre de la dernière page
+$pageno = (int)$pageno;
+if ($pageno > $lastpage) {
+   $pageno = $lastpage;
+} 
+if ($pageno < 1) {
+   $pageno = 1;
+} 
+
+$limit = 'LIMIT ' .($pageno - 1) * $rows_per_page .',' .$rows_per_page;
+$select = $db->prepare("SELECT * FROM client_ join user_ where user_.idUser=client_.idUser $limit");
 $select->execute();
 $i=0;
 while($row = $select->fetch()){
-
-
 ?>
     <tr>
     <td><?php echo $row['nomUser']." ".$row['prenomUser'];?></td>
@@ -317,15 +332,25 @@ while($row = $select->fetch()){
 </table>
 
 <div class="clearfix"></div>
-<ul class="pagination pull-right">
-  <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-  <li class="active"><a href="#">1</a></li>
-  <li><a href="gestionClient.html">2</a></li>
-  <li><a href="gestionClient.html">3</a></li>
-  <li><a href="gestionClient.html">4</a></li>
-  <li><a href="gestionClient.html">5</a></li>
-  <li><a href="gestionClient.html"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-</ul>
+<?php 
+
+ if ($pageno == 1) {
+   echo " Début Précédent ";
+} else {
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=1'>Début</a> ";
+   $prevpage = $pageno-1;
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$prevpage'>Précédent</a> ";
+} // if
+
+echo " (<span style='color:#428bca;;'>Page $pageno parmi $lastpage )</span> ";
+if ($pageno == $lastpage) {
+   echo " Suivant Précédent ";
+} else {
+   $nextpage = $pageno+1;
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$nextpage'>Suivant</a> ";
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$lastpage'>Fin</a> ";
+} // if
+?>
                 
             </div>
             
@@ -399,4 +424,3 @@ while($row = $select->fetch()){
     </script>
 
 </html>
-
