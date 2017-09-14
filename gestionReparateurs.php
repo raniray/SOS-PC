@@ -79,7 +79,7 @@ function annulersup(id){
  <body class="default-bg3">
 
   <div class="banner-caption2">
-
+     
 
       <!-- header start -->
     <!-- ================ --> 
@@ -197,8 +197,9 @@ function annulersup(id){
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 <div class="container">
+
   <div class="row">
-    
+  
         
         <div class="col-md-12">
         <h3 class="text-center">Voici tous les réparateurs</h3>
@@ -302,11 +303,34 @@ function annulersup(id){
                    </thead>
     <tbody>
   <?php 
+ if (isset($_GET['pageno'])) {
+   $pageno = $_GET['pageno'];
+} else {
+   $pageno = 1;
+} 
+//Récuéprer le nombre des lignes du résultat de la requête
+$result = $db->prepare("SELECT count(*) FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
+$result->execute();
+$numrows = $result->fetchColumn(0);
+//Définir le nombre de lignes par page
+$rows_per_page = 6;
+$lastpage      = ceil($numrows/$rows_per_page);
 
-$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
+//Assurer que le nombre de page est entier et qu'il est entre 1 et le nombre de la dernière page
+$pageno = (int)$pageno;
+if ($pageno > $lastpage) {
+   $pageno = $lastpage;
+} 
+if ($pageno < 1) {
+   $pageno = 1;
+} 
+
+$limit = 'LIMIT ' .($pageno - 1) * $rows_per_page .',' .$rows_per_page;
+$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser $limit");
 $select->execute();
 $i=0;
 while($row = $select->fetch()){
+	
   ?>
     <tr >
     <td><?php echo $row['nomUser']." ".$row['prenomUser'];?> </td>
@@ -578,18 +602,43 @@ while($row = $select->fetch()){
     </tbody>
         
 </table>
-
 <div class="clearfix"></div>
+<?php 
+
+ if ($pageno == 1) {
+   echo " Début Précédent ";
+} else {
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=1'>Début</a> ";
+   $prevpage = $pageno-1;
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$prevpage'>Précédent</a> ";
+} // if
+
+echo " (<span style='color:#428bca;;'>Page $pageno parmi $lastpage )</span> ";
+if ($pageno == $lastpage) {
+   echo " Suivant Précédent ";
+} else {
+   $nextpage = $pageno+1;
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$nextpage'>Suivant</a> ";
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$lastpage'>Fin</a> ";
+} // if
+?>
+<!--<div class="clearfix"></div>
 <ul class="pagination pull-right">
   <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
   <li class="active"><a href="#">1</a></li>
-  <li><a href="gestionReparateurs.html">2</a></li>
+  <li><a href="">2</a></li>
   <li><a href="gestionReparateurs.html">3</a></li>
   <li><a href="gestionReparateurs.html">4</a></li>
   <li><a href="gestionReparateurs.html">5</a></li>
   <li><a href="gestionReparateurs.html"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-</ul>
-                
+</ul>-->
+
+  
+
+	
+	
+  
+
             </div>
             
         </div>
