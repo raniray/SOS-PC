@@ -2,7 +2,27 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	background-color: #000000; 
 }
-
+#f1_upload_process{
+   z-index:100;
+   position:absolute;
+   visibility:hidden;
+   text-align:center;
+   width:400px;
+   margin:0px;
+   padding:0px;
+   background-color:#fff;
+   border:1px solid #ccc;
+}
+ 
+form{
+   text-align:center;
+   width:390px;
+   margin:0px;
+   padding:5px;
+   background-color:#fff;
+   border:1px solid #ccc;
+ 
+}
 .dashboard{
 	
 	position:absolute;
@@ -460,7 +480,7 @@ background: #28B78D;
 }
 
 .rating:not(:checked) > label:before {
-    content: '★ ';
+    content: '★';
 	
 }
 
@@ -1358,6 +1378,12 @@ textarea {
 	color:#428bca;
 	padding:14px 16px;
 }
+
+.gestion-page {
+	font-size:14px;
+	color:#428bca;
+	
+}
 /* Images Overlay
 ----------------------------------------------------------------------------- */
 .overlay-container {
@@ -1905,6 +1931,23 @@ padding:18px 22px;
 	text-decoration:underline;
 	font-weight:bold;
 }
+#creer-avis{
+	position:absolute;
+	margin-left:42%;
+	
+	
+	}   
+#creer-avis a {
+	text-decoration:none;
+	color:#fff;
+	border:none;
+}
+
+#creer-avis a:hover {
+	text-decoration:underline;
+	font-weight:bold;
+}
+
 .yesButton{
 	background-color:#28B78D;
 	border:none;
@@ -2112,3 +2155,4 @@ div .supprimer-annonce:hover,
 }
 
 }
+
