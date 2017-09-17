@@ -364,98 +364,40 @@ $db = data_base_connect();
 			</div>
 		<!-- section start -->
 		<!-- ================ -->
+		
 		<div class="section translucent-bg bg-image-2 pb-clear">
 			<div class="container object-non-visible" data-animation-effect="fadeIn">
 				<h1 id="clients" class="title text-center">Nos clients</h1>
+				
 				<div class="space"></div>
+				<div class="separator"></div>
+	             <div class="btn button"  id="creer-avis"><a href="nouvelAvis.php" >Créer un avis</a></div>
+				<div class="space"></div>				
+                 <br><br>
+				
+				<br>	
 				<div class="row">
+				<?php 
+				  $stmt = $db->prepare("SELECT * FROM avis_ JOIN user_ WHERE user_.idUser=avis_.idUser");
+				  $stmt->execute();
+				  while($row = $stmt->fetch()){
+				?>
 					<div class="col-md-4">
 						<div class="media testimonial">
 							<div class="media-left">
 								<img src="images/testimonial-1.png" alt="">
 							</div>
 							<div class="media-body">
-								<h3 class="media-heading">Mot clé !</h3>
+								<h3 class="media-heading"><?php echo "Avis N°".$row['idAvis']; ?></h3>
 								<blockquote>
-									<p> Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
+									<p><?php echo $row['contenuAvis']; ?></p>
+									<footer><?php echo $row['nomUser']." ".$row['prenomUser']; ?></footer>
 								</blockquote>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-2.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-3.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-2.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-3.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-1.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Présnom </footer>
-								</blockquote>
-							</div>
-						</div>
-					</div>
-				</div>
+				  <?php }?>
+					
 			</div>
 			<!-- section start -->
 			<!-- ================ -->
