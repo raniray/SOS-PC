@@ -2,6 +2,9 @@
 <html >
 <?php     
 session_start();
+require('php/connexion.php');
+$db=data_base_connect();
+
 if(!isset($_SESSION['login'])){
 		header("Location: login.php");
  }
@@ -76,7 +79,7 @@ function annulersup(id){
  <body class="default-bg3">
 
   <div class="banner-caption2">
-
+     
 
       <!-- header start -->
     <!-- ================ --> 
@@ -194,8 +197,9 @@ function annulersup(id){
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 <div class="container">
+
   <div class="row">
-    
+  
         
         <div class="col-md-12">
         <h3 class="text-center">Voici tous les réparateurs</h3>
@@ -299,25 +303,59 @@ function annulersup(id){
                    </thead>
     <tbody>
   <?php 
-require('php/connexion.php');
-$db=data_base_connect();
-$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
+ if (isset($_GET['pageno'])) {
+   $pageno = $_GET['pageno'];
+} else {
+   $pageno = 1;
+} 
+//Récuéprer le nombre des lignes du résultat de la requête
+$result = $db->prepare("SELECT count(*) FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
+$result->execute();
+$numrows = $result->fetchColumn(0);
+//Définir le nombre de lignes par page
+$rows_per_page = 6;
+$lastpage      = ceil($numrows/$rows_per_page);
+
+//Assurer que le nombre de page est entier et qu'il est entre 1 et le nombre de la dernière page
+$pageno = (int)$pageno;
+if ($pageno > $lastpage) {
+   $pageno = $lastpage;
+} 
+if ($pageno < 1) {
+   $pageno = 1;
+} 
+$limit = 'LIMIT ' .($pageno - 1) * $rows_per_page .',' .$rows_per_page;
+
+$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser $limit");
 $select->execute();
 $i=0;
+  if($select->rowCount()==0){
+  ?>  <td colspan="6"> <div style="text-align:center;position:relative;"><p class="nouveau-rep">Nouveau réparateur?</p><p class="nouveau-rep">Ajoutez-le!</p>
+  <button  class="btn button btn-xs" onclick="ajouter();" title="ajouter"><span class="glyphicon glyphicon-plus" ></span></button>
+  </td><?php
+
+  }else{
 while($row = $select->fetch()){
+
   ?>
     <tr >
     <td><?php echo $row['nomUser']." ".$row['prenomUser'];?> </td>
     <td><?php echo $row['dateInscription'];?> </td>
- 
-    <td style="position:relative;left:-3.4%;" >
-	<fieldset id="rad<?php echo $row['idUser']?>" name="<?php echo $row['idUser']?>" >
-    <input type="radio" id="star5" name="rating5" value="5" onclick="evaluer(<?php echo $row['idUser']?>,'1');"/><label for="star5" title="Excellent">5 stars</label>
-    <input type="radio" id="star4" name="rating4" value="4" onclick="evaluer(<?php echo $row['idUser']?>,'2');"/><label for="star4" title="Très bien">4 stars</label>
-    <input type="radio" id="star3" name="rating3" value="3" onclick="evaluer(<?php echo $row['idUser']?>,'3');"/><label for="star3" onclick="evaluer(<?php echo $row['idUser']?>,'3');" title="Bien">3 stars</label>
-    <input type="radio" id="star2" name="rating2" value="2" onclick="evaluer(<?php echo $row['idUser']?>,'4');"/><label for="star2" title="Un peu mauvais">2 stars</label>
-    <input type="radio" id="star1" name="rating1" value="1" onclick="evaluer(<?php echo $row['idUser']?>,'5');"/><label for="star1" title="Mauvais">1 star</label>
-  </fieldset>
+    <td style="position:relative;left:-3.4%;"  >
+	<?php $class =$row['classement'];
+	//echo $class;
+?>
+<div id="<?php echo "classement".$row['idUser'];?>">
+	<fieldset  class="rating">
+
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."5"; ?>" name="<?php echo "Rep".$row['idUser']."5"; ?>"  value="5" <?php if($row['classement']>=5){ echo "checked='true'";}?>  /><label for="<?php echo "Rep".$row['idUser']."5"; ?>" title="Excellent" onclick="evaluer(<?php echo $row['idUser']?>,'5');">5 stars</label>
+  <input type="radio" id="<?php echo "Rep".$row['idUser']."4"; ?>" name="<?php echo "Rep".$row['idUser']."4"; ?>" <?php if($row['classement']>=4){ echo "checked='true'";}?> value="4"  /><label for="<?php echo "Rep".$row['idUser']."4"; ?>" title="Très bien" onclick="evaluer(<?php echo $row['idUser']?>,'4');">4 stars</label>
+    <input type="radio" id="<?php echo "Rep".$row['idUser']."3"; ?>" name="<?php echo "Rep".$row['idUser']."3"; ?>"  <?php if($row['classement']>=3){ echo "checked='true'";}?> value="3" /><label for="<?php echo "Rep".$row['idUser']."3"; ?>" title="Bien" onclick="evaluer(<?php echo $row['idUser']?>,'3');">3 stars</label>
+    <input type="radio" <?php if($row['classement']>=2){ echo "checked='true'";}?> id="<?php echo "Rep".$row['idUser']."2"; ?>" name="<?php echo "Rep".$row['idUser']."2"; ?>" checked="true" value="2" /><label for="<?php echo "Rep".$row['idUser']."2"; ?>" title="Un peu mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'2');">2 stars</label>
+    <input type="radio" <?php if($row['classement']>=1){ echo "checked='true'";}?> id="<?php echo "Rep".$row['idUser']."1"; ?>" name="<?php echo "Rep".$row['idUser']."1"; ?>" checked="true" value="1"  /><label for="<?php echo "Rep".$row['idUser']."1"; ?>" title="Mauvais" onclick="evaluer(<?php echo $row['idUser']?>,'1');">1 star</label>
+  
+	</fieldset>
+</div>
 	</td>
  
     <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button onclick="afficher(<?php echo $row['idUser']; ?>);" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p>
@@ -422,9 +460,10 @@ while($row = $select->fetch()){
         </div>
       </div>
     </td>
-  
+
   </div>
 	</td>
+
   <?php if($i==0){?>
   <td rowspan="<?php echo $select->rowCount();?>"> <div style="text-align:center;position:relative;margin-top:30%;"><p class="nouveau-rep">Nouveau réparateur?</p><p class="nouveau-rep">Ajoutez-le!</p>
 	<button  class="btn button btn-xs" onclick="ajouter();" title="ajouter"><span class="glyphicon glyphicon-plus" ></span></button>
@@ -433,7 +472,8 @@ while($row = $select->fetch()){
     <?php 
     
     $i++;
-    }?>
+    }
+  }?>
 <!--    
  <tr>
     
@@ -501,18 +541,44 @@ while($row = $select->fetch()){
     </tbody>
         
 </table>
-
 <div class="clearfix"></div>
+<?php 
+
+ if ($pageno == 1) {
+   echo " Début Précédent ";
+} else {
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=1'>Début</a> ";
+   $prevpage = $pageno-1;
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$prevpage'>Précédent</a> ";
+} // if
+
+echo " (<span style='color:#428bca;;'>Page $pageno parmi $lastpage )</span> ";
+if ($pageno == $lastpage) {
+   echo " Suivant Précédent ";
+} else {
+   $nextpage = $pageno+1;
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$nextpage'>Suivant</a> ";
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$lastpage'>Fin</a> ";
+} // if
+?>
+
+<!--<div class="clearfix"></div>
 <ul class="pagination pull-right">
   <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
   <li class="active"><a href="#">1</a></li>
-  <li><a href="gestionReparateurs.html">2</a></li>
+  <li><a href="">2</a></li>
   <li><a href="gestionReparateurs.html">3</a></li>
   <li><a href="gestionReparateurs.html">4</a></li>
   <li><a href="gestionReparateurs.html">5</a></li>
   <li><a href="gestionReparateurs.html"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-</ul>
-                
+</ul>-->
+
+  
+
+	
+	
+  
+
             </div>
             
         </div>
@@ -616,10 +682,10 @@ while($row = $select->fetch()){
             }
 			
 			function evaluer(id,num){
-        				alert(id);
 				$.post("php/choixNum.php",{id,num},(data)=>{
-				alert(data);
-                })
+        $("#classement"+id).html(data);
+        
+        })
 			}
      </script>
 </html>

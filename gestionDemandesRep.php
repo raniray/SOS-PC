@@ -166,8 +166,31 @@ if(!isset($_SESSION['login'])){
     <?php 
 require('php/connexion.php');
 $db=data_base_connect();
+if (isset($_GET['pageno'])) {
+   $pageno = $_GET['pageno'];
+} else {
+   $pageno = 1;
+} 
+//Récuéprer le nombre des lignes du résultat de la requête
+$result = $db->prepare("SELECT count(*) FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
+$result->execute();
+$numrows = $result->fetchColumn(0);
+//Définir le nombre de lignes par page
+$rows_per_page = 6;
+$lastpage      = ceil($numrows/$rows_per_page);
+
+//Assurer que le nombre de page est entier et qu'il est entre 1 et le nombre de la dernière page
+$pageno = (int)$pageno;
+if ($pageno > $lastpage) {
+   $pageno = $lastpage;
+} 
+if ($pageno < 1) {
+   $pageno = 1;
+} 
+
+$limit = 'LIMIT ' .($pageno - 1) * $rows_per_page .',' .$rows_per_page;
 $id = $_SESSION['id'];
-$select = $db->prepare("SELECT * FROM demande_");
+$select = $db->prepare("SELECT * FROM demande_ $limit");
 $select->execute();
 $i=0;
 while($row = $select->fetch()){
@@ -233,15 +256,25 @@ while($row2 = $selectR->fetch()){?>
              
 
 <div class="clearfix"></div>
-<ul class="pagination pull-right">
-  <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-  <li class="active"><a href="#">1</a></li>
-  <li><a href="gestionDemandesRep.html">2</a></li>
-  <li><a href="gestionDemandesRep.html">3</a></li>
-  <li><a href="gestionDemandesRep.html">4</a></li>
-  <li><a href="gestionDemandesRep.html">5</a></li>
-  <li><a href="gestionDemandesRep.html"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-</ul>
+<?php 
+
+ if ($pageno == 1) {
+   echo " Début Précédent ";
+} else {
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=1'>Début</a> ";
+   $prevpage = $pageno-1;
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$prevpage'>Précédent</a> ";
+} // if
+
+echo " (<span style='color:#428bca;;'>Page $pageno parmi $lastpage )</span> ";
+if ($pageno == $lastpage) {
+   echo " Suivant Précédent ";
+} else {
+   $nextpage = $pageno+1;
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$nextpage'>Suivant</a> ";
+   echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$lastpage'>Fin</a> ";
+} // if
+?>
                 
             </div>
             

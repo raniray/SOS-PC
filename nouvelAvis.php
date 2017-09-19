@@ -327,112 +327,25 @@ session_start();
 <div class="demande">
 
 <div class="container">
+<form class="form-horizontal" method="post" action="php/creer_avis.php">
   <div class="row form-group">
         <div class="col-xs-22">
             <ul class="nav nav-pills nav-justified thumbnail setup-panel">
-                <li class="active"><a href="#step-1">
-                    <h4 class="list-group-item-heading">Etape 1</h4>
-                    <p class="list-group-item-text">Caractéristiques de votre annonce</p>
+               
+                <li ><a href="#step-2">
+                    <h4 class="list-group-item-heading">Avis client</h4>
+                    <p class="list-group-item-text">Que pensez-vous de SOS-PC?</p>
                 </a></li>
-                <li class="disabled"><a href="#step-2">
-                    <h4 class="list-group-item-heading">Etape 2</h4>
-                    <p class="list-group-item-text">Contenu de l'annonce </p>
-                </a></li>
-                <li class="disabled"><a href="#step-3">
-                    <h4 class="list-group-item-heading">Etape 3</h4>
-                    <p class="list-group-item-text">Une photo de votre PC</p>
-                </a></li>
+                
                 
              
                 
             </ul>
         </div>
   </div>
-    <div class="row setup-content" id="step-1">
-        <div class="col-xs-16">
-            <div class="well text-center">
-              <center>
-                <h1> ETAPE 1</h1>
-                <form class="form-horizontal" method="POST" action="php/newAnnonce.php" enctype="multipart/form-data" >
-  
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="modelePC">Modèle PC:</label>  
-  <div class="col-md-5">
-  <input id="model" name="model" type="text" placeholder="Modèle PC ex : Dell latitude" class="form-control input-md" required="">
-    
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-4 control-label" for="processeur">Processeur:</label>  
-  <div class="col-md-5">
-  <input id="processeur" name="processeur" type="text" placeholder="Processeur ex : i3" class="form-control input-md" required="">
-    
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-4 control-label" for="RAM">RAM:</label>  
-  <div class="col-md-5">
-  <input id="RAM" name="RAM" type="text" placeholder="RAM ex 8 GB" class="form-control input-md" required="">
-    
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-md-4 control-label" for="prix">Prix:</label>  
-  <div class="col-md-5">
-  <input id="prix" name="prix" type="text" placeholder="35000DA" class="form-control input-md" required="">
-    
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-md-4 control-label" for="duree">Durée de validité:</label>  
-  <div class="col-md-5">
-  <input id="duree" name="duree" type="text" placeholder="ex: 2 jours" class="form-control input-md" required="">
-    
-  </div>
-</div>
-
-<!-- Select Basic -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="sysE">Système d'exploitation:</label>
-  <div class="col-md-5">
-    <select id="sysE" name="sysE" class="form-control">
-      <option value="Windows XP">Windows XP</option>
-      <option value="Windows 7">Windows 7</option>
-      <option value="Windows 8">Windows 8</option>
-      <option value="Windows 10">Windows 10</option>
-      <option value="Windows Linux">Windows Linux</option>
-      <option value="Mac OS">Mac OS</option>
-      <option value="Autres..">Autres..</option>
-    </select>
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-4 control-label" for="ancienn">Ancienneté</label>
-  <div class="col-md-5">
-    <select id="ancienn" name="ancienn" class="form-control">
-      <option value="moins d'un ans">moins d'un ans</option>
-      <option value="1 ans">1 ans</option>
-      <option value="Entre 2  et 5 ans">Entre 2  et 5 ans </option>
-      <option value="Plus de 5 ans">Plus de 5 ans </option>
-     </select>
-  </div>
-</div>
-                
-</center>               
-
-                
-                
-                <button id="activate-step-2" class="btn btn-primary btn-md">Activer Etape 2</button>
-            </div>
-        </div>
-    </div>
 
 
-    <div class="row setup-content" id="step-2">
+    <div class="row setup-content" >
         <div class="col-xs-16">
             
                       <div class="row">
@@ -441,14 +354,9 @@ session_start();
                         <div class="row clearfix">
                          <div class="col-md-16 column">
                             <div class="col-md-16 well text-center">
-                <h1 class="text-center"> Etape 2</h1>
-                <h4 class="text-center"> Informations supplémentaires</h4>
-
-                              <textarea class="form-control" name="contenuAnnonce" type="textarea" id="contenuAnnonce" placeholder="Decrire la l'annonce" maxlength="140" rows="10"></textarea>
-                            
-                               <div class="container">
-
-                             </br> 
+                <h1 class="text-center"> Avis</h1>
+                <h4 class="text-center"> Créer un avis</h4>
+   
     </div> 
 
     <!-- /container -->
@@ -456,7 +364,7 @@ session_start();
 
 
                 
-                <button id="activate-step-3" class="btn btn-primary btn-md">Activer Etape 3</button>
+              
                 
             </div>
             </div>
@@ -477,38 +385,14 @@ session_start();
 
 
 
+<textarea class="form-control" style="margin-left:7%;max-width:1170px;" name="contenuAvis" type="textarea" id="contenuAvis" placeholder="Introduisez votre avis à propos de SOS-PC" maxlength="120" rows="12"></textarea>
+                            
+                               <div class="container">
+                             
 
- <div class="row setup-content" id="step-3">
-        <div class="col-xs-16">
-            <div class="col-md-16 well text-center">
-                <h1 class="text-center"> Etape 3</h1>
-                <h4 class="text-center">Joindre une photo de  votre PC</h4>
-                  <div class="container">
-                    <div class="col-md-16">
-                     <div class="form-group">
-					<!-- <p id="f1_upload_process">Loading...<br/><img src="loader.gif" /></p>-->
-                     <p id="result"></p>
-                   
+                             </br> 
 
-                        <div class="form-group">
-                                  
-                         
-                                  <div class="col-md-8 control-label" >
-                                    <input id="prev" type="text" class="form-control2" readonly>
-                                  </div>
-                                  
-                                  <div class="col-md-4" > 
-                                  <span class="btn btn-primary btn-md btn-file" style="float:left;margin-left:35%;margin-top:-2.3%;">
-                                  Parcourir… <input type="file" id="imgAnnonce" name="imgAnnonce" >
-                                   </span>
-
-
-                                 </div>
-
-
-                       </div> 
-					   </br></br></br>
-					   <input class="btn btn-primary btn-md" type="submit" name="submitBtn" value="Créer annonce" ></input>  
+					   <input class="btn btn-primary btn-md" type="submit" name="submitBtn" style="margin-left:45%;" value="Créer avis" ></input>  
 
                                          </form>
   

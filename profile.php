@@ -46,7 +46,7 @@ $db = data_base_connect();
     
   </head>
 
- <body class="default-bg2">
+ <body onload="hideTr()" class="default-bg2">
 
     <!-- scrollToTop -->
     <!-- ================ -->
@@ -241,6 +241,18 @@ while($row = $select->fetch()){?>
                         <td>Numéro de CCP:</td>
                         <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
                       </tr>
+                      <tr id="anmdp" hidden>
+                        <td>Ancien Mdp:</td>
+                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                      </tr>
+                      <tr id="newmdp" hidden>
+                        <td>Nouveau Mdp:</td>
+                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                      </tr>
+                      <tr id="confnewmdp" hidden>
+                        <td>Confirmer Mdp:</td>
+                        <td><input id="prenom" name="prenom" type="text" class="form-control3 input-md" required=""></td>
+                      </tr>
                     </tbody>
                   </table>
                 
@@ -255,7 +267,8 @@ while($row = $select->fetch()){?>
                     </div>
 
                       <div class="col-md-6">
-                      <a href="#" class="btn button btn-block">Modifier mon mot de passe</a>
+                      <a id="modifmdp1" href="#" class="btn button btn-block">Modifier mon mot de passe</a>
+                      <a id="modifmdp2" style="display: none" href="#" class="btn button btn-block">Modifier mon mot de passe</a>
                       </div>
                     </div>
                   </div>
@@ -312,6 +325,30 @@ while($row = $select->fetch()){?>
                 // })
             }
 
+
+
+                $("#modifmdp1").css('background-color','#FFC107');
+
+                $("#modifmdp1").click(function(){
+                 $("#anmdp").fadeIn("slow");
+                 $("#newmdp").fadeIn("slow");
+                 $("#confnewmdp").fadeIn("slow");
+                 $("#modifmdp2").fadeIn(0);
+                 $("#modifmdp1").fadeOut(0); 
+                });
+
+
+                $("#modifmdp2").click(function(){
+                 $("#anmdp").fadeOut("slow");
+                 $("#newmdp").fadeOut("slow");
+                 $("#confnewmdp").fadeOut("slow");
+                 $("#modifmdp2").fadeOut(0);
+                 $("#modifmdp1").fadeIn(0); 
+                 
+
+
+                 
+                });
      </script>
 </html>
 

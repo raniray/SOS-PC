@@ -224,13 +224,13 @@ while($row = $select->fetch()){
 	</td>
     <td><?php echo $row['dateCreation'];?></td>
     <td>
-	 <select id="etat-reparation" name="etat-reparation" onchange="changeEtat(<?php echo $row['idDemande'];?>)" class="form-control">
+	 <select id="<?php echo "etat-reparation".$row['idDemande'];?>" name="etat-reparation" onchange="changeEtat(<?php echo $row['idDemande'];?>)" class="form-control">
       <option <?php if(strcmp($row['etatDemande'],"En cours")==0){ echo "selected='true'"; } ?> value="En cours">En cours</option>
       <option <?php if(strcmp($row['etatDemande'],"Pas encore")==0){ echo "selected='true'"; } ?> value="Pas encore">Pas encore</option>
       <option <?php if(strcmp($row['etatDemande'],"Terminé")==0){ echo "selected='true'"; } ?> value="Terminé">Terminé</option>
     </select>
 	</td>
-    <td title="modifier"><input id="taux-reparation" onchange="changetaux(<?php echo $row['idDemande'];?>);" value="<?php echo $row['tauxAvancement'];?>">%</td>
+    <td title="modifier"><input id="<?php echo "taux-reparation".$row['idDemande'];?>" onchange="changetaux(<?php echo $row['idDemande'];?>);" value="<?php echo $row['tauxAvancement'];?>">%</td>
     </tr>
   <?php } ?>
    
@@ -312,12 +312,12 @@ while($row = $select->fetch()){
      <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
       <script type="text/javascript">
       function changeEtat(id) {
-      var etat = document.getElementById("etat-reparation").value;
+      var etat = document.getElementById("etat-reparation"+id).value;
       $.post("php/etatrep.php",{etat,id},(data)=>{
       })
       }
       function changetaux(id){
-        var taux = document.getElementById("taux-reparation").value;
+        var taux = document.getElementById("taux-reparation"+id).value;
         $.post("php/tauxrep.php",{taux,id},(data)=>{
         })
       }

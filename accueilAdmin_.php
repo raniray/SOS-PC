@@ -260,10 +260,17 @@ $(function () {
 
 				<div class="space"></div>
 				<div class="isotope-container row grid-space-20">
+
+				
+				<?php 	
+				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser ORDER BY classement DESC LIMIT 4");
+				$select->execute();
+				$i=0;
+				while($row = $select->fetch()){
+				?>
+
 				<div class="col-sm-6 col-md-3 isotope-item web-design">
-
 					<div class="image-box">
-
      					 <a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
       					 <center>
          				 <h6 class="heading">NOM Prénom</h6>
@@ -278,51 +285,7 @@ $(function () {
       					
       				</div>
       			</div>
-      			<div class="col-sm-6 col-md-3 isotope-item web-design">
-                    <div class="image-box">
-      					<a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-        				
-        				
-        				  <center>
-         				  <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				  </br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRepCons.php">Voir Profil</a></div>
-      					 </center>          
-        					
-      					
-                     </div>
-                </div>
-
-                     <div class="col-sm-6 col-md-3 isotope-item web-design">
-                     <div class="image-box">
-      				<a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-      					 <center>        				
-         				 <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				  </br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRepCons.php">Voir Profil</a></div>
-       					 </center>        
-        				
-      				
-      			     </div>
-                     </div>
- 					<div class="col-sm-6 col-md-3 isotope-item web-design">
-                     <div class="image-box">
-
-                       <a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
-      					 <center>         				
-         				  <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
-         				</br>
-         			</br>
-         				           			     <div class="btn button2"><a href="profileRepCons.php">Voir Profil</a></div>
-       					 </center> 
-  				    </div>
-  				</div>
- 
+				<?php } ?>
                        </div>
                    </br>
 

@@ -64,6 +64,7 @@ $db = data_base_connect();
 												 <li><a href="#vente">Vente</a></li>
 												 	 <?php
 													  if(isset($_SESSION['login'])==true){
+														 
 													if(strcmp($_SESSION['Account_type'],"C")==0){
    											     ?>	
 												<li class="dropdown" >
@@ -76,6 +77,7 @@ $db = data_base_connect();
 												  </div>
 												</li>
 												 <?php }elseif(strcmp($_SESSION['Account_type'],"R")==0){
+													
 													 ?>
 													 <li class="dropdown" >
 													<a class="dropbtn" href="#">Réparation PC</a>
@@ -141,8 +143,8 @@ $db = data_base_connect();
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="signUp.php" class="btn button btn-block">S'inscrire</a>
-                                             <a href="login.php" class="btn button btn-block">Se connecter</a>
+                                             <a href="signUp.html" class="btn button btn-block">S'inscrire</a>
+                                             <a href="login.html" class="btn button btn-block">Se connecter</a>
                                         </p>
                                     </div>
                                 </div>
@@ -203,7 +205,7 @@ $db = data_base_connect();
 				
 				
 				<?php 	
-				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser ORDER BY classement DESC LIMIT 4");
+				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser LIMIT 4");
 				$select->execute();
 				$i=0;
 				while($row = $select->fetch()){
@@ -252,7 +254,7 @@ $db = data_base_connect();
 				<div class="separator"></div>
 				<br>
 				<?php  if(isset($_SESSION['login'])==true){?>
-				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceClient.php" >Nouvelle annonce</a></div>
+				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonce.php" >Nouvelle annonce</a></div>
                	<br>
                	<br>
                	<br>
@@ -302,7 +304,7 @@ $db = data_base_connect();
 												<div class="row">
 													<div class="col-md-6">
 													
-														<p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."<br>".
+														<p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."DA"."<br>".
 														$row['dateCreation']."<br>"."Durée de validité:".$row['durreeValidite']."<br>".
 														
 														'<i class="fa fa-eye" aria-hidden="true">'.'</i>'.'&nbsp;&nbsp;'.
@@ -362,98 +364,40 @@ $db = data_base_connect();
 			</div>
 		<!-- section start -->
 		<!-- ================ -->
+		
 		<div class="section translucent-bg bg-image-2 pb-clear">
 			<div class="container object-non-visible" data-animation-effect="fadeIn">
 				<h1 id="clients" class="title text-center">Nos clients</h1>
+				
 				<div class="space"></div>
+				<div class="separator"></div>
+	             <div class="btn button"  id="creer-avis"><a href="nouvelAvis.php" >Créer un avis</a></div>
+				<div class="space"></div>				
+                 <br><br>
+				
+				<br>	
 				<div class="row">
+				<?php 
+				  $stmt = $db->prepare("SELECT * FROM avis_ JOIN user_ WHERE user_.idUser=avis_.idUser");
+				  $stmt->execute();
+				  while($row = $stmt->fetch()){
+				?>
 					<div class="col-md-4">
 						<div class="media testimonial">
 							<div class="media-left">
 								<img src="images/testimonial-1.png" alt="">
 							</div>
 							<div class="media-body">
-								<h3 class="media-heading">Mot clé !</h3>
+								<h3 class="media-heading"><?php echo "Avis N°".$row['idAvis']; ?></h3>
 								<blockquote>
-									<p> Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
+									<p><?php echo $row['contenuAvis']; ?></p>
+									<footer><?php echo $row['nomUser']." ".$row['prenomUser']; ?></footer>
 								</blockquote>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-2.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-3.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-2.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-3.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-1.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Présnom </footer>
-								</blockquote>
-							</div>
-						</div>
-					</div>
-				</div>
+				  <?php }?>
+					
 			</div>
 			<!-- section start -->
 			<!-- ================ -->
@@ -648,7 +592,7 @@ $db = data_base_connect();
 	<script type="text/javascript">
            function voirAnnonce(id){
              	$.post("php/voirAnnonce.php",{id},(data)=>{
-                 // alert(data);
+                  alert(data);
                 })
             }
 			function Annonces(type){

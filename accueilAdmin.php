@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <?php session_start();
+require('php/connexion.php');
+$db = data_base_connect();
 if(!isset($_SESSION['login'])){
 		header("Location: login.php");
 }else{
@@ -8,10 +10,6 @@ if(!isset($_SESSION['login'])){
 		header("Location: login.php");   
 	}
 }
-
-require('php/connexion.php');
-$db = data_base_connect();
-
 ?>
 	<head>
 		<meta charset="utf-8">
@@ -30,9 +28,25 @@ $db = data_base_connect();
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
+		<?php 
+//Récupérer le nombre des réparateurs inscris par mois		
+$req1 = $db->prepare("SELECT count(*) FROM reparateur_ ORDER BY dateInscription ASC");
+$req1->execute();
+$result1 = $req1->fetchAll(PDO::FETCH_COLUMN, 0);
+//Récupérer le nombre des clients inscris par mois
+$req2 = $db->prepare("SELECT count(*) FROM user_ join client_  WHERE user_.idUser=client_.idUser ORDER BY dateInscription ASC");
+$req2->execute();
+$result2 = $req2->fetchAll(PDO::FETCH_COLUMN, 0);
+//Récupérer le nombre des réparations effectuées par mois
+$req3 = $db->prepare("SELECT count(*) FROM demande_  WHERE etatDemande='T' ORDER BY dateCreation ASC");
+$req3->execute();
+$result3 = $req3->fetchAll(PDO::FETCH_COLUMN, 0);
+		?>
 		<script>
+		
 $(function () { 
-
+      
+	 
     Highcharts.setOptions({
     lang: {
         months: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
@@ -74,7 +88,6 @@ $(function () {
           backgroundColor: '#424242'
        
     },
-
         xAxis:
 		   
 		   
@@ -106,17 +119,17 @@ $(function () {
             }
         },
         series: [{
-            name: 'Nombre de PCs vendus',
-            data: [1, 0, 4,5,0,1,2,2,3,1,0,1]
-        }, {
             name: 'Nombre de réparations effectuées',
-            data: [2, 1, 0,3,7,2,4,2,3,1,0,2]
+            data: [<?php echo join($result3, ',') ?>]
+        }, {
+            name: 'Nombre de PCs vendus',
+            data: [0, 2, 1,5,7,3,4,5,1,3,10,6]
         },{
             name: 'Nombre d"inscris',
-            data: [15, 17, 30,10,9,5,13,12,3,11,7,14]},
+            data: [<?php echo join($result2, ',') ?>]},
 			{
             name: 'Nombre de réparateurs',
-            data: [2, 3, 3,3,5,6,6,5,5,7,7,6]}]
+            data: [<?php echo join($result1, ',') ?>]}]
     });
 });
 </script>
@@ -162,7 +175,7 @@ $(function () {
 											<ul class="nav navbar-nav navbar-right">
 												<li class="active"><a href="accueilAdmin.php">Accueil</a></li>
 						
-												 <li><a href="#portfolio">Vente</a></li>
+												 <li><a href="#vente">Vente</a></li>
 												<li class="active" >
 													<a  href="dashboard.php">Administration</a>					
   												
@@ -171,7 +184,7 @@ $(function () {
                                                 <li><a href="#about">A propos</a></li>
 												<li><a href="#contact">Contact</a></li>
 												<li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
-          <span class="glyphicon glyphicon-user"></span> 
+          <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 
                     </a>
                     <?php
@@ -212,24 +225,7 @@ $(function () {
                             </div>
                         </li>
                     </ul>
-                    <?php }else{
-												 ?>
-                    <ul class="dropdown-menu">
-                     
-                        <li>
-                            <div class="navbar-login navbar-login-session">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <p>
-                                             <a href="signUp.php" class="btn button btn-block">S'inscrire</a>
-                                             <a href="login.php" class="btn button btn-block">Se connecter</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                                        <?php };
+                    <?php };
 												 ?>
                 </li>
             </li>
@@ -286,34 +282,35 @@ $(function () {
 				<div class="isotope-container row grid-space-20">
 				
 				<?php 	
-				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser ORDER BY classement DESC LIMIT 4");
+				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser LIMIT 4");
 				$select->execute();
 				$i=0;
 				while($row = $select->fetch()){
 				?>
 
+
 				<div class="col-sm-6 col-md-3 isotope-item web-design">
 					<div class="image-box">
-     					 <a class="imgover" href="#"><img src="images/320x320.png" class="rounded" alt=""></a>
+     					 <a class="imgover" href="#"><img src="<?php echo $row['profilePicUser'];?>" class="rounded" alt=""></a>
       					 <center>
-         				 <h6 class="heading">NOM Prénom</h6>
-         				  <em>Evaluation=9999</em>
+         				 <h6 class="heading"><?php echo $row['nomUser']." ".$row['prenomUser'];?></h6>
+         				  <em>Evaluation=<?php echo $row['classement'];?></em>
          				</br>
          			</br>
-         			     <div class="btn button2"><a href="profileRepCons.php">Voir Profil</a></div>
-
+         			     <div class="btn button2"><a href="profileRep.php?id=<?php echo $row['idUser'];?>">Voir Profil</a></div>
          				</center>
-        
-       						
-      					
       				</div>
       			</div>
-				<?php } ?>
 
+				<?php }?>
+ 
                        </div>
                    </br>
+
 					</div>
-					</div>
+
+       
+		</div>
 
 		<!-- section end -->
 
@@ -332,57 +329,40 @@ $(function () {
 		<!-- ================ -->
 		<div class="section">
 			<div class="container">
-				<h1 class="text-center title" id="portfolio">Espace vente PC</h1>
+				<h1 class="text-center title" id="vente">Espace vente PC</h1>
                  
 				<div class="separator"></div>
 				<br>		
 
-				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonceAdmin.php" >Nouvelle annonce</a></div>
+				<div class="btn btn-primary btn-xs" id="nouvelle-annonce"><a href="nouvelleAnnonce.php" >Nouvelle annonce</a></div>
                
 				<div class="row object-non-visible" data-animation-effect="fadeIn" style="margin-top:9%;">
 					<div class="col-md-12">
 						<div class="isotope-container row grid-space-20">
-						
-				<div id="tous">
-
-				<?php 	
+						 <div id="tous">
+						<?php 	
 				$select = $db->prepare("SELECT * FROM annonce_");
 				$select->execute();
 				$i=0;
 				while($row = $select->fetch()){
 				?>
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
+
+							<div class="col-sm-6 col-md-3 isotope-item web-design" >
+							<div>
 								<div class="image-box">
 									<div class="overlay-container">
 										<img src="<?php echo "images/annonces/".$row['annoncePic'];?>" alt="">
 										<a class="overlay" id="<?php echo $row['idAnnonce']; ?>" name="<?php echo $row['idAnnonce']; ?>" onclick="voirAnnonce(<?php echo $row['idAnnonce'];?>);" data-toggle="modal" data-target="<?php  echo "#project".$row['idAnnonce'];?>" >
 											<i class="fa fa-search-plus"></i>
-											<span>Voir l'annonce tous</span>
+											<span>Voir l'annonce</span>
 										</a>
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="<?php echo "#project".$row['idAnnonce'];?>" >Voir l'annonce</a>
 								</div>
-										<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="#delete">Supprimer annonce</a>
-								   <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    	<div class="modal-content">
-					<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-					<h4 class="modal-title custom_align" id="Heading">Supprimer annonce </h4>
-					</div>
-					<div class="modal-body">
-					<div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
-					</div>
-					<div class="modal-footer ">
-					<button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-					<button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-					</div>
-        </div>
-    <!-- /.modal-content --> 
-  	</div>
+								<a class=" btn supprimer-annonce btn-block" data-toggle="modal" data-target="<?php echo "#delete".$row['idAnnonce']?>">Supprimer annonce</a>
+								  
 
-      <!-- /.modal-dialog --> 
-    </div>
+								</div>
 								<!-- Modal -->
 								<div class="modal fade" id="<?php echo "project".$row['idAnnonce'];?>" tabindex="-1" role="dialog" aria-labelledby="project-1-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
@@ -396,7 +376,7 @@ $(function () {
 												<div class="row">
 													<div class="col-md-6">
 													
-														<p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."<br>".
+														<p style="overflow:auto;"><?php echo $row['annonceContent']."<br>"."Prix:".$row['prix']."DA"."<br>".
 														$row['dateCreation']."<br>"."Durée de validité:".$row['durreeValidite']."<br>".
 														
 														'<i class="fa fa-eye" aria-hidden="true">'.'</i>'.'&nbsp;&nbsp;'.
@@ -408,19 +388,40 @@ $(function () {
 													</div>
 												</div>
 											</div>
-											
 											<div class="modal-footer">
 												<button type="button" class="btn btn-sm btn-default2" data-dismiss="modal">Fermer</button>
 											</div>
-
 										</div>
 									</div>
 								</div>
 								<!-- Modal end -->
+								
+								 <div class="modal fade" id="<?php echo "delete".$row['idAnnonce']?>" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content" id="supAnnonce">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="<?php echo $row['idAnnonce']?>">Supprimer annonce </h4>
+      </div>
+          <div class="modal-body">
+       
+       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cette annonce  </div>
+       
+      </div>
+        <div class="modal-footer ">
+        <button type="button" class=" yesButton btn btn-success" onclick="supprimerAnnonce(<?php echo $row['idAnnonce']?>);" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
+      </div>
+        </div>
+    <!-- /.modal-content --> 
+  </div>
+      <!-- /.modal-dialog --> 
+    </div>
+								
 							</div>
-				<?php } ?>
-							</div>
-
+                                <?php } ?>
+							
+        </div>
 						</div>
 						<!-- portfolio items end -->
 					
@@ -436,11 +437,11 @@ $(function () {
 							<center>
 								
 
-
 								<div class="btn button"><button class="btn button" onclick="Annonces('T');">tout</button></div>
 								<div class="btn button"><button class="btn button" onclick="Annonces('R');">Les plus récentes</button></div>
 								<div class="btn button"><button class="btn button" onclick="Annonces('C');" >Les plus consultées</button></div>
 								<div class="btn button"><button class="btn button" onclick="Annonces('M');" >Les moins chères</button></div>
+								
 
 							</center>
 						</div>
@@ -461,26 +462,31 @@ $(function () {
 				<h1 id="clients" class="title text-center">Nos clients</h1>
 				<div class="space"></div>
 				<div class="row">
+				<?php 
+				  $stmt = $db->prepare("SELECT * FROM avis_ JOIN user_ WHERE user_.idUser=avis_.idUser");
+				  $stmt->execute();
+				  while($row = $stmt->fetch()){
+				?>
 					<div class="col-md-4">
 						<div class="media testimonial">
 							<div class="media-left">
 								<img src="images/testimonial-1.png" alt="">
 							</div>
 							<div class="media-body">
-								<h3 class="media-heading">Mot clé !</h3>
+								<h3 class="media-heading"><?php echo "Avis N°".$row['idAvis']; ?></h3>
 								<blockquote>
-									<p> Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
+									<p><?php echo $row['contenuAvis']; ?></p>
+									<footer><?php echo $row['nomUser']." ".$row['prenomUser']; ?></footer>
 								</blockquote>
 							</div>
 						</div>
 		<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
 								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
       <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content" id="supAvis">
           <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
+        <h4 class="modal-title custom_align" id="<?php echo $row['idAvis']; ?>">Supprimer avis </h4>
       </div>
           <div class="modal-body">
        
@@ -488,7 +494,7 @@ $(function () {
        
       </div>
         <div class="modal-footer ">
-        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class=" yesButton btn btn-success" onclick="supprimerAvis(<?php echo $row['idAvis']; ?>)"><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
         <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
       </div>
         </div>
@@ -497,196 +503,12 @@ $(function () {
       <!-- /.modal-dialog --> 
     </div>
 	<br><br><br>
+	
 					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-2.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-								<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
-								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cet avis  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
-	<br><br><br>
-					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-3.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-								<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
-								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cet avis  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
-	<br><br><br>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-2.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-								<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
-								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cet avis  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
-	<br><br><br>
-					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-3.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Prénom</footer>
-								</blockquote>
-							</div>
-						</div>
-								<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
-								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cet avis  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
-	<br><br><br>
-					</div>
-					<div class="col-md-4">
-						<div class="media testimonial">
-							<div class="media-left">
-								<img src="images/testimonial-1.png" alt="">
-							</div>
-							<div class="media-body">
-								<h3 class="media-heading">Mot clé!</h3>
-								<blockquote>
-									<p>Ici on met l'avis</p>
-									<footer>Nom Présnom </footer>
-								</blockquote>
-							</div>
-						</div>
-								<a class=" btnC supprimer-avis" data-toggle="modal" data-target="#deleteClient">Supprimer</a>
-								   <div class="modal fade" id="deleteClient" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer avis </h4>
-      </div>
-          <div class="modal-body">
-       
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Etes vous sur de vouloir supprimer cet avis  </div>
-       
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class=" yesButton btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
-        <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
-      </div>
-        </div>
-    <!-- /.modal-content --> 
-  </div>
-      <!-- /.modal-dialog --> 
-    </div>
-	<br><br><br>
-					</div>
-				</div>
+				 	 <?php } ?>
 			</div>
+			</div>
+
 			<!-- section start -->
 			<!-- ================ -->
 			<div class="translucent-bg blue">
@@ -875,18 +697,32 @@ $(function () {
 
 		<!-- Custom Scripts -->
 		<script type="text/javascript" src="js/custom.js"></script>
-			<script type="text/javascript">
+		<script type="text/javascript">
            function voirAnnonce(id){
-             	$.post("php/voirAnnonce.php",{id},(data)=>{
-                 // alert(data);
+           	$.post("php/voirAnnonce.php",{id},(data)=>{
+                  alert(data);
                 })
             }
+			function supprimerAnnonce(id){
+             $.post("php/supprimerAnnonce.php",{id},(data)=>{
+                  alert(data);
+                })
+				$('#supAnnonce').css("visibility", "hidden");
+            }
+			
 			function Annonces(type){
 				$.post("php/choixAnnonces.php",{type},(data)=>{
 				$("#tous").html(data);
                 })
 			}
-     </script>
+			function supprimerAvis(id){
+             
+                $.post("php/supprimerAvis.php",{id},(data)=>{
+                  alert(data);
+                })
+				$('#supAvis').css("visibility", "hidden");
+            }
+		</script>
 
 	</body>
 </html>
