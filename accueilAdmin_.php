@@ -5,6 +5,8 @@ if(!isset($_SESSION['login'])){
 		header("Location: login.php");
 }
 
+require('php/connexion.php');
+$db = data_base_connect();
 ?>
 	<head>
 		<meta charset="utf-8">

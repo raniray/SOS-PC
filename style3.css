@@ -436,7 +436,7 @@ background: #28B78D;
 
 
 /****************************************************Rating*************************************************************/
-
+/*
 .rating:not(:checked) > input {
     position:absolute;
     top:-9999px;
@@ -458,11 +458,12 @@ background: #28B78D;
     text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
 	
 }
-
+*/
 .rating:not(:checked) > label:before {
     content: '★ ';
 	
 }
+/*
 
 .rating > input:checked ~ label {
     color: #f70;
@@ -489,7 +490,7 @@ background: #28B78D;
     top:2px;
     left:2px;
 
-}
+}*/
 
 
 
