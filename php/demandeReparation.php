@@ -24,7 +24,7 @@ if (file_exists($target_file)) {
     $uploadOk = 0;
 }
 // Check file size
-if ($_FILES["imgInp"]["size"] > 500000) {
+if ($_FILES["imgInp"]["size"] > 5000000) {
     echo "Sorry, your file is too large.";
     $uploadOk = 0;
 }
@@ -139,5 +139,5 @@ try{
 }catch (Exception $e) {
         echo $e->getMessage();
       }
-header("Location: ../Reparations.php");
+header("Location: ../history.php");
 ?>

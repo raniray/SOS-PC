@@ -64,9 +64,9 @@ if(!isset($_SESSION['login'])){
                     </div>
                     <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
                       <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="accueilRep.php">Accueil</a></li>
+                        <li class="active"><a href="home.php">Accueil</a></li>
             
-                         <li><a href="accueilRep.php#portfolio">Vente</a></li>
+                         <li><a href="home.php#portfolio">Vente</a></li>
                         <li class="dropdown" >
                           <a class="dropbtn" href="#">Réparation PC</a>
                     
@@ -76,8 +76,8 @@ if(!isset($_SESSION['login'])){
                             <a href="liveHelpRep.php">Live help</a>
                           </div>
                         </li>
-                                                <li><a href="accueilRep.php#about">A propos</a></li>
-                        <li><a href="accueilRep.php#contact">Contact</a></li>
+                                                <li><a href="home.php#about">A propos</a></li>
+                        <li><a href="home.php#contact">Contact</a></li>
                         <li class="dropdown"><li class="dropdown"> <a href="#" class="dropbtn">
           <span class="glyphicon glyphicon-user"></span> 
                         Mon compte 

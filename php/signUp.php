@@ -23,6 +23,13 @@ $stmt->bindValue(':prenomUser', $prenom);
 $stmt->bindValue(':mailUser', $mail);
 $stmt->bindValue(':pswdUser', $pwd);
 $stmt->bindValue(':dateInscription', $dateInscription);
+try{
+  $stmt->execute(); 
+  }
+  catch(Exception $e){
+        echo $e->getMessage();
+  }
+
 //Exécution de la requête 
 $idUser = $db->lastInsertId('idUser');
 
@@ -30,12 +37,13 @@ $sql2 = "INSERT INTO Client_ (idUser,ccpUser) VALUES (:iduser,null)";
 $stmtC = $db->prepare($sql2);
 $stmtC->bindValue(':iduser', $idUser);
 try{
-  $res = $stmtC->execute();
-  $stmt->execute(); 
+  $stmtC->execute();
   session_start(); // On commence la session
   $_SESSION['login_user']=$nom." ".$prenom;
   $_SESSION['login']=true;
   $_SESSION['mail']=$mail;
+  $_SESSION['Account_type']="C";
+  $_SESSION['id']=$userRow['idUser'];
   $_SESSION['picture']="./img/Profiles/default-user.png";
   echo "successful";
   }

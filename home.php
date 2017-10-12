@@ -143,8 +143,8 @@ $db = data_base_connect();
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                             <a href="signUp.html" class="btn button btn-block">S'inscrire</a>
-                                             <a href="login.html" class="btn button btn-block">Se connecter</a>
+                                             <a href="signUp.php" class="btn button btn-block">S'inscrire</a>
+                                             <a href="login.php" class="btn button btn-block">Se connecter</a>
                                         </p>
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@ $db = data_base_connect();
 				
 				
 				<?php 	
-				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser LIMIT 4");
+				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser and User_.statusAcount='R' LIMIT 4");
 				$select->execute();
 				$i=0;
 				while($row = $select->fetch()){
@@ -220,7 +220,7 @@ $db = data_base_connect();
          				  <em>Evaluation=<?php echo $row['classement'];?></em>
          				</br>
          			</br>
-         			     <div class="btn button2"><a href="profileRep.php?id=<?php echo $row['idUser'];?>">Voir Profil</a></div>
+         		
          				</center>
       				</div>
       			</div>
@@ -283,7 +283,7 @@ $db = data_base_connect();
 							<div class="col-sm-6 col-md-3 isotope-item web-design">
 								<div class="image-box">
 									<div class="overlay-container">
-										<img src="<?php echo "images/annonces/".$row['annoncePic'];?>" alt="">
+										<img src="<?php echo "images/Annonces/".$row['annoncePic'];?>" alt="">
 										<a class="overlay" id="<?php echo $row['idAnnonce']; ?>" name="<?php echo $row['idAnnonce']; ?>" onclick="voirAnnonce(<?php echo $row['idAnnonce'];?>);" data-toggle="modal" data-target="<?php  echo "#project".$row['idAnnonce'];?>" >
 											<i class="fa fa-search-plus"></i>
 											<span>Voir l'annonce tous</span>
@@ -588,11 +588,10 @@ $db = data_base_connect();
 		<!-- Custom Scripts -->
 		<script type="text/javascript" src="js/custom.js"></script>
 	</body>
-	
 	<script type="text/javascript">
+
            function voirAnnonce(id){
              	$.post("php/voirAnnonce.php",{id},(data)=>{
-                  alert(data);
                 })
             }
 			function Annonces(type){

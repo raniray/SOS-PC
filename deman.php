@@ -263,8 +263,11 @@
                       </tr>
                       <tr>
                         <td>Réparateur:</td>
+                      
                       <?php 
+                     
                         $idUser2=$row['idReparateur'];
+                        if($idUser2!=0){
                       	$select3 = $db->prepare("SELECT nomUser,prenomUser FROM User_ where idUser=$idUser2");
                         $select3->execute();
                         $i=0;
@@ -272,8 +275,16 @@
                       ?>
                         <td><?php echo $row3['nomUser']." ".$row3['prenomUser'];?></td>
 
-                      <?php } ?>                      </tr>
-                  
+                      <?php }
+                    }else{ ?>
+
+                      <td><?php echo "pas de reparateur attribuer encore";?></td>                   
+                      <?php 
+                    }
+                       ?>                      
+
+
+                     </tr>
                              <tr>
                         <td>Etat de la demande:</td>
                         <td><?php echo $row['etatDemande'];?></td>

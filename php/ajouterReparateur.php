@@ -23,19 +23,23 @@ $stmt->bindValue(':dateInscription', $dateInscription);
 $stmt->bindValue(':telUser', !empty($_POST['tel']) ? trim($_POST['tel']) : null);
 $stmt->bindValue(':naissance', $dateNaissance);
 
-$idUser = $db->lastInsertId('idUser');
+try {
+        $stmt->execute(); 
+    }catch (Exception $e) {
+  echo $e->getMessage();
+}
 
+$idUser = $db->lastInsertId();
 $ajout = $db->prepare("INSERT INTO reparateur_ (idUser,profession,classement,biography) VALUES (:idUser,:profession,:classement,:biography)");
 $ajout->bindValue(':idUser', $idUser);
 $ajout->bindValue(':classement', !empty($_POST['classement']) ? trim($_POST['classement']) : null);
 $ajout->bindValue(':profession', !empty($_POST['profession']) ? trim($_POST['profession']) : null);
 $ajout->bindValue(':biography', !empty($_POST['biographie']) ? trim($_POST['biographie']) : null);
-
+try{
 //Exécution de la requête 
-try {
-        $stmt->execute();  
+ 
         $ajout->execute();
-        echo "Reparateur inseré Avec succées";
+        echo "Reparateur inseré Avec succées".$idUser;
 } catch (Exception $e) {
   echo $e->getMessage();
 }

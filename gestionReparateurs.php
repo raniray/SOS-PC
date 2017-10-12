@@ -309,7 +309,7 @@ function annulersup(id){
    $pageno = 1;
 } 
 //Récuéprer le nombre des lignes du résultat de la requête
-$result = $db->prepare("SELECT count(*) FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
+$result = $db->prepare("SELECT count(*) FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser and User_.statusAcount='R' ");
 $result->execute();
 $numrows = $result->fetchColumn(0);
 //Définir le nombre de lignes par page
@@ -326,7 +326,7 @@ if ($pageno < 1) {
 } 
 $limit = 'LIMIT ' .($pageno - 1) * $rows_per_page .',' .$rows_per_page;
 
-$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser $limit");
+$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser and User_.statusAcount='R'  $limit");
 $select->execute();
 $i=0;
   if($select->rowCount()==0){

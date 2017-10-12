@@ -172,7 +172,7 @@ if (isset($_GET['pageno'])) {
    $pageno = 1;
 } 
 //Récuéprer le nombre des lignes du résultat de la requête
-$result = $db->prepare("SELECT count(*) FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
+$result = $db->prepare("SELECT count(*) FROM demande_");
 $result->execute();
 $numrows = $result->fetchColumn(0);
 //Définir le nombre de lignes par page
@@ -196,8 +196,8 @@ $i=0;
 while($row = $select->fetch()){
     ?>
     <tr>  
-    <td><a data-toggle="modal" data-target="#demande1"><?php echo $row['intitulePanne'];?></a>
-	<div class="modal fade" id="demande1" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
+    <td><a data-toggle="modal" data-target="#demande<?php echo $row['idDemande'];?>"><?php echo $row['intitulePanne'];?></a>
+	<div class="modal fade" id="demande<?php echo $row['idDemande'];?>" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -216,7 +216,7 @@ while($row = $select->fetch()){
 </p>
 													</div>
 													<div class="col-md-6">
-														<img src="images/320x320.png" alt="">
+														<img src="<?php echo "images/reparations/".$row['pannePic'];?>" alt="">
 													</div>
 												</div>
 											</div>
@@ -232,7 +232,7 @@ while($row = $select->fetch()){
     <select id="affecter-rep<?php echo $row['idDemande'];?>" name="affecter-rep<?php echo $row['idDemande'];?>" onchange="changeEtat(<?php echo $row['idDemande'];?>)" class="form-control">
       <option>Aucun</option>
       <?php
-$selectR = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
+$selectR = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser and User_.statusAcount='R' ");
 $selectR->execute();
 $i=0;
 while($row2 = $selectR->fetch()){?>

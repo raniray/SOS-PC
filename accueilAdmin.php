@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
-<?php session_start();
+<?php 
+session_start();
 require('php/connexion.php');
 $db = data_base_connect();
 if(!isset($_SESSION['login'])){
@@ -30,7 +31,7 @@ if(!isset($_SESSION['login'])){
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
 		<?php 
 //Récupérer le nombre des réparateurs inscris par mois		
-$req1 = $db->prepare("SELECT count(*) FROM reparateur_ ORDER BY dateInscription ASC");
+$req1 = $db->prepare("SELECT count(*) FROM user_ join reparateur_ WHERE user_.idUser=reparateur_.idUser ORDER BY user_.dateInscription ASC");
 $req1->execute();
 $result1 = $req1->fetchAll(PDO::FETCH_COLUMN, 0);
 //Récupérer le nombre des clients inscris par mois
@@ -38,7 +39,7 @@ $req2 = $db->prepare("SELECT count(*) FROM user_ join client_  WHERE user_.idUse
 $req2->execute();
 $result2 = $req2->fetchAll(PDO::FETCH_COLUMN, 0);
 //Récupérer le nombre des réparations effectuées par mois
-$req3 = $db->prepare("SELECT count(*) FROM demande_  WHERE etatDemande='T' ORDER BY dateCreation ASC");
+$req3 = $db->prepare("SELECT count(*) FROM demande_ WHERE etatDemande='Terminé' ORDER BY dateCreation ASC");
 $req3->execute();
 $result3 = $req3->fetchAll(PDO::FETCH_COLUMN, 0);
 		?>
@@ -218,7 +219,7 @@ $(function () {
                                     <div class="col-lg-12">
                                         <p>
                                              <a href="./php/logout.php" class="btn button btn-block">Se déconnecter</a>
-                                             <a href="profileAdmin.php" class="btn button btn-block">Mon profil</a>
+                                             <a href="profile.php" class="btn button btn-block">Mon profil</a>
                                         </p>
                                     </div>
                                 </div>
@@ -282,7 +283,7 @@ $(function () {
 				<div class="isotope-container row grid-space-20">
 				
 				<?php 	
-				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser LIMIT 4");
+				$select = $db->prepare("SELECT * FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser and User_.statusAcount='R' LIMIT 4");
 				$select->execute();
 				$i=0;
 				while($row = $select->fetch()){
@@ -409,7 +410,7 @@ $(function () {
        
       </div>
         <div class="modal-footer ">
-        <button type="button" class=" yesButton btn btn-success" onclick="supprimerAnnonce(<?php echo $row['idAnnonce']?>);" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
+        <button type="button" class=" yesButton btn btn-success" data-dismiss="modal" onclick="supprimerAnnonce(<?php echo $row['idAnnonce']?>);" ><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;OUI</button>
         <button type="button" class="noButton btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp;NON</button>
       </div>
         </div>
@@ -706,6 +707,7 @@ $(function () {
 			function supprimerAnnonce(id){
              $.post("php/supprimerAnnonce.php",{id},(data)=>{
                   alert(data);
+                  Annonces('T');
                 })
 				$('#supAnnonce').css("visibility", "hidden");
             }
@@ -716,7 +718,6 @@ $(function () {
                 })
 			}
 			function supprimerAvis(id){
-             
                 $.post("php/supprimerAvis.php",{id},(data)=>{
                   alert(data);
                 })

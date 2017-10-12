@@ -213,7 +213,7 @@ if (isset($_GET['pageno'])) {
    $pageno = 1;
 } 
 //Récuéprer le nombre des lignes du résultat de la requête
-$result = $db->prepare("SELECT count(*) FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser");
+$result = $db->prepare("SELECT count(*) FROM reparateur_ JOIN User_ where reparateur_.idUser=User_.idUser and User_.statusAcount='C' ");
 $result->execute();
 $numrows = $result->fetchColumn(0);
 //Définir le nombre de lignes par page
@@ -230,7 +230,7 @@ if ($pageno < 1) {
 } 
 
 $limit = 'LIMIT ' .($pageno - 1) * $rows_per_page .',' .$rows_per_page;
-$select = $db->prepare("SELECT * FROM client_ join user_ where user_.idUser=client_.idUser $limit");
+$select = $db->prepare("SELECT * FROM client_ join user_ where user_.idUser=client_.idUser and User_.statusAcount='C' $limit");
 $select->execute();
 $i=0;
 while($row = $select->fetch()){
